@@ -1,9 +1,10 @@
-__pycache__/
-*.py[cod]
-*.log
-db.sqlite3
-media/
-venv/
-.env
-
+# IDE
+.idea/
 .vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+*.pyc
+__pycache__/
