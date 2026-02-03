@@ -6,7 +6,7 @@ flake8:
   image: python:3.12
   before_script:
     - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
+    - pip install -r requirements/prod.txt
   script:
     - flake8 .
   only:
