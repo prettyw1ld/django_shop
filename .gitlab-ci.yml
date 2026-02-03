@@ -1,28 +1,17 @@
+image: python:3.12
+
 stages:
   - lint
-  - format
 
 lint:
   stage: lint
-  image: python:3.12
-  before_script:
-    - python -m pip install --upgrade pip
-    - pip install -r requirements/prod.txt
-    - pip install flake8 flake8-import-order flake8-quotes pep8-naming
+  image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
-    - flake8 . --config=.flake8 
-  only:
-    - merge_requests
-    - main
+    - pip install pep8-naming
+    - flake8 --verbose
 
 black-check:
   stage: format
-  image: python:3.12
-  before_script:
-    - python -m pip install --upgrade pip
-    - pip install black==24.8.*
+  image: gitlab.com/pipeline-components/black@1.0.0
   script:
-    - black --check --diff --line-length 79 .
-  only:
-    - merge_requests
-    - main
+    - black --check --verbose lyceum/
