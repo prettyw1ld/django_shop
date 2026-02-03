@@ -8,7 +8,7 @@ lint:
   before_script:
     - python -m pip install --upgrade pip
     - pip install -r requirements/prod.txt
-    - pip install flake8 flake8-import-order
+    - pip install flake8 flake8-import-order flake8-quotes
   script:
     - flake8 . --config=.flake8 
   only:
@@ -18,8 +18,8 @@ lint:
 black:
   stage: format
   image: python:3.12
-  before_script:
-    - python -m pip install --upgrade pip
+   before_script:
+    - python -m pip install --upgrade pip  # ← ДОБАВИТЬ!
     - pip install black==24.8.*
   script:
     - black --check --diff .
