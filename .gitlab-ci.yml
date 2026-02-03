@@ -2,6 +2,7 @@ image: python:3.12
 
 stages:
   - lint
+  - format
 
 lint:
   stage: lint
