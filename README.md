@@ -1,4 +1,7 @@
-# Lyceum Django Project [![Pipeline status](https://gitlab.crja72.ru/api/v4/projects/3798/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/pipelines)
+## CI/CD Pipeline Status
+
+[![Lint](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/jobs/artifacts/main/raw/lint.svg?job=lint)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/pipelines)
+[![Format](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/jobs/artifacts/main/raw/format.svg?job=format)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/pipelines)
 
 ### Linux (dev-режим)
 1. `git clone <URL_РЕПО>`
