@@ -2,7 +2,6 @@ image: python:3.12
 
 stages:
   - lint
-  - format
 
 lint:
   stage: lint
@@ -11,8 +10,8 @@ lint:
     - pip install pep8-naming
     - flake8 --verbose
 
-black-check:
-  stage: format
-  image: gitlab.com/pipeline-components/black@1.0.0
+black:
+  stage: lint
+  image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black --check --verbose lyceum/
+    - black --check --verbose -- .
