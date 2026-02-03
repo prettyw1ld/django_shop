@@ -1,7 +1,7 @@
 [flake8]
-exclude = venv,__pycache__,migrations,manage.py
+exclude = venv,__pycache__,migrations,manage.py,.env,db.sqlite3
 max-line-length = 88
-extend-ignore = E203,W503
+extend-ignore = E203,W503,Q000,Q002
 per-file-ignores =
     */settings.py:E501
     */urls.py:E501

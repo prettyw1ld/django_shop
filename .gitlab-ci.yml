@@ -8,7 +8,7 @@ lint:
   before_script:
     - python -m pip install --upgrade pip
     - pip install -r requirements/prod.txt
-    - pip install flake8 flake8-quotes flake8-import-order  # Все плагины!
+    - pip install flake8 flake8-import-order
   script:
     - flake8 . --config=.flake8 
   only:
