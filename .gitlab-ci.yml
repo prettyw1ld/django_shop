@@ -1,15 +1,28 @@
 stages:
   - lint
+  - format
 
-flake8:
+lint:
   stage: lint
   image: python:3.12
   before_script:
     - python -m pip install --upgrade pip
     - pip install -r requirements/prod.txt
-    - pip install flake8
+    - pip install flake8 flake8-quotes flake8-import-order  # Все плагины!
   script:
-    - flake8 .
+    - flake8 . --config=.flake8 
+  only:
+    - merge_requests
+    - main
+
+black:
+  stage: format
+  image: python:3.12
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install black==24.8.*
+  script:
+    - black --check --diff .
   only:
     - merge_requests
     - main
