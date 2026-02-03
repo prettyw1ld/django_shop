@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/badges/main/pipeline.svg)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/commits/main)
+
 ### Linux (dev-режим)
 1. `git clone <URL_РЕПО>`
 2. `cd lyceum`
