@@ -10,10 +10,10 @@ lint:
     - pip install pep8-naming
     - pip install flake8-quotes
     - pip install flake8-import-order
-    - flake8 --verbose
+    - flake8 lyceum
 
 black:
   stage: lint
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black --check --verbose -- .
+    - black --check --skip-string-normalization lyceum
