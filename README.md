@@ -52,7 +52,7 @@ python manage.py runserver
 ```
 
 ## CI/CD
-В файле [.gitlab-ci.yml](Lection/.gitlab-ci.yml) ностроены первоначальные проверки. Пайплан будет запускаться сразу же после коммита в репозиторий.
+В файле [.gitlab-ci.yml](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/blob/main/.gitlab-ci.yml) ностроены первоначальные проверки. Пайплан будет запускаться сразу же после коммита в репозиторий.
 
 ## Команда проекта
 - **Дамир** (я) - разработчик и лид проекта
