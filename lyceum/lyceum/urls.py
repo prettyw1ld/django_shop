@@ -19,15 +19,13 @@ from django import conf, urls
 from django.contrib import admin
 from django.urls import include, path
 
-import catalog.views
 import homepage.views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", homepage.views.home),
-    path("", include("catalog.urls")),
-    path("catalog/<int:pk>/", catalog.views.item_detail),
-    path("", include("about.urls")),
+    path("", homepage.views.home, name="home"),
+    path("catalog/", include("catalog.urls")),
+    path("about/", include("about.urls")),
 ]
 
 
