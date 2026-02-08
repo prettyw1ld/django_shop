@@ -2,6 +2,7 @@ image: python:3.12
 
 stages:
   - lint
+  - test
 
 lint:
   stage: lint
@@ -17,3 +18,11 @@ black:
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
     - black --check --skip-string-normalization lyceum
+
+django:
+  stage: test
+  script:
+    - pip install -r requirements/test.txt
+    - pip install django-debug-toolbar
+    - cd lyceum
+    - python3 manage.py test
