@@ -35,4 +35,5 @@ urlpatterns = [
 
 if conf.settings.DEBUG:
     import debug_toolbar
+
     urlpatterns += (urls.path("__debug__/", urls.include(debug_toolbar.urls)),)
