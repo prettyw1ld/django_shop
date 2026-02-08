@@ -22,7 +22,6 @@ from django.urls import include, path
 import catalog.views
 import homepage.views
 
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", homepage.views.home),
