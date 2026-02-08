@@ -1,3 +1,4 @@
+-r prod.txt
 black==24.8.*
 flake8==7.1.*
 flake8-import-order==0.18.*
