@@ -30,9 +30,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fake-key")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "t", "yes", "y")
 
-ALLOWED_HOSTS = [
-    os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(","),
-]
+ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
 # Application definition
 
