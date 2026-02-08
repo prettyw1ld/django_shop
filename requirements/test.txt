@@ -1,3 +1,4 @@
 -r prod.txt
 django-debug-toolbar==4.4.4
+jinja2==3.1.2
 pytest==7.4.*
