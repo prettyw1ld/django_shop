@@ -1,4 +1,4 @@
 [flake8]
 exclude = venv,__pycache__,migrations,manage.py,.env,db.sqlite3
 max-line-length = 79
-extend-ignore = E203,W503,Q000,Q00,I100
+extend-ignore = E203,W503,Q000,Q00
