@@ -1,11 +1,11 @@
-from django.test import Client, TestCase, override_settings
+from django.test import Client, override_settings, TestCase
 
-from .middleware import ReverseMiddleWare
+from .middleware import ReverseMiddleware
 
 
 class MiddleWareTest(TestCase):
     def test_middleware(self):
-        ReverseMiddleWare.cont = 0
+        ReverseMiddleware.cont = 0
         for i in range(10):
             if i < 9:
                 response = Client().get("/")
