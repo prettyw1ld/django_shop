@@ -26,6 +26,7 @@ urlpatterns = [
     path("", homepage.views.home, name="home"),
     path("catalog/", include("catalog.urls")),
     path("about/", include("about.urls")),
+    path("", include("homepage.urls")),
 ]
 
 
