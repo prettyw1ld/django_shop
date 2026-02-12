@@ -1,8 +1,8 @@
 from django.urls import path
-from views import *
-from django.urls import reverse
+from . import views
+
 
 urlpatterns = [
-    path("", home, name="home"),
-    path("coffee/", coffee, name="coffee"),
+    path('', views.home, name='home'),
+    path('coffee/', views.coffee, name='coffee'),
 ]
