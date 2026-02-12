@@ -38,6 +38,14 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() in (
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
+ALLOW_REVERSE = os.getenv("DJANGO_ALLOW_REVERSE", "True").lower() in (
+    "true",
+    "1",
+    "t",
+    "yes",
+    "y",
+)
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -56,6 +64,7 @@ INSTALLED_APPS = [
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
 
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -65,12 +74,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "lyceum.middleware.ReverseMiddleWare",
 ]
+
 
 if DEBUG:
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-
-if DEBUG:
     INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
 
