@@ -3,7 +3,7 @@ from http_constants.status import HttpStatus
 
 
 def home(request):
-    return django.http.HttpResponse("<body>Popa</body>")
+    return django.http.HttpResponse("<body>Главная</body>")
 
 
 def coffee(request):
