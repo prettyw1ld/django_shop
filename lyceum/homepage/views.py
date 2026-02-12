@@ -1,8 +1,12 @@
 import django.http
 from http_constants.status import HttpStatus
 
+
 def home(request):
-    return django.http.HttpResponse("<body>Главная</body>")
+    return django.http.HttpResponse("<body>Popa</body>")
+
 
 def coffee(request):
-    return django.http.response("Я чайник", status=418)
+    return django.http.HttpResponse(
+        "Я чайник", status=HttpStatus.I_AM_A_TEAPOT
+    )
