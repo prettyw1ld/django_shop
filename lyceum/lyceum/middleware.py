@@ -15,7 +15,7 @@ class ReverseMiddleWare:
                 content = response.content.decode()
                 words = content.split()
                 reversed_words = [word[::-1] for word in words]
-                new_content = ' '.join(reversed_words)
+                new_content = " ".join(reversed_words)
                 response.content = new_content
                 ReverseMiddleWare.cont = 0
                 return response
