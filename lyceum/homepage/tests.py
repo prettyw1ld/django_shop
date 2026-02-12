@@ -1,5 +1,5 @@
 from django.test import Client, TestCase
-from http_constants.status import HttpStatus
+from http import HTTPStatus
 
 
 class StaticURLTests(TestCase):
@@ -11,7 +11,7 @@ class StaticURLTests(TestCase):
 class CoffeeViewTest(TestCase):
     def test_coffee_status_code(self):
         response = self.client.get("/coffee/")
-        self.assertEqual(response.status_code, HttpStatus.I_AM_A_TEAPOT)
+        self.assertEqual(response.status_code, HTTPStatus.I_AM_A_TEAPOT)
 
     def test_coffee_content(self):
         response = self.client.get("/coffee/")

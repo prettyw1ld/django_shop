@@ -1,5 +1,5 @@
 import django.http
-from http_constants.status import HttpStatus
+from http import HTTPStatus
 
 
 def home(request):
@@ -8,5 +8,5 @@ def home(request):
 
 def coffee(request):
     return django.http.HttpResponse(
-        "Я чайник", status=HttpStatus.I_AM_A_TEAPOT
+        "Я чайник", status=HTTPStatus.I_AM_A_TEAPOT
     )
