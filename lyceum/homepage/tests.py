@@ -1,6 +1,5 @@
 from django.test import Client, TestCase
 from http_constants.status import HttpStatus
-from django.urls import reverse
 
 
 class StaticURLTests(TestCase):

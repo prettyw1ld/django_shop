@@ -67,6 +67,15 @@ env/
 venv/
 ENV/
 
+# Django databases
+*.sqlite3
+db.sqlite3
+*.db
+*.sqlite
+*.sql
+*.backup
+
+
 # If you are using PyCharm # 
 .idea/**/workspace.xml 
 .idea/**/tasks.xml 
