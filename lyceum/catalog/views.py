@@ -8,5 +8,6 @@ def item_list(request):
 def item_detail(request, pk):
     return django.http.HttpResponse("<body>Подробно элемент</body>")
 
+
 def number_view(request, number):
     return django.http.HttpResponse(str(number))
