@@ -1,7 +1,7 @@
 -r prod.txt
 django-debug-toolbar==4.4.4
 flake8==7.1.*
-flake8-import-order==0.18.*
+flake8-import-order==0.19.2
 flake8-quotes==3.3.*
 pep8-naming==0.14.*
 pytest==7.4.*
