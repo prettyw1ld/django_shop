@@ -8,6 +8,8 @@ lint:
   stage: lint
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
+    - pip install --upgrade setuptools pip
+    - pip install pkg-resources  
     - pip install -r requirements/test.txt
     - flake8 lyceum
 
