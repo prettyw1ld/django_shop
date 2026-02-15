@@ -11,7 +11,7 @@ class MiddleWareTest(TestCase):
                 response = Client().get("/")
                 self.assertEqual(response.content.decode(), "Главная")
             else:
-                response = Client().get("/")
+                response = self.client.get("/")
                 self.assertEqual(response.content.decode(), "яанвалГ")
 
     @override_settings(REVERSE_RUSSIAN=False)
