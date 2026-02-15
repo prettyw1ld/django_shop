@@ -1,25 +1,40 @@
-from django.conf import settings
+import re
+
+import django.conf
+
+WORDS_REGEX = re.compile(r"\w+|\W+")
+NOT_RUSSIAN_REGEX = re.compile(r"^[^а-яА-Я\s]+$")
 
 
-class ReverseMiddleware:
-    cont = 0
+class ReverseRussianMiddleWare:
+    cnt = 0
 
     def __init__(self, get_response):
         self.get_response = get_response
 
+    @classmethod
+    def check_need_reverse(cls):
+        if not django.conf.settings.REVERSE_RUSSIAN:
+            return False
+
+        cls.cnt += 1
+        if cls.cnt != 10:
+            return False
+        cls.cnt = 0
+        return True
+
     def __call__(self, request):
+        if not self.check_need_reverse():
+            return self.get_response(request)
+
         response = self.get_response(request)
-        if settings.ALLOW_REVERSE:
-            ReverseMiddleware.cont += 1
-            if ReverseMiddleware.cont == 10:
-                content = response.content.decode()
-                words = content.split()
-                reversed_words = [word[::-1] for word in words]
-                new_content = " ".join(reversed_words)
-                response.content = new_content
-                ReverseMiddleware.cont = 0
-                return response
-            else:
-                return response
-        else:
-            return response
+        content = response.content.decode()
+        words = WORDS_REGEX.findall(content)
+
+        transformed = [
+            word if NOT_RUSSIAN_REGEX.search(word) else word[::-1]
+            for word in words
+        ]
+
+        response.content = "".join(transformed).encode()
+        return response

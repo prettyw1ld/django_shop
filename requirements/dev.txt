@@ -1,6 +1,2 @@
--r prod.txt
-black==24.8.*
-django-debug-toolbar==4.4.4
-flake8==7.1.*
-flake8-import-order==0.18.*
-isort==5.13.*
+-r test.txt
+black==26.1.0

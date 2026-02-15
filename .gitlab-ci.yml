@@ -8,21 +8,19 @@ lint:
   stage: lint
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
-    - pip install pep8-naming
-    - pip install flake8-quotes
-    - pip install flake8-import-order
+    - pip install -r requirements/test.txt
     - flake8 lyceum
 
 black:
   stage: lint
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black --check --skip-string-normalization lyceum
+    - black --check lyceum
 
 django:
   stage: test
   script:
+    - pip install -r requirements/prod.txt
     - pip install -r requirements/test.txt
-    - pip install django-debug-toolbar
     - cd lyceum
     - python3 manage.py test

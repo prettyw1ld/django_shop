@@ -1,7 +1,7 @@
 from django.urls import path, re_path, register_converter
 
-from . import converters
-from . import views
+from catalog import converters
+from catalog import views
 
 register_converter(converters.PositiveIntegerConverter, "positive_int")
 
