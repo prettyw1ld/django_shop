@@ -12,4 +12,4 @@ urlpatterns = [
 
 
 if not django.conf.settings.DEBUG:
-    urlpatterns += +debug_toolbar_urls()
+    urlpatterns += debug_toolbar_urls()
