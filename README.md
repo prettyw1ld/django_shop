@@ -1,7 +1,9 @@
-[![pipeline status](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/badges/main/pipeline.svg?key_text=lint/test)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/commits/main)
-
 # Lyceum (проект на Django)
 Учебный проект с ипользованием фреймворка Django. 
+
+
+[![pipeline status](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/badges/main/pipeline.svg?key_text=lint/test)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/commits/main)
+
 
 ## Необходимое ПО
 - [Django](https://www.djangoproject.com/download/)
@@ -30,7 +32,7 @@ source venv/bin/activate
 ```
 Теперь нужно клонировать файл-шаблон с переменными окружения:
 ```sh
-cp ../template.env ../.env
+cp template.env .env
 ```
 <sub> (p.s. конечно же надо будет заполнить потом настоящие данные, а не оставлять как есть :D) </sub>
 
