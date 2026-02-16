@@ -3,7 +3,6 @@ import django.conf
 from django.contrib import admin
 from django.urls import include, path
 
-
 urlpatterns = [
     path("", include("homepage.urls")),
     path("catalog/", include("catalog.urls")),
@@ -13,4 +12,4 @@ urlpatterns = [
 
 
 if not django.conf.settings.DEBUG:
-    urlpatterns += + debug_toolbar_urls()
+    urlpatterns += +debug_toolbar_urls()
