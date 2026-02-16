@@ -1,5 +1,6 @@
 [flake8]
 exclude = venv,__pycache__,migrations,manage.py,.env,db.sqlite3
 max-line-length = 79
+inline-quotes = double
 import-order-style = google
 application-import-names = about, catalog, homepage
