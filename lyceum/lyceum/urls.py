@@ -11,5 +11,5 @@ urlpatterns = [
 ]
 
 
-if not django.conf.settings.DEBUG:
+if django.conf.settings.DEBUG:
     urlpatterns += debug_toolbar_urls()
