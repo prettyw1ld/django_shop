@@ -1,4 +1,3 @@
-from debug_toolbar.toolbar import debug_toolbar_urls
 import django.conf
 from django.contrib import admin
 from django.urls import include, path
@@ -12,4 +11,5 @@ urlpatterns = [
 
 
 if django.conf.settings.DEBUG:
+    from debug_toolbar.toolbar import debug_toolbar_urls
     urlpatterns += debug_toolbar_urls()
