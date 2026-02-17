@@ -10,20 +10,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 def load_bool(name, default):
     env_value = os.getenv(name, str(default)).lower()
-    return env_value in (
+    return env_value in {
         "true",
         "1",
         "t",
         "yes",
         "y",
-    )
+    }
 
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 
 
-DEBUG = load_bool("DJANGO_DEBUG", True)
-REVERSE_RUSSIAN = load_bool("DJANGO_ALLOW_REVERSE", False)
+DEBUG = load_bool("DJANGO_DEBUG", False)
+REVERSE_RUSSIAN = load_bool("DJANGO_ALLOW_REVERSE", True)
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
@@ -55,8 +55,8 @@ MIDDLEWARE = [
 
 
 if DEBUG:
-    INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    INSTALLED_APPS.append("debug_toolbar")
 
 INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(",")
 
@@ -103,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": (
-            "django.contrib.auth.password_validation." "MinimumLengthValidator"
+            "django.contrib.auth.password_validation.MinimumLengthValidator"
         ),
     },
     {
@@ -121,9 +121,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -132,8 +129,5 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"

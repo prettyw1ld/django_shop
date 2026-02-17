@@ -27,7 +27,7 @@ class ReverseRussianMiddleWare:
             return self.get_response(request)
 
         response = self.get_response(request)
-        content = response.content.decode("utf-8")
+        content = response.content.decode(response.charset)
 
         def replace_func(match):
             word = match.group()

@@ -64,7 +64,7 @@ class StaticURLTests(TestCase):
         expected_status,
     ):
         full_url = f"/catalog/{prefix}/{url}/"
-        response = Client().get(full_url)
+        response = self.client.get(full_url)
         self.assertEqual(
             response.status_code,
             expected_status,
