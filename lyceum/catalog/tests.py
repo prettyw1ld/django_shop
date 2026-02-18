@@ -4,6 +4,10 @@ import itertools
 from django.test import Client, TestCase
 import parameterized
 
+from catalog.models import Category, Item, Tag
+
+from django.core.exceptions import ValidationError
+
 
 class StaticURLTests(TestCase):
     def test_catalog_endpoint(self):
@@ -70,3 +74,44 @@ class StaticURLTests(TestCase):
             expected_status,
             f"failed check status request to '{full_url}'",
         )
+
+
+class TestModel(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.category = Category.objects.create(
+            is_published=True,
+            name="Тестовая категория",
+            slug="test-category-slug",
+            weight=100,
+        )
+        cls.tag = Tag.objects.create(
+            is_published=True, name="Тестовый тэг", slug="test-tug-slug"
+        )
+
+    def test_unable_create_one_letter(self):
+        item_count = Item.objects.count()
+        with self.assertRaises(ValidationError):
+            self.item = Item(
+                name="Тестовый товар",
+                category=self.category,
+                text="1",
+            )
+            self.item.full_clean()
+            self.item.save()
+            self.item.tags.add(TestModel.tag)
+        self.assertEqual(Item.objects.count(), item_count)
+
+    def test_able_create_one_letter(self):
+        item_count = Item.objects.count()
+        self.item = Item(
+            name="Тестовый товар",
+            category=self.category,
+            text="123 превосходно",
+        )
+        self.item.full_clean()
+        self.item.save()
+        self.item.tags.add(TestModel.tag)
+        self.assertEqual(Item.objects.count(), item_count + 1)

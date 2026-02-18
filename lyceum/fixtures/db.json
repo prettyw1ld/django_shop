@@ -1,0 +1,137 @@
+[
+{
+  "model": "catalog.tag",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "Пушистики",
+    "slug": "pushistiki_tag"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "Круто",
+    "slug": "Cool"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "Модно",
+    "slug": "Fashionable"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "Молодежно",
+    "slug": "Modern"
+  }
+},
+{
+  "model": "catalog.tag",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "Красивое",
+    "slug": "Beautiful"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "Пупсики",
+    "slug": "pupsiki_categ",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "Продукты",
+    "slug": "products_categ",
+    "weight": 100
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 1,
+  "fields": {
+    "is_published": true,
+    "name": "Деник",
+    "text": "Мой пушистик, превосходно",
+    "category": 1,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 2,
+  "fields": {
+    "is_published": true,
+    "name": "Ститч",
+    "text": "Игрушка крутая, роскошно",
+    "category": 2,
+    "tags": [
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 3,
+  "fields": {
+    "is_published": true,
+    "name": "Чупакабра",
+    "text": "роскошно, для людей с утонченным вкусом",
+    "category": 1,
+    "tags": [
+      3,
+      5
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 4,
+  "fields": {
+    "is_published": true,
+    "name": "Панан",
+    "text": "роскошно, в наше время, действительно роскошно",
+    "category": 2,
+    "tags": [
+      2,
+      3,
+      4
+    ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 5,
+  "fields": {
+    "is_published": true,
+    "name": "Бибизянко",
+    "text": "превосходно, милейшее существо",
+    "category": 1,
+    "tags": [
+      1,
+      2
+    ]
+  }
+}
+]

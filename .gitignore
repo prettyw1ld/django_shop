@@ -74,6 +74,7 @@ db.sqlite3
 *.sqlite
 *.sql
 *.backup
+**/migrations/
 
 
 # If you are using PyCharm # 
