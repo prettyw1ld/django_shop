@@ -1,12 +1,11 @@
 from http import HTTPStatus
 import itertools
 
+from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 import parameterized
 
 from catalog.models import Category, Item, Tag
-
-from django.core.exceptions import ValidationError
 
 
 class StaticURLTests(TestCase):
