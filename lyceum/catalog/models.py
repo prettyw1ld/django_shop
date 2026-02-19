@@ -52,10 +52,11 @@ class Item(PublishedBaseModel):
         max_length=150,
         verbose_name="Название",
         help_text="max 150 символов",
+        unique=True,
     )
     text = django.db.models.TextField(
         verbose_name="Текст",
-        validators=[catalog.validators.validate_briliant],
+        validators=[catalog.validators.validate_brilliant],
         help_text="Описание должно быть больше, чем из 2х слов и содержать"
         + " слова \"превосходно, роскошно\" ",
     )

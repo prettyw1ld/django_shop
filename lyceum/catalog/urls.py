@@ -9,7 +9,9 @@ urlpatterns = [
     path("", views.item_list, name="item_list"),
     path("<int:pk>/", views.item_detail, name="item_detail"),
     re_path(
-        r"^re/(?P<number>0*[1-9]\d*)/$", views.number_view, name="re_number",
+        r"^re/(?P<number>0*[1-9]\d*)/$",
+        views.number_view,
+        name="re_number",
     ),
     path(
         "converter/<positive_int:number>/",

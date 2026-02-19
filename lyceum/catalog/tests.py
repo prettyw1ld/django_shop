@@ -81,7 +81,9 @@ class TestModel(TestCase):
             weight=100,
         )
         cls.tag = Tag.objects.create(
-            is_published=True, name="Тестовый тэг", slug="test-tug-slug",
+            is_published=True,
+            name="Тестовый тэг",
+            slug="test-tug-slug",
         )
 
     def test_unable_create_one_letter(self):
