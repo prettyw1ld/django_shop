@@ -1,8 +1,8 @@
+from core.models import PublishedBaseModel
 import django.core.validators
 import django.db.models
 
 import catalog.validators
-from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
