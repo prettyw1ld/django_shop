@@ -1,8 +1,8 @@
-from core.models import PublishedBaseModel
 import django.core.validators
 import django.db.models
 
 import catalog.validators
+from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
@@ -62,6 +62,7 @@ class Item(PublishedBaseModel):
     tags = django.db.models.ManyToManyField(
         Tag,
         verbose_name="Теги",
+        help_text="Выберите теги",
     )
     category = django.db.models.ForeignKey(
         Category,
@@ -75,4 +76,4 @@ class Item(PublishedBaseModel):
         verbose_name_plural = "Товары"
 
     def __str__(self):
-        return self.name
+        return self.name[:15]
