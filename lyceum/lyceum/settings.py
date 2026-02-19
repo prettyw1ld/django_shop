@@ -51,7 +51,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Мои_мидлвейр
-    "lyceum.middleware.ReverseRussianMiddleWare",
+    "lyceum.middleware.ReverseRussianMiddleware",
 ]
 
 

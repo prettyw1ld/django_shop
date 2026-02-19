@@ -5,7 +5,7 @@ import django.conf
 RUSSIAN_WORD_REGEX = re.compile(r"[а-яА-ЯёЁ]+")
 
 
-class ReverseRussianMiddleWare:
+class ReverseRussianMiddleware:
     cnt = 0
 
     def __init__(self, get_response):

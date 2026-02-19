@@ -6,28 +6,28 @@ from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
-    name = django.db.models.CharField(max_length=150, verbose_name="Название")
+    name = django.db.models.CharField(max_length=150, verbose_name="название")
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
-        verbose_name="Слаг",
+        verbose_name="слаг",
         validators=[catalog.validators.validate_slug],
     )
 
     class Meta:
-        verbose_name = "Тег"
-        verbose_name_plural = "Теги"
+        verbose_name = "тег"
+        verbose_name_plural = "теги"
 
     def __str__(self):
         return self.name
 
 
 class Category(PublishedBaseModel):
-    name = django.db.models.CharField(max_length=150, verbose_name="Название")
+    name = django.db.models.CharField(max_length=150, verbose_name="название")
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
-        verbose_name="Слаг",
+        verbose_name="слаг",
         validators=[catalog.validators.validate_slug],
     )
     weight = django.db.models.IntegerField(
@@ -36,12 +36,12 @@ class Category(PublishedBaseModel):
             django.core.validators.MinValueValidator(1),
             django.core.validators.MaxValueValidator(32767),
         ],
-        verbose_name="Вес",
+        verbose_name="вес",
     )
 
     class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
+        verbose_name = "категория"
+        verbose_name_plural = "категории"
 
     def __str__(self):
         return self.name
@@ -62,19 +62,19 @@ class Item(PublishedBaseModel):
     )
     tags = django.db.models.ManyToManyField(
         Tag,
-        verbose_name="Теги",
+        verbose_name="теги",
         help_text="Выберите теги",
     )
     category = django.db.models.ForeignKey(
         Category,
         on_delete=django.db.models.CASCADE,
-        verbose_name="Категории",
+        verbose_name="категории",
         help_text="Выберите категорию",
     )
 
     class Meta:
-        verbose_name = "Товар"
-        verbose_name_plural = "Товары"
+        verbose_name = "товар"
+        verbose_name_plural = "товары"
 
     def __str__(self):
         return self.name[:15]
