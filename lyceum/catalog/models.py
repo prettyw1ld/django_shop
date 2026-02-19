@@ -6,7 +6,11 @@ from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
-    name = django.db.models.CharField(max_length=150, verbose_name="название")
+    name = django.db.models.CharField(
+        max_length=150,
+        verbose_name="название",
+        help_text="max 150 символов",
+    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
@@ -23,7 +27,11 @@ class Tag(PublishedBaseModel):
 
 
 class Category(PublishedBaseModel):
-    name = django.db.models.CharField(max_length=150, verbose_name="название")
+    name = django.db.models.CharField(
+        max_length=150,
+        verbose_name="название",
+        help_text="max 150 символов",
+    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
@@ -50,12 +58,12 @@ class Category(PublishedBaseModel):
 class Item(PublishedBaseModel):
     name = django.db.models.CharField(
         max_length=150,
-        verbose_name="Название",
+        verbose_name="название",
         help_text="max 150 символов",
         unique=True,
     )
     text = django.db.models.TextField(
-        verbose_name="Текст",
+        verbose_name="текст",
         validators=[catalog.validators.validate_brilliant],
         help_text="Описание должно быть больше, чем из 2х слов и содержать"
         + ' слова "превосходно, роскошно" ',
