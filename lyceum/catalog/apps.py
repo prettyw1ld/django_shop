@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 class CatalogConfig(AppConfig):
     name = "catalog"
-    verbose_name = "Каталог"
+    verbose_name = "каталог"
     default_auto_field = "django.db.models.BigAutoField"

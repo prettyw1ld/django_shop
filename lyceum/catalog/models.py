@@ -10,12 +10,14 @@ class Tag(PublishedBaseModel):
         max_length=150,
         verbose_name="название",
         help_text="max 150 символов",
+        unique=True,
     )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
         verbose_name="слаг",
         validators=[catalog.validators.validate_slug],
+        help_text="слаг",
     )
 
     class Meta:
@@ -37,6 +39,7 @@ class Category(PublishedBaseModel):
         unique=True,
         verbose_name="слаг",
         validators=[catalog.validators.validate_slug],
+        help_text="слаг",
     )
     weight = django.db.models.IntegerField(
         default=100,
@@ -45,6 +48,7 @@ class Category(PublishedBaseModel):
             django.core.validators.MaxValueValidator(32767),
         ],
         verbose_name="вес",
+        help_text="вес",
     )
 
     class Meta:
@@ -76,7 +80,7 @@ class Item(PublishedBaseModel):
     category = django.db.models.ForeignKey(
         Category,
         on_delete=django.db.models.CASCADE,
-        verbose_name="категории",
+        verbose_name="категория",
         help_text="Выберите категорию",
     )
 
