@@ -4,15 +4,12 @@ import django.core.validators
 
 
 def validate_brilliant(value):
-    must_be_word_1 = "превосходно"
-    must_be_word_2 = "роскошно"
-    if (
-        must_be_word_1 not in value.lower()
-        and must_be_word_2 not in value.lower()
-    ):
+    match_1 = re.search(r"\bпревосходно\b", value.lower())
+    match_2 = re.search(r"\bроскошно\b", value.lower())
+    if (not match_1 and not match_2):
         raise django.core.validators.ValidationError(
             "Обязательно используйте одно из этих "
-            + f"слов: {must_be_word_1}, {must_be_word_2}",
+            + "слов: превосходно, роскошно",
         )
     return value
 
