@@ -9,7 +9,7 @@ ignore =
     F811,
     Q003
 exclude = 
-    */migrations/,
+    lyceum/catalog/migrations/*,
     venv/,
     env/,
     .git,

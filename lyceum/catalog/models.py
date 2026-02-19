@@ -58,7 +58,7 @@ class Item(PublishedBaseModel):
         verbose_name="Текст",
         validators=[catalog.validators.validate_brilliant],
         help_text="Описание должно быть больше, чем из 2х слов и содержать"
-        + " слова \"превосходно, роскошно\" ",
+        + ' слова "превосходно, роскошно" ',
     )
     tags = django.db.models.ManyToManyField(
         Tag,
