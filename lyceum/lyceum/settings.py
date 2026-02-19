@@ -23,7 +23,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 
 
 DEBUG = load_bool("DJANGO_DEBUG", False)
-REVERSE_RUSSIAN = load_bool("DJANGO_ALLOW_REVERSE", True)
+ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
@@ -88,7 +88,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    }
+    },
 }
 
 

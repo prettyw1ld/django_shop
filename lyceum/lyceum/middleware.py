@@ -13,7 +13,7 @@ class ReverseRussianMiddleWare:
 
     @classmethod
     def check_need_reverse(cls):
-        if not django.conf.settings.REVERSE_RUSSIAN:
+        if not django.conf.settings.ALLOW_REVERSE:
             return False
 
         cls.cnt += 1

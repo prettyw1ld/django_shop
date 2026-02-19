@@ -1,8 +1,8 @@
-from core.models import PublishedBaseModel
 import django.core.validators
 import django.db.models
 
 import catalog.validators
+from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
@@ -49,7 +49,9 @@ class Category(PublishedBaseModel):
 
 class Item(PublishedBaseModel):
     name = django.db.models.CharField(
-        max_length=150, verbose_name="Название", help_text="max 150 символов"
+        max_length=150,
+        verbose_name="Название",
+        help_text="max 150 символов",
     )
     text = django.db.models.TextField(
         verbose_name="Текст",
