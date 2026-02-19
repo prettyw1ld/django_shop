@@ -33,6 +33,7 @@ class Category(PublishedBaseModel):
         max_length=150,
         verbose_name="название",
         help_text="max 150 символов",
+        unique=True,
     )
     slug = django.db.models.CharField(
         max_length=200,
