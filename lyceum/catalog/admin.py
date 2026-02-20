@@ -6,32 +6,37 @@ import catalog.models
 @django.contrib.admin.register(catalog.models.Category)
 class CategoryAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
-        catalog.models.Category.name.field.name,
-        catalog.models.Category.is_published.field.name,
+        "name",
+        "is_published",
     )
 
 
 @django.contrib.admin.register(catalog.models.Tag)
 class TagAdmin(django.contrib.admin.ModelAdmin):
-    list_display = (catalog.models.Tag.name.field.name,)
+    list_display = ("name",)
 
 
 @django.contrib.admin.register(catalog.models.Item)
 class ItemAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
-        catalog.models.Item.name.field.name,
-        catalog.models.Item.is_published.field.name,
+        "name",
+        "is_published",
     )
-    list_editable = (catalog.models.Item.is_published.field.name,)
-    list_display_links = (catalog.models.Item.name.field.name,)
-    filter_horizontal = (catalog.models.Item.tags.field.name,)
+    list_editable = ("is_published",)
+    list_display_links = ("name",)
+    filter_horizontal = ("tags",)
 
-    @django.contrib.admin.display(description="Название", ordering="name")
+    @django.contrib.admin.display(
+        description="Название",
+        ordering="name",
+    )
     def name(self, obj):
         return getattr(obj, "name")
 
     @django.contrib.admin.display(
-        description="Опубликовано", boolean=True, ordering="is_published",
+        description="Опубликовано",
+        boolean=True,
+        ordering="is_published",
     )
     def is_published(self, obj):
         return getattr(obj, "is_published")

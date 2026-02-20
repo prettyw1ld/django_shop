@@ -1,22 +1,16 @@
 import django.core.validators
 import django.db.models
 
-import catalog.validators
+from catalog.validators import validate_slug, ValidateMustContain
 from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
-    name = django.db.models.CharField(
-        max_length=150,
-        verbose_name="название",
-        help_text="max 150 символов",
-        unique=True,
-    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
         verbose_name="слаг",
-        validators=[catalog.validators.validate_slug],
+        validators=[validate_slug],
         help_text="слаг",
     )
 
@@ -29,17 +23,11 @@ class Tag(PublishedBaseModel):
 
 
 class Category(PublishedBaseModel):
-    name = django.db.models.CharField(
-        max_length=150,
-        verbose_name="название",
-        help_text="max 150 символов",
-        unique=True,
-    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
         verbose_name="слаг",
-        validators=[catalog.validators.validate_slug],
+        validators=[validate_slug],
         help_text="слаг",
     )
     weight = django.db.models.IntegerField(
@@ -61,15 +49,9 @@ class Category(PublishedBaseModel):
 
 
 class Item(PublishedBaseModel):
-    name = django.db.models.CharField(
-        max_length=150,
-        verbose_name="название",
-        help_text="max 150 символов",
-        unique=True,
-    )
     text = django.db.models.TextField(
         verbose_name="текст",
-        validators=[catalog.validators.validate_brilliant],
+        validators=[ValidateMustContain("превосходно", "роскошно")],
         help_text="Описание должно быть больше, чем из 2х слов и содержать"
         + ' слова "превосходно, роскошно" ',
     )

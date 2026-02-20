@@ -3,15 +3,35 @@ import re
 import django.core.validators
 
 
-def validate_brilliant(value):
-    match_1 = re.search(r"\bпревосходно\b", value.lower())
-    match_2 = re.search(r"\bроскошно\b", value.lower())
-    if not match_1 and not match_2:
-        raise django.core.validators.ValidationError(
-            "Обязательно используйте одно из этих "
-            + "слов: превосходно, роскошно",
+class ValidateMustContain:
+
+    def __init__(self, *words):
+        self.words = words
+
+    def __call__(self, value):
+        if not value:
+            return
+
+        text_lower = value.lower()
+        matches = []
+
+        for word in self.words:
+            pattern = rf"\b{re.escape(word)}\b"
+            if re.search(pattern, text_lower):
+                matches.append(word)
+
+        if not matches:
+            raise django.core.validators.ValidationError(
+                "Обязательно используйте одно из этих "
+                + "слов: превосходно, роскошно",
+            )
+
+    def deconstruct(self):
+        return (
+            f"{self.__class__.__module__}.{self.__class__.__name__}",
+            self.words,
+            {},
         )
-    return value
 
 
 def validate_slug(value):
