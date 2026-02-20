@@ -1,11 +1,18 @@
 import django.core.validators
 import django.db.models
 
+import catalog.utils
 from catalog.validators import validate_slug, ValidateMustContain
 from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
+    normalized_name = django.db.models.CharField(
+        max_length=100,
+        unique=True,
+        editable=False,
+        default="",
+    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
@@ -21,8 +28,20 @@ class Tag(PublishedBaseModel):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        raw_name = self.name
+        clean_version = catalog.utils.normalization_function(raw_name)
+        self.normalized_name = clean_version
+        super().save(*args, **kwargs)
+
 
 class Category(PublishedBaseModel):
+    normalized_name = django.db.models.CharField(
+        max_length=100,
+        unique=True,
+        editable=False,
+        default="",
+    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
@@ -46,6 +65,12 @@ class Category(PublishedBaseModel):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        raw_name = self.name
+        clean_version = catalog.utils.normalization_function(raw_name)
+        self.normalized_name = clean_version
+        super().save(*args, **kwargs)
 
 
 class Item(PublishedBaseModel):

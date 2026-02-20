@@ -1,5 +1,6 @@
 import django.contrib.admin
 
+from catalog.forms import CategoryForm, TagForm
 import catalog.models
 
 
@@ -9,11 +10,13 @@ class CategoryAdmin(django.contrib.admin.ModelAdmin):
         catalog.models.Category.name.field.name,
         catalog.models.Category.is_published.field.name,
     )
+    form = CategoryForm
 
 
 @django.contrib.admin.register(catalog.models.Tag)
 class TagAdmin(django.contrib.admin.ModelAdmin):
     list_display = (catalog.models.Tag.name.field.name,)
+    form = TagForm
 
 
 @django.contrib.admin.register(catalog.models.Item)
