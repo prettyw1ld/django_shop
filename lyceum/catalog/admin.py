@@ -28,10 +28,10 @@ class ItemAdmin(django.contrib.admin.ModelAdmin):
 
     @django.contrib.admin.display(description="Название", ordering="name")
     def name(self, obj):
-        return getattr(obj, catalog.models.Item.name.field.name)
+        return getattr(obj, "name")
 
     @django.contrib.admin.display(
-        description="Опубликовано", boolean=True, ordering="is_published"
+        description="Опубликовано", boolean=True, ordering="is_published",
     )
     def is_published(self, obj):
-        return getattr(obj, catalog.models.Item.is_published.field.name)
+        return getattr(obj, "is_published")
