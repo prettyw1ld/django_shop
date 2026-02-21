@@ -1,37 +1,32 @@
 import re
 
+import django.core.exceptions
 import django.core.validators
+import django.utils.deconstruct
+
+WORDS_REGEX = re.compile(r"\w+|\W+")
 
 
-class ValidateMustContain:
+def validate_briliant(value):
+    words = set(WORDS_REGEX.findall(value.lower()))
+    if not {"превосходно", "роскошно"} & words:
+        raise django.core.exceptions.ValidationError(
+            "В тексте должно быть слово \"превосходно\" или \"роскошно\"",
+        )
 
-    def __init__(self, *words):
-        self.words = words
+
+@django.utils.deconstruct.deconstructible
+class WordsValidator:
+    def __init__(self, *args):
+        self.validate_words = {word.lower() for word in args}
+        self.joined_words = ", ".join(self.validate_words)
 
     def __call__(self, value):
-        if not value:
-            return
-
-        text_lower = value.lower()
-        matches = []
-
-        for word in self.words:
-            pattern = rf"\b{re.escape(word)}\b"
-            if re.search(pattern, text_lower):
-                matches.append(word)
-
-        if not matches:
-            raise django.core.validators.ValidationError(
-                "Обязательно используйте одно из этих "
-                + "слов: превосходно, роскошно",
+        words = set(WORDS_REGEX.findall(value.lower()))
+        if not self.validate_words & words:
+            raise django.core.exceptions.ValidationError(
+                f"В тексте \"{value}\" нет слов: {self.joined_words}",
             )
-
-    def deconstruct(self):
-        return (
-            f"{self.__class__.__module__}.{self.__class__.__name__}",
-            self.words,
-            {},
-        )
 
 
 def validate_slug(value):

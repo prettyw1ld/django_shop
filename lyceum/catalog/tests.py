@@ -70,7 +70,6 @@ class StaticURLTests(TestCase):
 
 
 class TestModel(TestCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -110,3 +109,75 @@ class TestModel(TestCase):
         self.item.save()
         self.item.tags.add(TestModel.tag)
         self.assertEqual(Item.objects.count(), item_count + 1)
+
+
+class ModelsTests(TestCase):
+    def setUp(self):
+        self.category = Category.objects.create(
+            name="Test category",
+            slug="test-category",
+        )
+        self.tag = Tag.objects.create(name="Test tag", slug="test-tag")
+
+        super(ModelsTests, self).setUp()
+
+    def tearDown(self):
+        Item.objects.all().delete()
+        Tag.objects.all().delete()
+        Category.objects.all().delete()
+
+        super(ModelsTests, self).tearDown()
+
+    @parameterized.parameterized.expand(
+        [
+            {"Превосходно"},
+            {"роскошно"},
+            {"роскошно!"},
+            {"роскошно⌁"},
+            {"!роскошно"},
+            {"не роскошно"},
+        ]
+    )
+    def test_item_validator(self, text):
+        items_count = Item.objects.count()
+
+        item = Item(
+            name="Тестовый товар",
+            text=text,
+            category=self.category,
+        )
+        item.full_clean()
+        item.save()
+        item.tags.add(self.tag)
+
+        self.assertEqual(
+            Item.objects.count(),
+            items_count + 1,
+        )
+
+    @parameterized.parameterized.expand(
+        [
+            {"Превос!ходно"},
+            {"роскошный"},
+            {"роскошноe"},
+            {"рскошно⌁"},
+            {"!ро скошно"},
+            {"не рoскошно"},
+        ]
+    )
+    def test_item_negative_validator(self, text):
+        items_count = Item.objects.count()
+        with self.assertRaises(ValidationError):
+            item = Item(
+                name="Тестовый товар",
+                text=text,
+                category=self.category,
+            )
+            item.full_clean()
+            item.save()
+            item.tags.add(self.tag)
+
+        self.assertEqual(
+            Item.objects.count(),
+            items_count + 1,
+        )

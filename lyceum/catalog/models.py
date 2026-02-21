@@ -1,18 +1,11 @@
 import django.core.validators
 import django.db.models
 
-import catalog.utils
-from catalog.validators import validate_slug, ValidateMustContain
+from catalog.validators import WordsValidator, validate_slug
 from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
-    normalized_name = django.db.models.CharField(
-        max_length=100,
-        unique=True,
-        editable=False,
-        default="",
-    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
@@ -24,30 +17,19 @@ class Tag(PublishedBaseModel):
     class Meta:
         verbose_name = "тег"
         verbose_name_plural = "теги"
+        default_related_name = "tags"
 
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        raw_name = self.name
-        clean_version = catalog.utils.normalization_function(raw_name)
-        self.normalized_name = clean_version
-        super().save(*args, **kwargs)
-
 
 class Category(PublishedBaseModel):
-    normalized_name = django.db.models.CharField(
-        max_length=100,
-        unique=True,
-        editable=False,
-        default="",
-    )
     slug = django.db.models.CharField(
         max_length=200,
         unique=True,
         verbose_name="слаг",
         validators=[validate_slug],
-        help_text="слаг",
+        help_text="Максимум 200 символов",
     )
     weight = django.db.models.IntegerField(
         default=100,
@@ -56,7 +38,7 @@ class Category(PublishedBaseModel):
             django.core.validators.MaxValueValidator(32767),
         ],
         verbose_name="вес",
-        help_text="вес",
+        help_text="Max 32767",
     )
 
     class Meta:
@@ -66,25 +48,20 @@ class Category(PublishedBaseModel):
     def __str__(self):
         return self.name
 
-    def save(self, *args, **kwargs):
-        raw_name = self.name
-        clean_version = catalog.utils.normalization_function(raw_name)
-        self.normalized_name = clean_version
-        super().save(*args, **kwargs)
-
 
 class Item(PublishedBaseModel):
     text = django.db.models.TextField(
-        verbose_name="текст",
-        validators=[ValidateMustContain("превосходно", "роскошно")],
+        verbose_name="описание",
         help_text="Описание должно быть больше, чем из 2х слов и содержать"
-        + ' слова "превосходно, роскошно" ',
+        + ' слова "превосходно, роскошно"',
+        validators=[
+            WordsValidator(
+                "превосходно",
+                "роскошно",
+            )
+        ],
     )
-    tags = django.db.models.ManyToManyField(
-        Tag,
-        verbose_name="теги",
-        help_text="Выберите теги",
-    )
+    tags = django.db.models.ManyToManyField(Tag)
     category = django.db.models.ForeignKey(
         Category,
         on_delete=django.db.models.CASCADE,
@@ -95,6 +72,7 @@ class Item(PublishedBaseModel):
     class Meta:
         verbose_name = "товар"
         verbose_name_plural = "товары"
+        default_related_name = "items"
 
     def __str__(self):
         return self.name[:15]
