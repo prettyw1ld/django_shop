@@ -179,5 +179,5 @@ class ModelsTests(TestCase):
 
         self.assertEqual(
             Item.objects.count(),
-            items_count + 1,
+            items_count,
         )
