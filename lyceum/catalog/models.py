@@ -1,7 +1,7 @@
 import django.core.validators
 import django.db.models
 
-from catalog.validators import WordsValidator, validate_slug
+from catalog.validators import validate_slug, WordsValidator
 from core.models import PublishedBaseModel
 
 
