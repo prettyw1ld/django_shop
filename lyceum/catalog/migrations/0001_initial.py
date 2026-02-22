@@ -181,7 +181,7 @@ class Migration(migrations.Migration):
                 (
                     "text",
                     models.TextField(
-                        help_text="Описание должно быть больше, чем из 2х слов и содержать слова \"превосходно, роскошно\"",
+                        help_text="Описание должно быть больше, чем из 2х слов и содержать слова: превосходно, роскошно",
                         validators=[
                             catalog.validators.WordsValidator(
                                 "превосходно", "роскошно"
