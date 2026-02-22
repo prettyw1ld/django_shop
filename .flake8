@@ -9,14 +9,16 @@ ignore =
     F811,
     Q003
 exclude = 
-    lyceum/catalog/migrations/*,
-    venv/,
-    env/,
+    venv,
+    .venv,
+    env,
+    migrations,
+    __pycache__,
     .git,
-    __pycache__
+    */migrations/*
 
 per-file-ignores = 
-    */migrations/,
-    */settings.py:E501
+    */migrations/*: E501
+    */settings.py: E501
 
 max-complexity = 10

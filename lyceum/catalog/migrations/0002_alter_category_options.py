@@ -6,16 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0001_initial'),
+        ("catalog", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='category',
+            name="category",
             options={
-                'ordering': ('weight', 'id'),
-                'verbose_name': 'категория',
-                'verbose_name_plural': 'категории',
+                "ordering": ("weight", "id"),
+                "verbose_name": "категория",
+                "verbose_name_plural": "категории",
             },
         ),
     ]
