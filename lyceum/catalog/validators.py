@@ -11,7 +11,7 @@ def validate_briliant(value):
     words = set(WORDS_REGEX.findall(value.lower()))
     if not {"превосходно", "роскошно"} & words:
         raise django.core.exceptions.ValidationError(
-            "В тексте должно быть слово 'превосходно' или 'роскошно'",
+            "В тексте должно быть слово: превосходно, роскошно",
         )
 
 
