@@ -13,7 +13,12 @@ class CategoryAdmin(django.contrib.admin.ModelAdmin):
 
 @django.contrib.admin.register(catalog.models.Tag)
 class TagAdmin(django.contrib.admin.ModelAdmin):
-    list_display = (catalog.models.Tag.name.field.name,)
+
+    @django.contrib.admin.display(
+        ordering="name",
+    )
+    def name(self, obj):
+        return obj.name
 
 
 @django.contrib.admin.register(catalog.models.Item)
