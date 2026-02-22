@@ -17,7 +17,7 @@ class ReverseRussianMiddleware:
             return False
 
         cls.cnt += 1
-        if cls.cnt != 12:
+        if cls.cnt != 10:
             return False
         cls.cnt = 0
         return True
