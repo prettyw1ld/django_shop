@@ -15,7 +15,7 @@ class CategoryAdmin(django.contrib.admin.ModelAdmin):
 class TagAdmin(django.contrib.admin.ModelAdmin):
 
     @django.contrib.admin.display(
-        ordering="name",
+        ordering=catalog.models.Tag.name.field.name,
     )
     def name(self, obj):
         return obj.name

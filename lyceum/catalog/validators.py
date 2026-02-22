@@ -33,6 +33,6 @@ def validate_slug(value):
     if not re.match(r"^[a-zA-Z0-9_-]+$", value):
         raise django.core.validators.ValidationError(
             "Слаг должен содержать только латинские буквы,"
-            + " цифры и символы '-' и '_'",
+            + " цифры и символы \"-\" и \"_\"",
         )
     return value

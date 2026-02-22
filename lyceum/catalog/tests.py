@@ -65,7 +65,7 @@ class StaticURLTests(TestCase):
         self.assertEqual(
             response.status_code,
             expected_status,
-            f"failed check status request to '{full_url}'",
+            f"failed check status request to \"{full_url}\"",
         )
 
 
