@@ -7,21 +7,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0002_alter_category_options'),
+        ("catalog", "0002_alter_category_options"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='item',
-            name='text',
+            model_name="item",
+            name="text",
             field=models.TextField(
-                help_text='Описание должно быть больше, чем из 2х слов и содержать слова: превосходно, роскошно',
+                help_text="Описание должно быть больше, чем из 2х слов и содержать слова: превосходно, роскошно",
                 validators=[
                     catalog.validators.WordsValidator(
-                        'превосходно', 'роскошно'
+                        "превосходно", "роскошно"
                     )
                 ],
-                verbose_name='описание',
+                verbose_name="описание",
             ),
         ),
     ]
