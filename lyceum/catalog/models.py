@@ -42,6 +42,7 @@ class Category(PublishedBaseModel):
     )
 
     class Meta:
+        ordering = ("weight", "id")
         verbose_name = "категория"
         verbose_name_plural = "категории"
 
@@ -58,7 +59,7 @@ class Item(PublishedBaseModel):
             WordsValidator(
                 "превосходно",
                 "роскошно",
-            )
+            ),
         ],
     )
     tags = django.db.models.ManyToManyField(Tag)

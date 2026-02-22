@@ -56,7 +56,7 @@ class PublishedBaseModel(django.db.models.Model):
             > 0
         ):
             raise django.core.exceptions.ValidationError(
-                "Уже есть такой же элемент"
+                "Уже есть такой же элемент",
             )
         return super().clean()
 

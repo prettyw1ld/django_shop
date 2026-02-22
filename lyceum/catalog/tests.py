@@ -136,7 +136,7 @@ class ModelsTests(TestCase):
             {"роскошно⌁"},
             {"!роскошно"},
             {"не роскошно"},
-        ]
+        ],
     )
     def test_item_validator(self, text):
         items_count = Item.objects.count()
@@ -163,7 +163,7 @@ class ModelsTests(TestCase):
             {"рскошно⌁"},
             {"!ро скошно"},
             {"не рoскошно"},
-        ]
+        ],
     )
     def test_item_negative_validator(self, text):
         items_count = Item.objects.count()
@@ -180,4 +180,51 @@ class ModelsTests(TestCase):
         self.assertEqual(
             Item.objects.count(),
             items_count,
+        )
+
+    @parameterized.parameterized.expand(
+        [
+            {1},
+            {100},
+            {32000},
+        ],
+    )
+    def test_category_validator(self, weight):
+        categories_count = Category.objects.count()
+
+        test_category = Category(
+            name="Тестовая категория",
+            weight=weight,
+            slug="test-cat",
+        )
+        test_category.full_clean()
+        test_category.save()
+
+        self.assertEqual(
+            Category.objects.count(),
+            categories_count + 1,
+        )
+
+    @parameterized.parameterized.expand(
+        [
+            {-100},
+            {0},
+            {64000},
+        ],
+    )
+    def test_category_negative_validator(self, weight):
+        categories_count = Category.objects.count()
+
+        with self.assertRaises(ValidationError):
+            test_category = Category(
+                name="Тестовая категория",
+                weight=weight,
+                slug="test-cat",
+            )
+            test_category.full_clean()
+            test_category.save()
+
+        self.assertEqual(
+            Category.objects.count(),
+            categories_count,
         )
