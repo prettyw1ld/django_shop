@@ -4,9 +4,6 @@ import-order-style = google
 inline-quotes = double
 max-line-length = 79
 
-ignore = 
-    W503,
-    F811,
 exclude = 
     venv,
     .venv,
