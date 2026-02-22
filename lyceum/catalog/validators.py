@@ -25,7 +25,7 @@ class WordsValidator:
         words = set(WORDS_REGEX.findall(value.lower()))
         if not self.validate_words & words:
             raise django.core.exceptions.ValidationError(
-                f"В тексте \"{value}\" нет слов: {self.joined_words}",
+                f"В тексте {value} нет слов: {self.joined_words}",
             )
 
 
