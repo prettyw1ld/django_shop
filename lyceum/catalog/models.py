@@ -54,7 +54,7 @@ class Item(PublishedBaseModel):
     text = django.db.models.TextField(
         verbose_name="описание",
         help_text="Описание должно быть больше, чем из 2х слов и содержать"
-        + " слова \"превосходно, роскошно\"",
+        + " слова: превосходно, роскошно",
         validators=[
             WordsValidator(
                 "превосходно",
