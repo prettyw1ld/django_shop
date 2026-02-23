@@ -1,16 +1,15 @@
 import django.core.validators
 import django.db.models
 
-from catalog.validators import validate_slug, WordsValidator
+from catalog.validators import WordsValidator
 from core.models import PublishedBaseModel
 
 
 class Tag(PublishedBaseModel):
-    slug = django.db.models.CharField(
+    slug = django.db.models.SlugField(
         max_length=200,
         unique=True,
         verbose_name="слаг",
-        validators=[validate_slug],
         help_text="слаг",
     )
 
@@ -24,11 +23,10 @@ class Tag(PublishedBaseModel):
 
 
 class Category(PublishedBaseModel):
-    slug = django.db.models.CharField(
+    slug = django.db.models.SlugField(
         max_length=200,
         unique=True,
         verbose_name="слаг",
-        validators=[validate_slug],
         help_text="Максимум 200 символов",
     )
     weight = django.db.models.IntegerField(

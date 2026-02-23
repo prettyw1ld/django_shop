@@ -7,18 +7,7 @@ import transliterate
 ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 
-class PublishedBaseModel(django.db.models.Model):
-    name = django.db.models.CharField(
-        max_length=150,
-        verbose_name="название",
-        help_text="max 150 символов",
-        unique=True,
-    )
-    is_published = django.db.models.BooleanField(
-        default=True,
-        verbose_name="опубликовано",
-        help_text="статус публикации",
-    )
+class NormalizedNameMixin(django.db.models.Model):
     cannonical_name = django.db.models.CharField(
         max_length=150,
         null=True,
@@ -52,13 +41,29 @@ class PublishedBaseModel(django.db.models.Model):
             type(self)
             .objects.filter(cannonical_name=self.cannonical_name)
             .exclude(id=self.id)
-            .count()
-            > 0
+            .exists()
         ):
             raise django.core.exceptions.ValidationError(
                 "Уже есть такой же элемент",
             )
         return super().clean()
+
+    class Meta:
+        abstract = True
+
+
+class PublishedBaseModel(django.db.models.Model, NormalizedNameMixin):
+    name = django.db.models.CharField(
+        max_length=150,
+        verbose_name="название",
+        help_text="max 150 символов",
+        unique=True,
+    )
+    is_published = django.db.models.BooleanField(
+        default=True,
+        verbose_name="опубликовано",
+        help_text="статус публикации",
+    )
 
     class Meta:
         abstract = True
