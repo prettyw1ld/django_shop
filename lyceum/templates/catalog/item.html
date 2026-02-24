@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{item.title}}{% endblock title %}
+{% block content %}
+  {% include "includes/item_card.html" %}
+{% endblock content %}

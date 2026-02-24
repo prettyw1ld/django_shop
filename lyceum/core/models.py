@@ -52,7 +52,7 @@ class NormalizedNameMixin(django.db.models.Model):
         abstract = True
 
 
-class PublishedBaseModel(django.db.models.Model, NormalizedNameMixin):
+class PublishedBaseModel(django.db.models.Model):
     name = django.db.models.CharField(
         max_length=150,
         verbose_name="название",

@@ -3,6 +3,8 @@ from django.urls import path, re_path, register_converter
 from catalog import converters
 from catalog import views
 
+app_name = "catalog"
+
 register_converter(converters.PositiveIntegerConverter, "positive_int")
 
 urlpatterns = [

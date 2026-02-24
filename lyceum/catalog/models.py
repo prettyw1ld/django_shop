@@ -2,10 +2,10 @@ import django.core.validators
 import django.db.models
 
 from catalog.validators import WordsValidator
-from core.models import PublishedBaseModel
+from core.models import NormalizedNameMixin, PublishedBaseModel
 
 
-class Tag(PublishedBaseModel):
+class Tag(PublishedBaseModel, NormalizedNameMixin):
     slug = django.db.models.SlugField(
         max_length=200,
         unique=True,
@@ -22,7 +22,7 @@ class Tag(PublishedBaseModel):
         return self.name
 
 
-class Category(PublishedBaseModel):
+class Category(PublishedBaseModel, NormalizedNameMixin):
     slug = django.db.models.SlugField(
         max_length=200,
         unique=True,
