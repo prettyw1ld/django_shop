@@ -4,6 +4,8 @@
   <div class="card-body">
     <h5 class="card-title">{{ item.title }}</h5>
     <p class="card-text">{{ item.description }}</p>
-    <a href="{% url "catalog:item_detail" item.id %}" class="btn btn-primary">Подробнее</a>
+    {% if item and item.id %}
+      <a href="{% url "catalog:item_detail" item.id %}" class="btn btn-primary">Подробнее</a>
+    {% endif %}
   </div>
 </div>

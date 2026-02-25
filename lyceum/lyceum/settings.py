@@ -34,11 +34,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Мои_риложения
+    # Мои_приложения
     "about.apps.AboutConfig",
     "catalog.apps.CatalogConfig",
     "homepage.apps.HomepageConfig",
     "core.apps.CoreConfig",
+    # Не_мои_приложения
+    "sorl.thumbnail",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 

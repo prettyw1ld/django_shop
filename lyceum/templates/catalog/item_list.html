@@ -2,5 +2,11 @@
 {% block title %}Список товаров{% endblock title %}
 {% block content %}
   <h1>Список товаров</h1>
-  {% include "includes/item.html" %}
+    <div class="row">
+      {% for item in items %}
+          <div class="col-md-3 ">
+              {% include "includes/item_card.html" %}
+          </div>
+      {% endfor %}
+    </div>
 {% endblock content %}

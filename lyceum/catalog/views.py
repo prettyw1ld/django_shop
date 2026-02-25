@@ -4,7 +4,20 @@ import django.shortcuts
 
 def item_list(request):
     template = "catalog/item_list.html"
-    return django.shortcuts.render(request, template)
+    items = [
+        {
+            "id": 1,
+            "title": "Сонный деник",
+            "description": "Надудонился и спит",
+        },
+        {
+            "id": 2,
+            "title": "Люксовый",
+            "description": "Слишком дорого чтобы объяснять",
+        },
+        {"id": 3, "title": "Депресивни", "description": "Грустни(("},
+    ]
+    return django.shortcuts.render(request, template, {"items": items})
 
 
 def item_detail(request, pk):

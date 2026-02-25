@@ -2,23 +2,23 @@
 <ul class="nav nav-item ">
   <li class="nav-item">
     {% if view_name == "homepage:index_render" %}
-      <span class="nav-link active">На главную</span>
+      <a class="nav-link active">На главную</a>
     {% else %}
-      <a class="nav-link" href="{% url 'homepage:index_render' %}">На главную</a>
+      <a class="nav-link" href="{% url "homepage:index_render" %}">На главную</a>
     {% endif %}
   </li>
   <li class="nav-item">
     {% if view_name == "about:about" %}
       <span class="nav-link active">О проекте</span>
     {% else %}
-      <a class="nav-link" href="{% url 'about:about' %}">О проекте</a>
+      <a class="nav-link" href="{% url "about:about" %}">О проекте</a>
     {% endif %}
   </li>
   <li class="nav-item">
     {% if view_name == "catalog:item_list" %}
       <span class="nav-link active">Список товаров</span>
     {% else %}
-      <a class="nav-link" href="{% url 'catalog:item_list' %}">Список товаров</a>
+      <a class="nav-link" href="{% url "catalog:item_list" %}">Список товаров</a>
     {% endif %}
   </li>
 </ul>
