@@ -1,7 +1,7 @@
-from ckeditor.fields import RichTextField
 import django.core.validators
 import django.db.models
 from django.utils.safestring import mark_safe
+from django_ckeditor_5.fields import CKEditor5Field
 from sorl.thumbnail import get_thumbnail
 
 from catalog.validators import WordsValidator
@@ -54,7 +54,7 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
 
 
 class Item(PublishedBaseModel):
-    text = RichTextField(
+    text = CKEditor5Field(
         verbose_name="описание",
         help_text="Описание должно быть больше, чем из 2х слов лоль и "
         + " содержать слова: превосходно, роскошно",
