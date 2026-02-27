@@ -1,15 +1,25 @@
-{% load static %}
-<ul class="nav nav-item">
+{% with request.resolver_match.view_name as view_name %}
+<ul class="nav nav-item ">
   <li class="nav-item">
-    <a class="nav-link {% if active_menu == 'home' %}active{% endif %}"
-       href="{% url 'homepage:index_render' %}">На главную</a>
+    {% if view_name == "homepage:index_render" %}
+      <span class="nav-link active">На главную</span>
+    {% else %}
+      <a class="nav-link" href="{% url "homepage:index_render" %}">На главную</a>
+    {% endif %}
   </li>
   <li class="nav-item">
-    <a class="nav-link {% if active_menu == 'about' %}active{% endif %}"
-       href="{% url 'about:about' %}">О проекте</a>
+    {% if view_name == "about:about" %}
+      <span class="nav-link active">О проекте</span>
+    {% else %}
+      <a class="nav-link" href="{% url "about:about" %}">О проекте</a>
+    {% endif %}
   </li>
   <li class="nav-item">
-    <a class="nav-link {% if active_menu == 'catalog' %}active{% endif %}"
-       href="{% url 'catalog:item_list' %}">Список товаров</a>
+    {% if view_name == "catalog:item_list" %}
+      <span class="nav-link active">Список товаров</span>
+    {% else %}
+      <a class="nav-link" href="{% url "catalog:item_list" %}">Список товаров</a>
+    {% endif %}
   </li>
 </ul>
+{% endwith %}
