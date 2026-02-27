@@ -57,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     # Мои_мидлвейр
     "lyceum.middleware.ReverseRussianMiddleware",
 ]
@@ -130,14 +131,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "ru-ru"
+LANGUAGE_CODE = "en"
 
 TIME_ZONE = "UTC"
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
+LANGUAGES = [
+    ("ru", "Русский"),
+    ("en", "English"),
+]
 
 STATIC_URL = "static/"
 
@@ -295,3 +302,7 @@ CKEDITOR_5_CONFIGS = {
 }
 
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
