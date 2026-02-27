@@ -1,6 +1,8 @@
 import django.http
 import django.shortcuts
 
+__all__ = []
+
 
 def item_list(request):
     template = "catalog/item_list.html"
@@ -36,7 +38,14 @@ def item_detail(request, pk):
         3: {"id": 3, "title": "Депресивни", "description": "Грустни(("},
     }
     item = items.get(pk)
-    return django.shortcuts.render(request, template, {"item": item})
+    return django.shortcuts.render(
+        request,
+        template,
+        {
+            "item": item,
+            "active_menu": "catalog",
+        },
+    )
 
 
 def number_view(request, number):

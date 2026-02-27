@@ -6,6 +6,8 @@ import parameterized
 
 from catalog.models import Category, Item, Tag
 
+__all__ = []
+
 
 class StaticURLTests(TestCase):
     def test_catalog_endpoint(self):

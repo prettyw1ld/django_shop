@@ -5,6 +5,8 @@ from sorl.thumbnail import get_thumbnail
 
 import catalog.models
 
+__all__ = []
+
 
 class MainImageInline(django.contrib.admin.StackedInline):
     model = catalog.models.MainImage
@@ -77,7 +79,7 @@ class ItemAdmin(django.contrib.admin.ModelAdmin):
                     catalog.models.Item.is_published.field.name,
                     catalog.models.Item.category.field.name,
                     catalog.models.Item.tags.field.name,
-                )
+                ),
             },
         ),
         (

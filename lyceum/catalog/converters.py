@@ -1,3 +1,6 @@
+__all__ = []
+
+
 class PositiveIntegerConverter:
     regex = "0*[1-9]\\d*"
 

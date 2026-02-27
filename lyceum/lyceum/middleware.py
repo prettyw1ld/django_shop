@@ -2,6 +2,9 @@ import re
 
 import django.conf
 
+__all__ = []
+
+
 RUSSIAN_WORD_REGEX = re.compile(r"[а-яА-ЯёЁ]+")
 
 

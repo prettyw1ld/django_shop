@@ -4,6 +4,9 @@ import django.core.exceptions
 import django.core.validators
 import django.utils.deconstruct
 
+__all__ = []
+
+
 WORDS_REGEX = re.compile(r"\w+|\W+")
 
 

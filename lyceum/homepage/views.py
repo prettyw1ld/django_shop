@@ -3,6 +3,8 @@ from http import HTTPStatus
 import django.http
 import django.shortcuts
 
+__all__ = []
+
 
 def coffee(request):
     return django.http.HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
@@ -23,4 +25,11 @@ def index_render(request):
         },
         {"id": 3, "title": "Депресивни", "description": "Грустни(("},
     ]
-    return django.shortcuts.render(request, template, {"items": items})
+    return django.shortcuts.render(
+        request,
+        template,
+        {
+            "items": items,
+            "active_menu": "home",
+        },
+    )

@@ -6,6 +6,8 @@ from sorl.thumbnail import get_thumbnail
 from catalog.validators import WordsValidator
 from core.models import NormalizedNameMixin, PublishedBaseModel
 
+__all__ = ["Tag", "Category", "Item", "MainImage", "Images"]
+
 
 class Tag(PublishedBaseModel, NormalizedNameMixin):
     slug = django.db.models.SlugField(
@@ -100,18 +102,24 @@ class MainImage(django.db.models.Model):
     def get_image_300x300(self):
         if self.image:
             return get_thumbnail(
-                self.image, "300x300", crop="center", quality=90
+                self.image,
+                "300x300",
+                crop="center",
+                quality=90,
             )
         return None
 
     def image_tmb(self):
         if self.image:
             thumbnail = get_thumbnail(
-                self.image, "50x50", crop="center", quality=90
+                self.image,
+                "50x50",
+                crop="center",
+                quality=90,
             )
             return mark_safe(
                 f"<img src='{thumbnail.url}' width='50' height='50' "
-                f"style='object-fit: cover; border-radius: 4px;' />"
+                f"style='object-fit: cover; border-radius: 4px;' />",
             )
         return "Нет изображения"
 
@@ -140,7 +148,10 @@ class Images(django.db.models.Model):
     def get_image_300x300(self):
         if self.image:
             return get_thumbnail(
-                self.image, "300x300", crop="center", quality=90
+                self.image,
+                "300x300",
+                crop="center",
+                quality=90,
             )
         return None
 
@@ -152,7 +163,7 @@ class Images(django.db.models.Model):
             return mark_safe(
                 f"<img src='{thumbnail.url}' width='50' height='50' "
                 f"style='object-fit: cover; "
-                f"border-radius: 4px; margin: 2px;' />"
+                f"border-radius: 4px; margin: 2px;' />",
             )
         return "Нет изображения"
 
