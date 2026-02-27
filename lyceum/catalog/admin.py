@@ -95,7 +95,10 @@ class ItemAdmin(django.contrib.admin.ModelAdmin):
     def show_main_image(self, obj):
         if hasattr(obj, "main_image") and obj.main_image.image:
             thumbnail = get_thumbnail(
-                obj.main_image.image, "50x50", crop="center", quality=90
+                obj.main_image.image,
+                "50x50",
+                crop="center",
+                quality=90,
             )
             return format_html(
                 "<img src='{}' width='25' height='25' "

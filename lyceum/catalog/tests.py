@@ -2,6 +2,7 @@ from http import HTTPStatus
 
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
+from django.urls import reverse
 import parameterized
 
 from catalog.models import Category, Item, Tag
@@ -11,7 +12,7 @@ __all__ = []
 
 class StaticURLTests(TestCase):
     def test_catalog_endpoint(self):
-        response = self.client.get("/")
+        response = self.client.get(reverse("catalog:item_list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     @parameterized.parameterized.expand(

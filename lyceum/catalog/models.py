@@ -89,7 +89,8 @@ class MainImage(django.db.models.Model):
         verbose_name="товар",
     )
     image = django.db.models.ImageField(
-        upload_to="catalog/main/", verbose_name="главное изображение"
+        upload_to="catalog/main/",
+        verbose_name="главное изображение",
     )
 
     class Meta:
@@ -134,7 +135,8 @@ class Images(django.db.models.Model):
         verbose_name="товар",
     )
     image = django.db.models.ImageField(
-        upload_to="catalog/gallery/", verbose_name="изображение"
+        upload_to="catalog/gallery/",
+        verbose_name="изображение",
     )
 
     class Meta:
@@ -158,7 +160,10 @@ class Images(django.db.models.Model):
     def image_tmb(self):
         if self.image:
             thumbnail = get_thumbnail(
-                self.image, "50x50", crop="center", quality=90
+                self.image,
+                "50x50",
+                crop="center",
+                quality=90,
             )
             return mark_safe(
                 f"<img src='{thumbnail.url}' width='50' height='50' "

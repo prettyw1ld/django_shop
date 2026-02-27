@@ -19,7 +19,14 @@ def item_list(request):
         },
         {"id": 3, "title": "Депресивни", "description": "Грустни(("},
     ]
-    return django.shortcuts.render(request, template, {"items": items})
+    return django.shortcuts.render(
+        request,
+        template,
+        {
+            "items": items,
+            "active_menu": "catalog",
+        },
+    )
 
 
 def item_detail(request, pk):
