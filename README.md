@@ -50,6 +50,16 @@ cd lyceum
 ```sh
 python manage.py migrate
 ```
+Создание перевода:
+```sh
+python manage.py makemessages -l ru
+python manage.py makemessages -l en
+```
+
+Далее нужно его скомпилоровать:
+```sh
+python manage.py compilemessages
+```
 
 Запуск приложения:
 ```sh
@@ -68,5 +78,3 @@ python manage.py runserver localhost:8000
 
 ## Зачем вы разработали этот проект?
 Чтобы был.
-
-а ну чото там еще переключать можно да (я поем и ревьюеру уже красиви отправлю все, наверное)

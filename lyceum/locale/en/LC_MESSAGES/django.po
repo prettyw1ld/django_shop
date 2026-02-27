@@ -31,3 +31,9 @@ msgstr "About"
 #: .\templates\includes\active_nav.html:21
 msgid "Список товаров"
 msgstr "Catalog"
+
+msgid "Русский"
+msgstr "Russian"
+
+msgid "English"
+msgstr "English"
