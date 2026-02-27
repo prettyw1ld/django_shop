@@ -5,6 +5,10 @@
         <img src="{% static "img/fav/web-app-manifest-192x192.png" %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
         <span class="fs-4">amir</span>
       </a>
-      {% include "includes/active_nav.html" %}
+      
+      {% with request.resolver_match.view_name as view_name %}
+        {% include "includes/active_nav.html" %}
+      {% endwith %}
+      
     </header>
 </div>
