@@ -8,79 +8,79 @@ class Migration(migrations.Migration):
 
     dependencies = [
         (
-            'catalog',
-            '0004_remove_item_cannonical_name_alter_category_slug_and_more',
+            "catalog",
+            "0004_remove_item_cannonical_name_alter_category_slug_and_more",
         ),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Images',
+            name="Images",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
                 (
-                    'image',
+                    "image",
                     models.ImageField(
-                        upload_to='catalog/gallery/',
-                        verbose_name='изображение',
+                        upload_to="catalog/gallery/",
+                        verbose_name="изображение",
                     ),
                 ),
                 (
-                    'item',
+                    "item",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='gallery_images',
-                        to='catalog.item',
-                        verbose_name='товар',
+                        related_name="gallery_images",
+                        to="catalog.item",
+                        verbose_name="товар",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'изображение галереи',
-                'verbose_name_plural': 'изображения галереи',
-                'ordering': ['id'],
+                "verbose_name": "изображение галереи",
+                "verbose_name_plural": "изображения галереи",
+                "ordering": ["id"],
             },
         ),
         migrations.CreateModel(
-            name='MainImage',
+            name="MainImage",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
                 (
-                    'image',
+                    "image",
                     models.ImageField(
-                        upload_to='catalog/main/',
-                        verbose_name='главное изображение',
+                        upload_to="catalog/main/",
+                        verbose_name="главное изображение",
                     ),
                 ),
                 (
-                    'item',
+                    "item",
                     models.OneToOneField(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='main_image',
-                        to='catalog.item',
-                        verbose_name='товар',
+                        related_name="main_image",
+                        to="catalog.item",
+                        verbose_name="товар",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'главное изображение',
-                'verbose_name_plural': 'главные изображения',
+                "verbose_name": "главное изображение",
+                "verbose_name_plural": "главные изображения",
             },
         ),
     ]

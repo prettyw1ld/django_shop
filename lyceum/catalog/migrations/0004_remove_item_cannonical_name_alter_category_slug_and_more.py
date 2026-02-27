@@ -6,32 +6,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalog', '0003_alter_item_text'),
+        ("catalog", "0003_alter_item_text"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='item',
-            name='cannonical_name',
+            model_name="item",
+            name="cannonical_name",
         ),
         migrations.AlterField(
-            model_name='category',
-            name='slug',
+            model_name="category",
+            name="slug",
             field=models.SlugField(
-                help_text='Максимум 200 символов',
+                help_text="Максимум 200 символов",
                 max_length=200,
                 unique=True,
-                verbose_name='слаг',
+                verbose_name="слаг",
             ),
         ),
         migrations.AlterField(
-            model_name='tag',
-            name='slug',
+            model_name="tag",
+            name="slug",
             field=models.SlugField(
-                help_text='слаг',
+                help_text="слаг",
                 max_length=200,
                 unique=True,
-                verbose_name='слаг',
+                verbose_name="слаг",
             ),
         ),
     ]

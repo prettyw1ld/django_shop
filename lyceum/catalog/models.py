@@ -56,8 +56,8 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
 class Item(PublishedBaseModel):
     text = RichTextField(
         verbose_name="описание",
-        help_text="Описание должно быть больше, чем из 2х слов и содержать"
-        + " слова: превосходно, роскошно",
+        help_text="Описание должно быть больше, чем из 2х слов лоль и "
+        + " содержать слова: превосходно, роскошно",
         validators=[
             WordsValidator(
                 "превосходно",
@@ -171,6 +171,6 @@ class Images(django.db.models.Model):
                 f"style='object-fit: cover; "
                 f"border-radius: 4px; margin: 2px;' />",
             )
-        return "Нет изображения"
+        return "Нет изображения лоль"
 
     image_tmb.short_description = "Превью"
