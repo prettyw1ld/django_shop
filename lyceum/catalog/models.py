@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 import django.core.validators
 import django.db.models
 from django.utils.safestring import mark_safe
@@ -53,7 +54,7 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
 
 
 class Item(PublishedBaseModel):
-    text = django.db.models.TextField(
+    text = RichTextField(
         verbose_name="описание",
         help_text="Описание должно быть больше, чем из 2х слов и содержать"
         + " слова: превосходно, роскошно",
