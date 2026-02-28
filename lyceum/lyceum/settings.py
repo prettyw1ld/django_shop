@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
     "django_ckeditor_5",
-    "django_translation_flags",
 ]
 
 
