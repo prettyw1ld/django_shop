@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
     "django_ckeditor_5",
+    "django_translation_flags",
 ]
 
 
@@ -132,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "UTC"
 
@@ -229,24 +230,6 @@ CKEDITOR_5_CONFIGS = {
                 "insertTable",
             ],
             "shouldNotGroupWhenFull": "true",
-        },
-        "image": {
-            "toolbar": [
-                "imageTextAlternative",
-                "|",
-                "imageStyle:alignLeft",
-                "imageStyle:alignRight",
-                "imageStyle:alignCenter",
-                "imageStyle:side",
-                "|",
-            ],
-            "styles": [
-                "full",
-                "side",
-                "alignLeft",
-                "alignRight",
-                "alignCenter",
-            ],
         },
         "table": {
             "contentToolbar": [

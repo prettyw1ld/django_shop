@@ -50,16 +50,6 @@ cd lyceum
 ```sh
 python manage.py migrate
 ```
-Создание перевода:
-```sh
-python manage.py makemessages -l ru
-python manage.py makemessages -l en
-```
-
-Далее нужно его скомпилоровать:
-```sh
-python manage.py compilemessages
-```
 
 Запуск приложения:
 ```sh
@@ -78,3 +68,10 @@ python manage.py runserver localhost:8000
 
 ## Зачем вы разработали этот проект?
 Чтобы был.
+
+## Запуск
+Перед запуском надо создавать файлы для переводов:
+```sh
+django-admin compilemessages
+python3 manage.py runserver
+```

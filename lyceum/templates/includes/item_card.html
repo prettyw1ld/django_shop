@@ -2,10 +2,8 @@
 <div class="card" style="width: 18rem;">
   <img src="{% static "img/kitty_denik.jpg" %}" class="card-img-top" alt="icon">
   <div class="card-body">
-    <h5 class="card-title">{{ item.title }}</h5>
-    <p class="card-text">{{ item.description }}</p>
-    {% if item and item.id %}
-      <a href="{% url "catalog:item_detail" item.id %}" class="btn btn-primary">Подробнее</a>
-    {% endif %}
+    <h5 class="card-title">Denik</h5>
+    <p class="card-text">Denik</p>
+      <a href="/" class="btn btn-primary">Подробнее</a>
   </div>
 </div>

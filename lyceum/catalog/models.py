@@ -1,13 +1,47 @@
 import django.core.validators
 import django.db.models
-from django.utils.safestring import mark_safe
 from django_ckeditor_5.fields import CKEditor5Field
 from sorl.thumbnail import get_thumbnail
 
 from catalog.validators import WordsValidator
 from core.models import NormalizedNameMixin, PublishedBaseModel
 
-__all__ = ["Tag", "Category", "Item", "MainImage", "Images"]
+__all__ = ["Tag", "Category", "Item", "MainImage", "Image"]
+
+
+def item_directory_path(instance, filename):
+    return f"catalog/{instance.item.id}/{filename}"
+
+
+class ImageBaseModel(django.db.models.Model):
+    image = django.db.models.ImageField(
+        "изображение",
+        upload_to=item_directory_path,
+        default=None,
+    )
+
+    def get_image_300x300(self):
+        return get_thumbnail(
+            self.image,
+            "300x300",
+            crop="center",
+            quality=51,
+        )
+
+    @property
+    def get_image_50x50(self):
+        return get_thumbnail(
+            self.image,
+            "50x50",
+            crop="center",
+            quality=51,
+        )
+
+    def __str__(self):
+        return self.item.name
+
+    class Meta:
+        abstract = True
 
 
 class Tag(PublishedBaseModel, NormalizedNameMixin):
@@ -78,99 +112,40 @@ class Item(PublishedBaseModel):
         verbose_name_plural = "товары"
         default_related_name = "items"
 
+    def image_tmb(self):
+        return get_thumbnail(
+            self.main_image,
+            "50x50",
+            crop="center",
+            quality=51,
+        )
+
     def __str__(self):
         return self.name[:15]
 
 
-class MainImage(django.db.models.Model):
+class MainImage(ImageBaseModel):
     item = django.db.models.OneToOneField(
         Item,
         on_delete=django.db.models.CASCADE,
         related_name="main_image",
-        verbose_name="товар",
     )
-    image = django.db.models.ImageField(
-        upload_to="catalog/main/",
-        verbose_name="главное изображение",
-    )
+
+    def __str__(self):
+        return self.item.name
 
     class Meta:
         verbose_name = "главное изображение"
         verbose_name_plural = "главные изображения"
 
-    def __str__(self):
-        return f"Главное фото для {self.item.name}"
 
-    def get_image_300x300(self):
-        if self.image:
-            return get_thumbnail(
-                self.image,
-                "300x300",
-                crop="center",
-                quality=90,
-            )
-        return None
-
-    def image_tmb(self):
-        if self.image:
-            thumbnail = get_thumbnail(
-                self.image,
-                "50x50",
-                crop="center",
-                quality=90,
-            )
-            return mark_safe(
-                f"<img src='{thumbnail.url}' width='50' height='50' "
-                f"style='object-fit: cover; border-radius: 4px;' />",
-            )
-        return "Нет изображения"
-
-    image_tmb.short_description = "Превью"
-
-
-class Images(django.db.models.Model):
+class Image(ImageBaseModel):
     item = django.db.models.ForeignKey(
         Item,
         on_delete=django.db.models.CASCADE,
-        related_name="gallery_images",
-        verbose_name="товар",
-    )
-    image = django.db.models.ImageField(
-        upload_to="catalog/gallery/",
-        verbose_name="изображение",
+        related_name="images",
     )
 
     class Meta:
-        verbose_name = "изображение галереи"
-        verbose_name_plural = "изображения галереи"
-        ordering = ["id"]
-
-    def __str__(self):
-        return f"Фото для {self.item.name} #{self.id}"
-
-    def get_image_300x300(self):
-        if self.image:
-            return get_thumbnail(
-                self.image,
-                "300x300",
-                crop="center",
-                quality=90,
-            )
-        return None
-
-    def image_tmb(self):
-        if self.image:
-            thumbnail = get_thumbnail(
-                self.image,
-                "50x50",
-                crop="center",
-                quality=90,
-            )
-            return mark_safe(
-                f"<img src='{thumbnail.url}' width='50' height='50' "
-                f"style='object-fit: cover; "
-                f"border-radius: 4px; margin: 2px;' />",
-            )
-        return "Нет изображения лоль"
-
-    image_tmb.short_description = "Превью"
+        verbose_name = "фото"
+        verbose_name_plural = "фото"
