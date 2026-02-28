@@ -37,3 +37,9 @@ msgstr "Список товаров"
 #: .\templates\includes\header.html:7
 msgid "амир"
 msgstr "амир"
+
+msgid "Русский"
+msgstr "Русский"
+
+msgid "English"
+msgstr "Английский"

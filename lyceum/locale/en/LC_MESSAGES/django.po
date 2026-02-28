@@ -35,3 +35,9 @@ msgstr "Catalog"
 #: .\templates\includes\header.html:7
 msgid "амир"
 msgstr "amir"
+
+msgid "Русский"
+msgstr "Русский"
+
+msgid "English"
+msgstr "Английский"
