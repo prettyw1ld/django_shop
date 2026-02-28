@@ -1,5 +1,6 @@
 import django.core.validators
 import django.db.models
+from django.utils.safestring import mark_safe
 from django_ckeditor_5.fields import CKEditor5Field
 from sorl.thumbnail import get_thumbnail
 
@@ -113,12 +114,17 @@ class Item(PublishedBaseModel):
         default_related_name = "items"
 
     def image_tmb(self):
-        return get_thumbnail(
-            self.main_image,
-            "50x50",
-            crop="center",
-            quality=51,
-        )
+        if hasattr(self, "main_image") and self.main_image:
+            thumbnail = get_thumbnail(
+                self.main_image.image,
+                "50x50",
+                crop="center",
+                quality=51,
+            )
+            return mark_safe(
+                f'<img src="{thumbnail.url}" width="50" height="50" />',
+            )
+        return "Нет фото"
 
     def __str__(self):
         return self.name[:15]

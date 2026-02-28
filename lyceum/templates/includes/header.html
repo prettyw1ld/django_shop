@@ -4,7 +4,7 @@
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="{% url 'homepage:index_render' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <img src="{% static "img/fav/web-app-manifest-192x192.png" %}" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-        <span class="fs-4">amir</span>
+        <span class="fs-4">{% trans "амир" %}</span>
       </a>
       
       {% with request.resolver_match.view_name as view_name %}

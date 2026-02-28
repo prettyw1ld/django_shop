@@ -21,8 +21,8 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 #: .\templates\includes\active_nav.html:5
 #: .\templates\includes\active_nav.html:7
-msgid "На главную"
-msgstr "На главную"
+msgid "Главная"
+msgstr "Главная"
 
 #: .\templates\includes\active_nav.html:12
 #: .\templates\includes\active_nav.html:14
@@ -34,8 +34,6 @@ msgstr "О проекте"
 msgid "Список товаров"
 msgstr "Список товаров"
 
-msgid "Русский"
-msgstr "Русский"
-
-msgid "English"
-msgstr "Английский"
+#: .\templates\includes\header.html:7
+msgid "амир"
+msgstr "амир"
