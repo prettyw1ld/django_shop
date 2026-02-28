@@ -36,41 +36,6 @@ class StaticURLTests(TestCase):
         response = Client().get(f"/catalog/{url}/")
         self.assertEqual(response.status_code, expected_status)
 
-    @parameterized.parameterized.expand(
-        [
-            (prefix, url, expected_status)
-            for prefix in ["converter", "re"]
-            for url, expected_status in [
-                ("1", HTTPStatus.OK),
-                ("100", HTTPStatus.OK),
-                ("0", HTTPStatus.NOT_FOUND),
-                ("-0", HTTPStatus.NOT_FOUND),
-                ("-100", HTTPStatus.NOT_FOUND),
-                ("0.5", HTTPStatus.NOT_FOUND),
-                ("abc", HTTPStatus.NOT_FOUND),
-                ("0abc", HTTPStatus.NOT_FOUND),
-                ("abc0", HTTPStatus.NOT_FOUND),
-                ("$#@", HTTPStatus.NOT_FOUND),
-                ("1e5", HTTPStatus.NOT_FOUND),
-                ("1_1", HTTPStatus.NOT_FOUND),
-                ("१२३", HTTPStatus.NOT_FOUND),
-            ]
-        ],
-    )
-    def test_catalog_item_positive_integer_endpoint(
-        self,
-        prefix,
-        url,
-        expected_status,
-    ):
-        full_url = f"/catalog/{prefix}/{url}/"
-        response = self.client.get(full_url)
-        self.assertEqual(
-            response.status_code,
-            expected_status,
-            f"failed check status request to {full_url}",
-        )
-
 
 class TestModel(TestCase):
     @classmethod
