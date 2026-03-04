@@ -10,14 +10,6 @@ __all__ = []
 WORDS_REGEX = re.compile(r"\w+|\W+")
 
 
-def validate_briliant(value):
-    words = set(WORDS_REGEX.findall(value.lower()))
-    if not {"превосходно", "роскошно"} & words:
-        raise django.core.exceptions.ValidationError(
-            "В тексте должно быть слово: превосходно, роскошно",
-        )
-
-
 @django.utils.deconstruct.deconstructible
 class WordsValidator:
     def __init__(self, *args):
