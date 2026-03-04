@@ -8,7 +8,7 @@ __all__ = []
 
 class StaticURLTests(TestCase):
     def test_homepage_endpoint(self):
-        response = Client().get(reverse("homepage:index_render"))
+        response = Client().get(reverse("homepage:home"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
 

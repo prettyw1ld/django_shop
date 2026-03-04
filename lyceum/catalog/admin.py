@@ -16,7 +16,10 @@ class CategoryAdmin(django.contrib.admin.ModelAdmin):
 
 @django.contrib.admin.register(catalog.models.Tag)
 class TagAdmin(django.contrib.admin.ModelAdmin):
-    list_display = (catalog.models.Tag.name.field.name,)
+    list_display = (
+        catalog.models.Tag.name.field.name,
+        catalog.models.Tag.cannonical_name.field.name,
+    )
     list_display_links = (catalog.models.Tag.name.field.name,)
 
 

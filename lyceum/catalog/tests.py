@@ -12,7 +12,7 @@ __all__ = []
 
 class StaticURLTests(TestCase):
     def test_catalog_endpoint(self):
-        response = self.client.get(reverse("catalog:item_list"))
+        response = self.client.get(reverse("catalog:item-list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     @parameterized.parameterized.expand(
@@ -98,12 +98,12 @@ class ModelsTests(TestCase):
 
     @parameterized.parameterized.expand(
         [
-            {"Превосходно"},
-            {"роскошно"},
-            {"роскошно!"},
-            {"роскошно⌁"},
-            {"!роскошно"},
-            {"не роскошно"},
+            ("Превосходно"),
+            ("роскошно"),
+            ("роскошно!"),
+            ("роскошно⌁"),
+            ("!роскошно"),
+            ("не роскошно"),
         ],
     )
     def test_item_validator(self, text):
@@ -125,12 +125,12 @@ class ModelsTests(TestCase):
 
     @parameterized.parameterized.expand(
         [
-            {"Превос!ходно"},
-            {"роскошный"},
-            {"роскошноe"},
-            {"рскошно⌁"},
-            {"!ро скошно"},
-            {"не рoскошно"},
+            ("Превос!ходно"),
+            ("роскошный"),
+            ("роскошноe"),
+            ("рскошно⌁"),
+            ("!ро скошно"),
+            ("не рoскошно"),
         ],
     )
     def test_item_negative_validator(self, text):
@@ -152,9 +152,9 @@ class ModelsTests(TestCase):
 
     @parameterized.parameterized.expand(
         [
-            {1},
-            {100},
-            {32000},
+            (1),
+            (100),
+            (32000),
         ],
     )
     def test_category_validator(self, weight):
@@ -175,9 +175,9 @@ class ModelsTests(TestCase):
 
     @parameterized.parameterized.expand(
         [
-            {-100},
-            {0},
-            {64000},
+            (-100),
+            (0),
+            (64000),
         ],
     )
     def test_category_negative_validator(self, weight):
@@ -195,4 +195,91 @@ class ModelsTests(TestCase):
         self.assertEqual(
             Category.objects.count(),
             categories_count,
+        )
+
+    def test_normalized_category_negative(self):
+        categories_count = Category.objects.count()
+        try:
+            test_category_1 = Category(
+                name="test_123$$",
+                weight=100,
+                slug="test-cat",
+            )
+            test_category_2 = Category(
+                name="test_123",
+                weight=100,
+                slug="test-cat-real",
+            )
+            test_category_1.full_clean()
+            test_category_1.save()
+            test_category_2.full_clean()
+            test_category_2.save()
+        except Exception:
+            self.assertEqual(
+                Category.objects.count(),
+                categories_count + 1,
+            )
+
+    def test_normalized_category_positive(self):
+        categories_count = Category.objects.count()
+
+        test_category_1 = Category(
+            name="test_123$$",
+            weight=100,
+            slug="test-cat",
+        )
+        test_category_2 = Category(
+            name="test_12$$",
+            weight=100,
+            slug="test-cat-real",
+        )
+        test_category_1.full_clean()
+        test_category_1.save()
+        test_category_2.full_clean()
+        test_category_2.save()
+
+        self.assertEqual(
+            Category.objects.count(),
+            categories_count + 2,
+        )
+
+    def test_normalized_tag_negative(self):
+        tags_count = Tag.objects.count()
+        try:
+            test_tag_1 = Tag(
+                name="test_123$$",
+                slug="test-cat",
+            )
+            test_tag_2 = Tag(
+                name="test_123",
+                slug="test-cat-real",
+            )
+            test_tag_1.full_clean()
+            test_tag_1.save()
+            test_tag_2.full_clean()
+            test_tag_2.save()
+        except Exception:
+            self.assertEqual(
+                Tag.objects.count(),
+                tags_count + 1,
+            )
+
+    def test_normalized_tag_positive(self):
+        tags_count = Tag.objects.count()
+
+        test_tag_1 = Tag(
+            name="test_123$$",
+            slug="test-cat",
+        )
+        test_tag_2 = Tag(
+            name="test_12$$",
+            slug="test-cat-real",
+        )
+        test_tag_1.full_clean()
+        test_tag_1.save()
+        test_tag_2.full_clean()
+        test_tag_2.save()
+        self.assertEqual(
+            Tag.objects.count(),
+            tags_count + 2,
         )
