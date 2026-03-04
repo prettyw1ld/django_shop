@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+#,
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -21,8 +21,8 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 #: .\templates\includes\active_nav.html:5
 #: .\templates\includes\active_nav.html:7
-msgid "Главная"
-msgstr "Главная"
+msgid "На главную"
+msgstr "На главную"
 
 #: .\templates\includes\active_nav.html:12
 #: .\templates\includes\active_nav.html:14
