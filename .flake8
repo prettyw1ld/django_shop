@@ -1,5 +1,5 @@
 [flake8]
-application-import-names = about, catalog, core, homepage
+application-import-names = about, catalog, core, homepage, lyceum
 import-order-style = google
 inline-quotes = double
 max-line-length = 79
@@ -11,10 +11,5 @@ exclude =
     migrations,
     __pycache__,
     .git,
-    */migrations/*
-
-per-file-ignores = 
-    */migrations/*: E501
-    */settings.py: E501
 
 max-complexity = 10
