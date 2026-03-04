@@ -8,7 +8,4 @@ def description(request):
     return django.shortcuts.render(
         request,
         template,
-        {
-            "active_menu": "about",
-        },
     )

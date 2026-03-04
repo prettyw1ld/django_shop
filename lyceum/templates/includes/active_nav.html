@@ -1,10 +1,10 @@
 {% load i18n %}
 <ul class="nav nav-item ">
   <li class="nav-item">
-    {% if view_name == "homepage:index_render" %}
+    {% if view_name == "homepage:home" %}
       <span class="nav-link active">{% translate "На главную" %}</span>
     {% else %}
-      <a class="nav-link" href="{% url "homepage:index_render" %}">{% translate "На главную" %}</a>
+      <a class="nav-link" href="{% url "homepage:home" %}">{% translate "На главную" %}</a>
     {% endif %}
   </li>
   <li class="nav-item">
@@ -15,10 +15,10 @@
     {% endif %}
   </li>
   <li class="nav-item">
-    {% if view_name == "catalog:item_list" %}
+    {% if view_name == "catalog:item-list" %}
       <span class="nav-link active">{% translate "Список товаров" %}</span>
     {% else %}
-      <a class="nav-link" href="{% url "catalog:item_list" %}">{% translate "Список товаров" %}</a>
+      <a class="nav-link" href="{% url "catalog:item-list" %}">{% translate "Список товаров" %}</a>
     {% endif %}
   </li>
   <div class="language-switcher ms-3">
