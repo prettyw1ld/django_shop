@@ -1,7 +1,7 @@
+__all__ = []
+
 import django.http
 import django.shortcuts
-
-__all__ = []
 
 
 def item_list(request):

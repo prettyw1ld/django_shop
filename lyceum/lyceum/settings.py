@@ -1,10 +1,10 @@
+__all__ = []
+
 import os
 from pathlib import Path
 
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
-
-__all__ = []
 
 
 load_dotenv()

@@ -1,3 +1,5 @@
+__all__ = []
+
 import django.core.validators
 import django.db.models
 from django.utils.safestring import mark_safe
@@ -6,8 +8,6 @@ from sorl.thumbnail import get_thumbnail
 
 from catalog.validators import WordsValidator
 from core.models import NormalizedNameMixin, PublishedBaseModel
-
-__all__ = ["Tag", "Category", "Item", "MainImage", "Image"]
 
 
 def item_directory_path(instance, filename):

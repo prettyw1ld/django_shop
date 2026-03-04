@@ -1,9 +1,9 @@
+__all__ = []
+
 from http import HTTPStatus
 
 import django.http
 import django.shortcuts
-
-__all__ = []
 
 
 def coffee(request):

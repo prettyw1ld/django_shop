@@ -1,3 +1,5 @@
+__all__ = []
+
 from http import HTTPStatus
 
 from django.core.exceptions import ValidationError
@@ -6,8 +8,6 @@ from django.urls import reverse
 import parameterized
 
 from catalog.models import Category, Item, Tag
-
-__all__ = []
 
 
 class StaticURLTests(TestCase):

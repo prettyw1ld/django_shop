@@ -1,6 +1,6 @@
-import django.shortcuts
-
 __all__ = []
+
+import django.shortcuts
 
 
 def description(request):

@@ -1,10 +1,10 @@
+__all__ = []
+
 import re
 
 import django.core.exceptions
 import django.db.models
 import transliterate
-
-__all__ = []
 
 
 ONLY_LETTERS_REGEX = re.compile(r"[^\w]")

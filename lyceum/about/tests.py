@@ -1,9 +1,9 @@
+__all__ = []
+
 from http import HTTPStatus
 
 import django.test
 from django.urls import reverse
-
-__all__ = []
 
 
 class StaticURLTests(django.test.TestCase):

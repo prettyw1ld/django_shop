@@ -1,8 +1,8 @@
+__all__ = []
+
 import django.contrib.admin
 
 import catalog.models
-
-__all__ = []
 
 
 @django.contrib.admin.register(catalog.models.Category)

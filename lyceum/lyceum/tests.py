@@ -22,3 +22,19 @@ class RussianReverseTest(django.test.TestCase):
         }
         self.assertIn("Я чайник".encode(), contents)
         self.assertNotIn("Я кинйач".encode(), contents)
+
+    def test_reverse_russian_words_default(self):
+        contents = {
+            django.test.Client().get(reverse("homepage:coffee")).content
+            for _ in range(10)
+        }
+        self.assertIn("Я чайник".encode(), contents)
+        self.assertNotIn("Я кинйач".encode(), contents)
+
+    def test_reverse_russian_words_every_twenty(self):
+        contents = {
+            django.test.Client().get(reverse("homepage:coffee")).content
+            for _ in range(10)
+        }
+        self.assertIn("Я чайник".encode(), contents)
+        self.assertNotIn("Я кинйач".encode(), contents)
