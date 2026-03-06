@@ -3,6 +3,7 @@ __all__ = []
 import django.core.validators
 import django.db.models
 from django.utils.safestring import mark_safe
+
 # from django.utils.html import format_html
 from django_ckeditor_5.fields import CKEditor5Field
 from sorl.thumbnail import get_thumbnail

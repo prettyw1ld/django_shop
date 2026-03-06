@@ -5,6 +5,8 @@ from http import HTTPStatus
 import django.http
 import django.shortcuts
 
+import catalog.models
+
 
 def coffee(request):
     return django.http.HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
@@ -12,14 +14,14 @@ def coffee(request):
 
 def index_render(request):
     template = "homepage/main.html"
-    fake_items = [
-        {"id": 1, "title": "Котик", "description": "Мягкий и пушистый"},
-        {"id": 2, "title": "Собачка", "description": "Верный друг"},
-        {"id": 3, "title": "Рыбка", "description": "Золотая"},
-    ]
-
+    items = (
+        catalog.models.Item.objects.filter(is_on_main=True)
+        .select_related("category")
+        .prefetch_related("tags")
+        .order_by("name")
+    )
     context = {
-        "items": fake_items,
+        "items": items,
     }
 
     return django.shortcuts.render(request, template, context)

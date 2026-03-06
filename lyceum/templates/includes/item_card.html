@@ -2,8 +2,14 @@
 <div class="card" style="width: 18rem;">
   <img src="{% static "img/kitty_denik.jpg" %}" class="card-img-top" alt="icon">
   <div class="card-body">
-    <h5 class="card-title">{{ item.title }}</h5>
-    <p class="card-text">{{ item.description }}</p>
+    <h5 class="card-name">{{ item.name }}</h5>
+    <p class="card-category">{{ item.category.name }}</p>
+    <p class="card-text">{{ item.text|truncatewords:10 }}</p>
+    <p class="card-tags">
+      {% for tag in item.tags.all %}
+        {{ tag.name }}{% if not forloop.last %}, {% endif %}
+      {% endfor %}
+    </p>
     {% if item and item.id %}
       <a href="{% url "catalog:item-detail" item.id %}" class="btn btn-primary">Подробнее</a>
     {% endif %}
