@@ -12,6 +12,7 @@ ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 class NormalizedNameMixin(django.db.models.Model):
     canonical_name = django.db.models.CharField(
         max_length=150,
+        default="",
         blank=True,
         unique=True,
         editable=False,
