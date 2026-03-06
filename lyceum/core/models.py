@@ -12,12 +12,15 @@ ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 class NormalizedNameMixin(django.db.models.Model):
     canonical_name = django.db.models.CharField(
         max_length=150,
-        null=True,
+        blank=True,
         unique=True,
         editable=False,
         verbose_name="каноническое название",
         help_text="Каноническое название элемента",
     )
+
+    class Meta:
+        abstract = True
 
     def _unify_similar_chars(self, text):
         text = text.lower()
@@ -46,9 +49,6 @@ class NormalizedNameMixin(django.db.models.Model):
             transliterated,
         )
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
     def clean(self):
         self.canonical_name = self._generate_canonical_name()
         if (
@@ -62,8 +62,8 @@ class NormalizedNameMixin(django.db.models.Model):
             )
         return super().clean()
 
-    class Meta:
-        abstract = True
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
 
 class PublishedBaseModel(django.db.models.Model):
@@ -81,3 +81,6 @@ class PublishedBaseModel(django.db.models.Model):
 
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.name[:15]

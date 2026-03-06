@@ -31,13 +31,13 @@ class Image(django.contrib.admin.TabularInline):
 
 
 @django.contrib.admin.register(catalog.models.Item)
+@django.contrib.admin.display(description="Фото")
 class ItemAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
         catalog.models.Item.name.field.name,
         catalog.models.Item.is_published.field.name,
         catalog.models.Item.image_tmb,
     )
-    catalog.models.Item.image_tmb.short_description = "фото"
     list_editable = (catalog.models.Item.is_published.field.name,)
     list_display_links = (catalog.models.Item.name.field.name,)
     filter_horizontal = (catalog.models.Item.tags.field.name,)

@@ -19,6 +19,7 @@ def load_bool(name, default):
         "t",
         "yes",
         "y",
+        "",
     }
 
 
@@ -66,8 +67,7 @@ MIDDLEWARE = [
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-
-INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(",")
+    INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(",")
 
 ROOT_URLCONF = "lyceum.urls"
 
@@ -90,9 +90,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "lyceum.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -100,9 +97,6 @@ DATABASES = {
     },
 }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -131,27 +125,23 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "ru"
-
-TIME_ZONE = "UTC"
-
 USE_I18N = True
-
-USE_L10N = True
-
-USE_TZ = True
-
+LANGUAGE_CODE = "ru"
 LANGUAGES = [
     ("ru", _("Русский")),
     ("en", _("English")),
 ]
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
-STATIC_URL = "static/"
+TIME_ZONE = "UTC"
+USE_TZ = True
 
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static_dev",
 ]
-
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
@@ -284,7 +274,3 @@ CKEDITOR_5_CONFIGS = {
 }
 
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
-
-LOCALE_PATHS = [
-    BASE_DIR / "locale",
-]

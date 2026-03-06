@@ -2,7 +2,7 @@ __all__ = []
 
 import django.core.validators
 import django.db.models
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 from django_ckeditor_5.fields import CKEditor5Field
 from sorl.thumbnail import get_thumbnail
 
@@ -29,7 +29,6 @@ class ImageBaseModel(django.db.models.Model):
             quality=51,
         )
 
-    @property
     def get_image_50x50(self):
         return get_thumbnail(
             self.image,
@@ -37,9 +36,6 @@ class ImageBaseModel(django.db.models.Model):
             crop="center",
             quality=51,
         )
-
-    def __str__(self):
-        return self.item.name
 
     class Meta:
         abstract = True
@@ -57,9 +53,6 @@ class Tag(PublishedBaseModel, NormalizedNameMixin):
         verbose_name = "тег"
         verbose_name_plural = "теги"
         default_related_name = "tags"
-
-    def __str__(self):
-        return self.name
 
 
 class Category(PublishedBaseModel, NormalizedNameMixin):
@@ -84,14 +77,11 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
         verbose_name = "категория"
         verbose_name_plural = "категории"
 
-    def __str__(self):
-        return self.name
-
 
 class Item(PublishedBaseModel):
     text = CKEditor5Field(
         verbose_name="описание",
-        help_text="Описание должно быть больше, чем из 2х слов лоль и "
+        help_text="Описание должно быть больше, чем из 2х слов и "
         + " содержать слова: превосходно, роскошно",
         validators=[
             WordsValidator(
@@ -121,13 +111,11 @@ class Item(PublishedBaseModel):
                 crop="center",
                 quality=51,
             )
-            return mark_safe(
-                f'<img src="{thumbnail.url}" width="50" height="50" />',
+            return format_html(
+                '<img src="{}" width="50" height="50">',
+                thumbnail.url,
             )
         return "Нет фото"
-
-    def __str__(self):
-        return self.name[:15]
 
 
 class MainImage(ImageBaseModel):
@@ -135,6 +123,7 @@ class MainImage(ImageBaseModel):
         Item,
         on_delete=django.db.models.CASCADE,
         related_name="main_image",
+        verbose_name="Главное изображение",
     )
 
     def __str__(self):
@@ -150,6 +139,7 @@ class Image(ImageBaseModel):
         Item,
         on_delete=django.db.models.CASCADE,
         related_name="images",
+        verbose_name="Изображения",
     )
 
     class Meta:
