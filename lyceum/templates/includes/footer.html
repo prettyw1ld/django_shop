@@ -1,18 +1,19 @@
 {% load static %}
 <div class="container">
   <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-     <p><span id="year">© {% now "Y" %}</span> Damir x Denik. All rights reserved.</p>  
+    <span id="year">© {% now "Y" %}</span>
     <script>
-      var dateStr = "{% now "Y-m-d" %}T{% now "H:i:s" %}Z"
-      var serverDate = Date.parse(dateStr);
-      var now = Date.now();
-      var diffTime = Math.abs(serverDate - now)
-      var diffDays = Math.ceil(difftime / (1000 * 60 * 60 * 24));
-
-      var date = new Date(diffDays < 1 ? now : serverDate);
-
-      ${"#year"}.text(date.getFullYear());
+      (function () {
+        var el = document.getElementById("year");
+        if (!el) return;
+        var serverMs = Date.parse("{% now 'c' %}");
+        var clientMs = Date.now();
+        if (Math.abs(serverMs - clientMs) <= 24 * 60 * 60 * 1000) {
+          el.textContent = "© " + new Date(clientMs).getFullYear();
+        }
+      })();
     </script>
+
     <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
       <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
     </a>

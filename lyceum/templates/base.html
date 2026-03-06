@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{% static "img/fav/favicon-16x16.png" %}">
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
     <title>{% block title %}{% endblock title %}</title>
-    <script src="{% static "js/jquery-3.2.1.slim.minjs" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
   </head>
   <body>
     {% include "includes/header.html" %}
@@ -20,8 +20,9 @@
         Контент не подвезли
         <img class="img-fluid" src="{% static "img/kitty_denik.jpg" %}">
         {% endblock %}
+      </div>
     </main>
     {% include "includes/footer.html" %}
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
   </body>
-  <script src="{% static "js/bootstrap.min.js" %}"></script>
 </html>
