@@ -5,7 +5,7 @@
 Учебный проект с использованием фреймворка Django. 
 
 ## Необходимое ПО
-- [Python](https://www.python.org/downloads/release/python-3120/), версии подходящие под джанго 5.2: 3.10, 3.11, 3.12, 3.13, 3.14
+- [Python](https://www.python.org/downloads/release/python-3120/) (3.12), версии подходящие под джанго 5.2: 3.10, 3.11, 3.12, 3.13, 3.14
 - [Git](https://git-scm.com/install/linux)
 
 ## Использование
