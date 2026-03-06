@@ -6,7 +6,6 @@ import django.core.exceptions
 import django.db.models
 import transliterate
 
-
 ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 
