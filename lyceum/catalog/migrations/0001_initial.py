@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "cannonical_name",
+                    "canonical_name",
                     models.CharField(
                         editable=False,
                         help_text="Каноническое название элемента",
@@ -111,7 +111,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "cannonical_name",
+                    "canonical_name",
                     models.CharField(
                         editable=False,
                         help_text="Каноническое название элемента",
@@ -168,7 +168,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "cannonical_name",
+                    "canonical_name",
                     models.CharField(
                         editable=False,
                         help_text="Каноническое название элемента",

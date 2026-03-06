@@ -10,7 +10,7 @@ ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 
 class NormalizedNameMixin(django.db.models.Model):
-    cannonical_name = django.db.models.CharField(
+    canonical_name = django.db.models.CharField(
         max_length=150,
         null=True,
         unique=True,
@@ -19,14 +19,27 @@ class NormalizedNameMixin(django.db.models.Model):
         help_text="Каноническое название элемента",
     )
 
-    def _generate_cannonical_name(self):
+    def _unify_similar_chars(self, text):
+        text = text.lower()
+        replacements = {
+            "0": "o",
+            "1": "l",
+            "3": "e",
+            "4": "a",
+            "$": "s",
+            "@": "a",
+        }
+        for wrong, correct in replacements.items():
+            text = text.replace(wrong, correct)
+
+        return text
+
+    def _generate_canonical_name(self):
+        unified = self._unify_similar_chars(self.name)
         try:
-            transliterated = transliterate.translit(
-                self.name.lower(),
-                reversed=True,
-            )
+            transliterated = transliterate.translit(unified, reversed=True)
         except transliterate.exceptions.LanguageDetectionError:
-            transliterated = self.name.lower()
+            transliterated = unified
 
         return ONLY_LETTERS_REGEX.sub(
             "",
@@ -34,14 +47,13 @@ class NormalizedNameMixin(django.db.models.Model):
         )
 
     def save(self, *args, **kwargs):
-        self.cannonical_name = self._generate_cannonical_name()
         super().save(*args, **kwargs)
 
     def clean(self):
-        self.cannonical_name = self._generate_cannonical_name()
+        self.canonical_name = self._generate_canonical_name()
         if (
             type(self)
-            .objects.filter(cannonical_name=self.cannonical_name)
+            .objects.filter(canonical_name=self.canonical_name)
             .exclude(id=self.id)
             .exists()
         ):

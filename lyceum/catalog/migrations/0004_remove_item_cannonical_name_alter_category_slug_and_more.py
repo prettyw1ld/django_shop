@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RemoveField(
             model_name="item",
-            name="cannonical_name",
+            name="canonical_name",
         ),
         migrations.AlterField(
             model_name="category",
