@@ -100,7 +100,7 @@ class Item(PublishedBaseModel):
     is_on_main = django.db.models.BooleanField(
         default=False,
         verbose_name="отображение на главной",
-        )
+    )
 
     class Meta:
         verbose_name = "товар"
