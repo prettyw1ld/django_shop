@@ -2,7 +2,8 @@ __all__ = []
 
 import django.core.validators
 import django.db.models
-from django.utils.html import format_html
+from django.utils.safestring import mark_safe
+# from django.utils.html import format_html
 from django_ckeditor_5.fields import CKEditor5Field
 from sorl.thumbnail import get_thumbnail
 
@@ -107,6 +108,7 @@ class Item(PublishedBaseModel):
         verbose_name_plural = "товары"
         default_related_name = "items"
 
+    @django.contrib.admin.display(description="Фото")
     def image_tmb(self):
         if hasattr(self, "main_image") and self.main_image:
             thumbnail = get_thumbnail(
@@ -115,10 +117,13 @@ class Item(PublishedBaseModel):
                 crop="center",
                 quality=51,
             )
-            return format_html(
-                '<img src="{}" width="50" height="50">',
-                thumbnail.url,
+            return mark_safe(
+                f'<img src="{thumbnail.url}" width="50" height="50" />',
             )
+            # return format_html(
+            #     '<img src="{}" width="50" height="50">',
+            #     thumbnail.url,
+            # )
         return "Нет фото"
 
 

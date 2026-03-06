@@ -31,7 +31,6 @@ class Image(django.contrib.admin.TabularInline):
 
 
 @django.contrib.admin.register(catalog.models.Item)
-@django.contrib.admin.display(description="Фото")
 class ItemAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
         catalog.models.Item.name.field.name,
