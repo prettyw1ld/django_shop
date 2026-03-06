@@ -2,12 +2,11 @@
 
 [![pipeline status](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/badges/main/pipeline.svg?key_text=lint/test)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/commits/main)
 
-Учебный проект с ипользованием фреймворка Django. 
+Учебный проект с использованием фреймворка Django. 
 
 ## Необходимое ПО
-- [Django](https://www.djangoproject.com/download/)
-- [Python](https://www.python.org/downloads/release/python-3120/)
-- [Git](https://git-scm.com/install/windows)
+- [Python](https://www.python.org/downloads/release/python-3120/), версии подходящие под джанго 5.2: 3.10, 3.11, 3.12, 3.13, 3.14
+- [Git](https://git-scm.com/install/linux)
 
 ## Использование
 Чтобы установить и запустить проект на Linux, нужно выполнить следующие действия:
@@ -23,7 +22,7 @@ cd lyceum
 ```
 Создание виртуального окружения:
 ```sh
-python3 -m venv venv
+python -m venv venv
 ```
 Активация: 
 ```sh
@@ -33,7 +32,7 @@ source venv/bin/activate
 ```sh
 cp template.env .env
 ```
-<sub> (p.s. конечно же надо будет заполнить потом настоящие данные, а не оставлять как есть :D) </sub>
+<sub>(p.s. конечно же надо будет заполнить потом настоящие данные, а не оставлять как есть :D)</sub>
 
 
 Установка основных зависимостей:
@@ -41,26 +40,35 @@ cp template.env .env
 pip install -r requirements/prod.txt
 ```
 
+Если проект требуется запустить в dev режиме:
+```sh
+pip install -r requirements/dev.txt
+```
+
 Далее перейти в папку с manage.py:
 ```sh
 cd lyceum
 ```
 
-Далее можно выполнить команду миграции, чтобы при запуске на нас не ругался терминал:
+Далее выполнить команду миграции:
 ```sh
 python manage.py migrate
 ```
 
+Создание суперпользователя:
+```sh
+python manage.py createsuperuser
+```
+<sub>Введите имя пользователя (username), email и пароль.</sub>
+
 Запуск приложения:
 ```sh
-python manage.py runserver localhost:8000
+python manage.py runserver
 ```
+Проект будет доступен по адресу: http://127.0.0.1:8000/
 
 ## CI/CD
-В файле [.gitlab-ci.yml](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/blob/main/.gitlab-ci.yml) ностроены первоначальные проверки. Пайплан будет запускаться сразу же после коммита в репозиторий.
-
-## ERD
-![ERD](db_schema.jpg)
+В файле [.gitlab-ci.yml](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/blob/main/.gitlab-ci.yml) настроены первоначальные проверки. Пайплайн будет запускаться сразу же после коммита в репозиторий.
 
 ## Команда проекта
 - **Дамир** (я) - разработчик и лид проекта
@@ -69,9 +77,5 @@ python manage.py runserver localhost:8000
 ## Зачем вы разработали этот проект?
 Чтобы был.
 
-## Запуск
-Перед запуском надо создавать файлы для переводов:
-```sh
-django-admin compilemessages
-python3 manage.py runserver
-```
+## ERD
+![ERD](db_schema.jpg)
