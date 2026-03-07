@@ -22,7 +22,7 @@ cd lyceum
 ```
 Создание виртуального окружения:
 ```sh
-python -m venv venv
+python3 -m venv venv
 ```
 Активация: 
 ```sh
@@ -52,18 +52,18 @@ cd lyceum
 
 Далее выполнить команду миграции:
 ```sh
-python manage.py migrate
+python3 manage.py migrate
 ```
 
 Создание суперпользователя:
 ```sh
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 <sub>Введите имя пользователя (username), email и пароль.</sub>
 
 Запуск приложения:
 ```sh
-python manage.py runserver
+python3 manage.py runserver
 ```
 Проект будет доступен по адресу: http://127.0.0.1:8000/
 
