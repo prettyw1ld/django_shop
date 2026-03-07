@@ -12,21 +12,26 @@
                 <div class="carousel-inner">
                     {% if item.main_image %}
                     <div class="carousel-item active">
-                        <img src="{% thumbnail item.main_image.image "600x400" crop="center" quality=70 %}" 
-                             class="d-block w-100" alt="{{ item.name }} - главное">
+                        {% thumbnail item.main_image.image "600x400" crop="center" quality=70 as im %}
+                            <img src="{{ im.url }}" class="d-block w-100" alt="{{ item.name }} - главное">
+                        {% empty %}
+                            <img src="{% static 'img/no_photo.jpg' %}" class="d-block w-100" alt="Ошибка загрузки">
+                        {% endthumbnail %}
                     </div>
                     {% endif %}
                     
                     {% for image in item.images.all %}
                     <div class="carousel-item {% if not item.main_image and forloop.first %}active{% endif %}">
-                        <img src="{% thumbnail image.image "600x400" crop="center" quality=70 %}" 
-                             class="d-block w-100" alt="{{ item.name }} - фото {{ forloop.counter }}">
+                        {% thumbnail image.image "600x400" crop="center" quality=70 as im %}
+                            <img src="{{ im.url }}" class="d-block w-100" alt="{{ item.name }} - фото {{ forloop.counter }}">
+                        {% empty %}
+                            <img src="{% static 'img/no_photo.jpg' %}" class="d-block w-100" alt="Ошибка загрузки">
+                        {% endthumbnail %}
                     </div>
                     {% empty %}
                         {% if not item.main_image %}
                         <div class="carousel-item active">
-                            <img src="{% static 'img/no_photo.jpg' %}" 
-                                 class="d-block w-100" alt="Нет фото">
+                            <img src="{% static 'img/no_photo.jpg' %}" class="d-block w-100" alt="Нет фото">
                         </div>
                         {% endif %}
                     {% endfor %}

@@ -119,10 +119,6 @@ class Item(PublishedBaseModel):
             return mark_safe(
                 f'<img src="{thumbnail.url}" width="50" height="50" />',
             )
-            # return format_html(
-            #     '<img src="{}" width="50" height="50">',
-            #     thumbnail.url,
-            # )
         return "Нет фото"
 
 

@@ -1,7 +1,8 @@
 __all__ = []
 
 from django.core.exceptions import ValidationError
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.urls import reverse
 import parameterized
 
 from catalog.models import Category, Item, Tag
@@ -217,12 +218,12 @@ class ModelsTests(TestCase):
         tags_count = Tag.objects.count()
         try:
             test_tag_1 = Tag(
-                name="test_123$$",
-                slug="test-cat",
+                name="test_12345$$",
+                slug="test-catik",
             )
             test_tag_2 = Tag(
-                name="test_123",
-                slug="test-cat-real",
+                name="test_12345",
+                slug="test-catik-real",
             )
             test_tag_1.full_clean()
             test_tag_1.save()
@@ -253,3 +254,38 @@ class ModelsTests(TestCase):
             Tag.objects.count(),
             tags_count + 2,
         )
+
+
+class ContextTests(TestCase):
+    def setUp(self):
+        self.published_category = Category.objects.create(
+            is_published=True,
+            name="test_context_published_category",
+            slug="test_context_published_category",
+            weight=100,
+        )
+        self.published_tag = Tag.objects.create(
+            is_published=True,
+            name="test_context_published_tag",
+            slug="test_context_published_tag",
+        )
+        self.published_item = Item.objects.create(
+            name="test_context_published_item",
+            category=self.published_category,
+            text="превосходно роскошно",
+            is_published=True,
+            is_on_main=True,
+        )
+        self.published_item.tags.add(self.published_tag)
+        super(ContextTests, self).setUp()
+
+    def tearDown(self):
+        Item.objects.all().delete()
+        Tag.objects.all().delete()
+        Category.objects.all().delete()
+
+        super(ContextTests, self).tearDown()
+
+    def test_home_page_show_correct_context(self):
+        response = Client().get(reverse("homepage:home"))
+        self.assertIn("items", response.context)
