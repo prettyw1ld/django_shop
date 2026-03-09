@@ -1,12 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Список товаров{% endblock title %}
+{% block title %}Каталог{% endblock %}
 {% block content %}
-  <h1>Список товаров</h1>
+<h1>Список товаров</h1>
+{% for item in items %}
+    {% if forloop.first %}
+    <div>
+    {% endif %}
+    {% ifchanged item.category %}
     <div class="row">
-        {% for item in items %}
-            <div class="col-md-3 ">
-                {% include "includes/item_card.html" %}
-            </div>
-        {% endfor %}
+    <div class="col-12 text-center">
+    <h1 class="display-4 fw-bold">{{ item.category.name }}</h1>
     </div>
-{% endblock content %}
+    {% endifchanged %}
+    {% include "includes/item_card.html" %}
+    {% if forloop.last %}
+    </div>
+    {% endif %}
+{% empty %}
+<p>Список пуст. Йо, Админ, добавь инфы!</p>
+{% endfor %}
+{% endblock %}
