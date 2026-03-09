@@ -43,7 +43,7 @@
   "model": "catalog.category",
   "pk": 1,
   "fields": {
-    "canonical_name": "kategorijal",
+    "canonical_name": "kategorija1",
     "name": "категория 1",
     "is_published": true,
     "slug": "cat-1",
