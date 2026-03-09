@@ -124,11 +124,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-FIXTURE_DIRS = [
-    BASE_DIR / "fixtures",
-]
-
 USE_I18N = True
 LANGUAGE_CODE = "ru"
 LANGUAGES = [
