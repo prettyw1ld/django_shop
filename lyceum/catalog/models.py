@@ -28,6 +28,9 @@ class ImageBaseModel(django.db.models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return self.image.name
+
     def get_image_300x300(self):
         return get_thumbnail(
             self.image,
@@ -43,9 +46,6 @@ class ImageBaseModel(django.db.models.Model):
             crop="center",
             quality=51,
         )
-
-    def __str__(self):
-        return self.image.name
 
 
 class Tag(PublishedBaseModel, NormalizedNameMixin):

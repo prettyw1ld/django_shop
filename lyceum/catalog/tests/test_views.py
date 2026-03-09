@@ -100,3 +100,129 @@ class DetailItemTests(CheckFieldTestCase):
             (),
             (),
         )
+
+
+class CatalogFridayItemsTests(CheckFieldTestCase):
+    fixtures = ["data.json"]
+
+    def test_friday_items_in_context(self):
+        response = Client().get("/catalog/friday/")
+        self.assertIn("items", response.context)
+
+    def test_friday_items_size(self):
+        response = Client().get("/catalog/friday/")
+        self.assertEqual(len(response.context["items"]), 0)
+
+    def test_friday_items_types(self):
+        response = Client().get("/catalog/friday/")
+        self.assertTrue(
+            all(
+                isinstance(
+                    item,
+                    Item,
+                )
+                for item in response.context["items"]
+            ),
+        )
+
+    def test_friday_items_loaded_values(self):
+        response = Client().get("/catalog/friday/")
+        for item in response.context["items"]:
+            self.check_content_value(
+                item,
+                (
+                    "name",
+                    "text",
+                    "category_id",
+                ),
+                ("tags",),
+                (
+                    "is_published",
+                    "image",
+                    "images",
+                ),
+            )
+
+
+class CatalogNewItemsTests(CheckFieldTestCase):
+    fixtures = ["data.json"]
+
+    def test_new_items_in_context(self):
+        response = Client().get("/catalog/new/")
+        self.assertIn("items", response.context)
+
+    def test_new_items_size(self):
+        response = Client().get("/catalog/new/")
+        self.assertEqual(len(response.context["items"]), 2)
+
+    def test_new_items_types(self):
+        response = Client().get("/catalog/new/")
+        self.assertTrue(
+            all(
+                isinstance(
+                    item,
+                    Item,
+                )
+                for item in response.context["items"]
+            ),
+        )
+
+    def test_new_items_loaded_values(self):
+        response = Client().get("/catalog/new/")
+        for item in response.context["items"]:
+            self.check_content_value(
+                item,
+                (
+                    "name",
+                    "text",
+                    "category_id",
+                ),
+                ("tags",),
+                (
+                    "is_published",
+                    "image",
+                    "images",
+                ),
+            )
+
+
+class CatalogUnverifiedNewItemsTests(CheckFieldTestCase):
+    fixtures = ["data.json"]
+
+    def test_unverified_items_in_context(self):
+        response = Client().get("/catalog/unverified/")
+        self.assertIn("items", response.context)
+
+    def test_unverified_items_size(self):
+        response = Client().get("/catalog/unverified/")
+        self.assertEqual(len(response.context["items"]), 1)
+
+    def test_unverified_items_types(self):
+        response = Client().get("/catalog/unverified/")
+        self.assertTrue(
+            all(
+                isinstance(
+                    item,
+                    Item,
+                )
+                for item in response.context["items"]
+            ),
+        )
+
+    def test_unverified_items_loaded_values(self):
+        response = Client().get("/catalog/unverified/")
+        for item in response.context["items"]:
+            self.check_content_value(
+                item,
+                (
+                    "name",
+                    "text",
+                    "category_id",
+                ),
+                ("tags",),
+                (
+                    "is_published",
+                    "image",
+                    "images",
+                ),
+            )

@@ -1,3 +1,5 @@
+__all__ = []
+
 import django.urls
 import download.views
 
