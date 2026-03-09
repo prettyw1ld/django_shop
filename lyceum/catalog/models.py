@@ -89,15 +89,7 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
 
 class ItemsManager(PublishedManager):
     def on_main(self):
-        return (
-            self.published()
-            .filter(
-                is_on_main=True,
-            )
-            .order_by(
-                Item.name.field.name,
-            )
-        )
+        return self.published().filter(is_on_main=True).order_by("name")
 
     def published(self):
         return (
@@ -116,7 +108,6 @@ class ItemsManager(PublishedManager):
             .only(
                 "name",
                 "text",
-                "is_on_main",
                 "category__name",
             )
         )

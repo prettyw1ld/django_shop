@@ -1,3 +1,5 @@
+__all__ = []
+
 from django.test import Client, TestCase
 
 from catalog.models import Item
