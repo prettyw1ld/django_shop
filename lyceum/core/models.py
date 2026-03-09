@@ -65,14 +65,20 @@ class NormalizedNameMixin(django.db.models.Model):
         self.canonical_name = self._generate_canonical_name()
         super().save(*args, **kwargs)
 
+    def _save_table(self, *args, **kwargs):
+        self.canonical_name = self._generate_canonical_name()
+        return super()._save_table(*args, **kwargs)
+
     def clean(self):
         self.canonical_name = self._generate_canonical_name()
-        if (
+        exists = (
             type(self)
             .objects.filter(canonical_name=self.canonical_name)
             .exclude(id=self.id)
             .exists()
-        ):
+        )
+
+        if exists:
             raise django.core.exceptions.ValidationError(
                 "Уже есть такой же элемент",
             )
