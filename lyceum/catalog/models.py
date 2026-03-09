@@ -159,10 +159,10 @@ class Item(PublishedBaseModel):
 
     @django.contrib.admin.display(description="Изображение")
     def image_tmb(self):
-        if self.main_image.image:
-            return mark_safe(
-                f'<img src="{self.main_image.get_image_50x50.url}">',
-            )
+        if hasattr(self, "main_image") and self.main_image.image:
+            tmb = self.main_image.get_image_50x50()
+            if tmb:
+                return mark_safe(f'<img src="{tmb.url}">')
         return "Нет изображения"
 
 

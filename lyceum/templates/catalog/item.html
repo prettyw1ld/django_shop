@@ -14,6 +14,11 @@
                     <div class="carousel-item active">
                         {% thumbnail item.main_image.image "600x400" crop="center" quality=70 as im %}
                             <img src="{{ im.url }}" class="d-block w-100" alt="{{ item.name }} - главное">
+                            <div class="carousel-caption d-none d-md-block">
+                                <a href="{% url 'download:file' item.main_image.image.name %}" class="btn btn-dark btn-sm">
+                                    Скачать оригинал
+                                </a>
+                            </div>
                         {% empty %}
                             <img src="{% static 'img/no_photo.jpg' %}" class="d-block w-100" alt="Ошибка загрузки">
                         {% endthumbnail %}
@@ -24,6 +29,11 @@
                     <div class="carousel-item {% if not item.main_image and forloop.first %}active{% endif %}">
                         {% thumbnail image.image "600x400" crop="center" quality=70 as im %}
                             <img src="{{ im.url }}" class="d-block w-100" alt="{{ item.name }} - фото {{ forloop.counter }}">
+                            <div class="carousel-caption d-none d-md-block">
+                                <a href="{% url 'download:file' image.image.name %}" class="btn btn-dark btn-sm">
+                                    Скачать оригинал
+                                </a>
+                            </div>
                         {% empty %}
                             <img src="{% static 'img/no_photo.jpg' %}" class="d-block w-100" alt="Ошибка загрузки">
                         {% endthumbnail %}
@@ -37,7 +47,7 @@
                     {% endfor %}
                 </div>
                 
-                {% if item.main_image or item.images.all|length > 0 %}
+                {% if item.main_image or item.images.all %}
                 <button class="carousel-control-prev" type="button" data-bs-target="#itemCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Предыдущий</span>

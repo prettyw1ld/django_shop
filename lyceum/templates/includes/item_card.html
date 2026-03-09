@@ -1,6 +1,5 @@
-{% load static %}
 <div class="card" style="width: 18rem;">
-  <img src="{% static "img/kitty_denik.jpg" %}" class="card-img-top" alt="icon">
+  <img src= "{{ item.main_image.get_image_300x300.url }}" class="card-img-top" alt="icon"/>
   <div class="card-body">
     <h5 class="card-name">{{ item.name }}</h5>
     <p class="card-category">{{ item.category.name }}</p>

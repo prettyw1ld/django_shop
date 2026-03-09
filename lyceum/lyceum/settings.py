@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "catalog.apps.CatalogConfig",
     "homepage.apps.HomepageConfig",
     "core.apps.CoreConfig",
+    "download.apps.DownloadConfig",
     # Не_мои_приложения
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",

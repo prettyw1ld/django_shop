@@ -43,3 +43,6 @@ msgstr "Русский"
 
 msgid "English"
 msgstr "Английский"
+
+msgid "Админ-панель"
+msgstr "Админ-панель"

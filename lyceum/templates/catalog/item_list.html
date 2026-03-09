@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Каталог{% endblock %}
 {% block content %}
-<h1>Список товаров</h1>
+<h1>{{ title }}</h1>
 {% for item in items %}
     {% if forloop.first %}
     <div>

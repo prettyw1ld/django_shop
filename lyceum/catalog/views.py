@@ -1,7 +1,9 @@
 __all__ = []
 
-import django.http
+import datetime
+
 import django.shortcuts
+from django.utils import timezone
 
 import catalog.models
 
@@ -38,4 +40,47 @@ def item_detail(request, pk):
         request,
         "catalog/item.html",
         context,
+    )
+
+
+def new_items(request):
+    last_week = timezone.now() - datetime.timedelta(days=7)
+    items = (
+        catalog.models.Item.objects.published()
+        .filter(created__gte=last_week)
+        .order_by("?")[:5]
+    )
+
+    return django.shortcuts.render(
+        request,
+        "catalog/item_list.html",
+        {"items": items, "title": "Новинки"},
+    )
+
+
+def friday_items(request):
+    items = (
+        catalog.models.Item.objects.published()
+        .filter(updated__week_day=6)
+        .order_by("-updated")[:5]
+    )
+
+    return django.shortcuts.render(
+        request,
+        "catalog/item_list.html",
+        {"items": items, "title": "Пятница"},
+    )
+
+
+def unverified_items(request):
+    from django.db.models import F
+
+    items = catalog.models.Item.objects.published().filter(
+        created=F("updated"),
+    )
+
+    return django.shortcuts.render(
+        request,
+        "catalog/item_list.html",
+        {"items": items, "title": "Непроверенное"},
     )
