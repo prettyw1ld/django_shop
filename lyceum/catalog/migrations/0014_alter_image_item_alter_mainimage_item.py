@@ -8,30 +8,30 @@ class Migration(migrations.Migration):
 
     dependencies = [
         (
-            'catalog',
-            '0010_alter_mainimage_image_alter_mainimage_item_image_and_more_squashed_0013_alter_item_created_alter_item_updated',
+            "catalog",
+            "0010_alter_mainimage_image_alter_mainimage_item_image_and_more_squashed_0013_alter_item_created_alter_item_updated",
         ),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='image',
-            name='item',
+            model_name="image",
+            name="item",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='images',
-                to='catalog.item',
-                verbose_name='изображения',
+                related_name="images",
+                to="catalog.item",
+                verbose_name="изображения",
             ),
         ),
         migrations.AlterField(
-            model_name='mainimage',
-            name='item',
+            model_name="mainimage",
+            name="item",
             field=models.OneToOneField(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='main_image',
-                to='catalog.item',
-                verbose_name='главное изображение',
+                related_name="main_image",
+                to="catalog.item",
+                verbose_name="главное изображение",
             ),
         ),
     ]
