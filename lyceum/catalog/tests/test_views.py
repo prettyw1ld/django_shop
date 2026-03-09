@@ -56,12 +56,11 @@ class CatalogItemsTests(CheckFieldTestCase):
                 (
                     "name",
                     "text",
-                    "is_on_main",
                     "category_id",
-                    "is_published",
                 ),
                 ("tags",),
                 (
+                    "is_published",
                     "image",
                     "images",
                 ),
@@ -86,12 +85,11 @@ class DetailItemTests(CheckFieldTestCase):
             (
                 "name",
                 "text",
-                "is_on_main",
                 "category_id",
-                "is_published",
             ),
             ("tags",),
             (
+                "is_published",
                 "image",
                 "images",
             ),

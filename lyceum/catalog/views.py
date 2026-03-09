@@ -8,11 +8,9 @@ import catalog.models
 
 def item_list(request):
     template = "catalog/item_list.html"
-    items = (
-        catalog.models.Item.objects.filter(is_published=True)
-        .select_related("category")
-        .prefetch_related("tags")
-        .order_by("category__name", "name")
+    items = catalog.models.Item.objects.published().order_by(
+        "category__name",
+        "name",
     )
 
     context = {

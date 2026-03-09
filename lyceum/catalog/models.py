@@ -103,8 +103,10 @@ class ItemsManager(PublishedManager):
                 ),
             )
             .only(
+                "id",
                 "name",
                 "text",
+                "category__id",
                 "category__name",
             )
         )
@@ -169,7 +171,7 @@ class MainImage(ImageBaseModel):
         Item,
         on_delete=django.db.models.CASCADE,
         related_name="main_image",
-        verbose_name="Главное изображение",
+        verbose_name="главное изображение",
     )
 
     class Meta:
@@ -185,7 +187,7 @@ class Image(ImageBaseModel):
         Item,
         on_delete=django.db.models.CASCADE,
         related_name="images",
-        verbose_name="Изображения",
+        verbose_name="изображения",
     )
 
     class Meta:
