@@ -110,17 +110,7 @@ class ItemsManager(PublishedManager):
         )
 
     def on_main(self):
-        return (
-            self.published()
-            .filter(is_on_main=True)
-            .only(
-                "name",
-                "text",
-                "category__name",
-                "is_on_main",
-            )
-            .order_by("name")
-        )
+        return self.published().filter(is_on_main=True).order_by("name")
 
 
 class Item(PublishedBaseModel):
