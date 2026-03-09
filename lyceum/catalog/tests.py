@@ -10,7 +10,7 @@ from catalog.models import Category, Item, Tag
 
 
 class StaticURLTests(TestCase):
-    fixtures = ["new_data.json"]
+    fixtures = ["data.json"]
 
     def test_catalog_endpoint(self):
         response = self.client.get("/catalog/")
@@ -306,7 +306,7 @@ class CheckFieldTestCase(TestCase):
 
 
 class CatalogItemsTests(CheckFieldTestCase):
-    fixtures = ["new_data.json"]
+    fixtures = ["data.json"]
 
     def test_items_in_context(self):
         response = Client().get("/catalog/")
@@ -349,7 +349,7 @@ class CatalogItemsTests(CheckFieldTestCase):
 
 
 class DetailItemTests(CheckFieldTestCase):
-    fixtures = ["new_data.json"]
+    fixtures = ["data.json"]
 
     def test_items_in_context(self):
         response = Client().get("/catalog/1/")

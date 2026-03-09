@@ -61,6 +61,10 @@ class NormalizedNameMixin(django.db.models.Model):
             transliterated,
         )
 
+    def save(self, *args, **kwargs):
+        self.canonical_name = self._generate_canonical_name()
+        super().save(*args, **kwargs)
+
     def clean(self):
         self.canonical_name = self._generate_canonical_name()
         if (
@@ -73,9 +77,6 @@ class NormalizedNameMixin(django.db.models.Model):
                 "Уже есть такой же элемент",
             )
         return super().clean()
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
 
 
 class PublishedBaseModel(django.db.models.Model):
