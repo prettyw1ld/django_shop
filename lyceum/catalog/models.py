@@ -78,7 +78,7 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
             django.core.validators.MaxValueValidator(32767),
         ],
         verbose_name="вес",
-        help_text="Max 32767",
+        help_text="Максимум 32767",
     )
 
     class Meta:
