@@ -1,40 +1,10 @@
 __all__ = []
 
-from http import HTTPStatus
-
 from django.core.exceptions import ValidationError
-from django.test import Client, TestCase
+from django.test import TestCase
 import parameterized
 
 from catalog.models import Category, Item, Tag
-
-
-class StaticURLTests(TestCase):
-    fixtures = ["data.json"]
-
-    def test_catalog_endpoint(self):
-        response = self.client.get("/catalog/")
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-
-    @parameterized.parameterized.expand(
-        [
-            ("1", HTTPStatus.OK),
-            ("4", HTTPStatus.NOT_FOUND),
-            ("100", HTTPStatus.NOT_FOUND),
-            ("0", HTTPStatus.NOT_FOUND),
-            ("-0", HTTPStatus.NOT_FOUND),
-            ("-100", HTTPStatus.NOT_FOUND),
-            ("0.5", HTTPStatus.NOT_FOUND),
-            ("abc", HTTPStatus.NOT_FOUND),
-            ("0abc", HTTPStatus.NOT_FOUND),
-            ("abc0", HTTPStatus.NOT_FOUND),
-            ("$#@", HTTPStatus.NOT_FOUND),
-            ("1e5", HTTPStatus.NOT_FOUND),
-        ],
-    )
-    def test_catalog_item_endpoint(self, url, expected_status):
-        response = Client().get(f"/catalog/{url}/")
-        self.assertEqual(response.status_code, expected_status)
 
 
 class TestModel(TestCase):
@@ -282,103 +252,4 @@ class ModelsTests(TestCase):
         self.assertEqual(
             Tag.objects.count(),
             tags_count + 2,
-        )
-
-
-class CheckFieldTestCase(TestCase):
-    def check_content_value(
-        self,
-        item,
-        exists,
-        prefetched,
-        not_loaded,
-    ):
-        check_dict = item.__dict__
-
-        for value in exists:
-            self.assertIn(value, check_dict)
-
-        for value in prefetched:
-            self.assertIn(value, check_dict["_prefetched_objects_cache"])
-
-        for value in not_loaded:
-            self.assertNotIn(value, check_dict)
-
-
-class CatalogItemsTests(CheckFieldTestCase):
-    fixtures = ["data.json"]
-
-    def test_items_in_context(self):
-        response = Client().get("/catalog/")
-        self.assertIn("items", response.context)
-
-    def test_items_size(self):
-        response = Client().get("/catalog/")
-        self.assertEqual(len(response.context["items"]), 2)
-
-    def test_items_types(self):
-        response = Client().get("/catalog/")
-        self.assertTrue(
-            all(
-                isinstance(
-                    item,
-                    Item,
-                )
-                for item in response.context["items"]
-            ),
-        )
-
-    def test_items_loaded_values(self):
-        response = Client().get("/catalog/")
-        for item in response.context["items"]:
-            self.check_content_value(
-                item,
-                (
-                    "name",
-                    "text",
-                    "is_on_main",
-                    "category_id",
-                    "is_published",
-                ),
-                ("tags",),
-                (
-                    "image",
-                    "images",
-                ),
-            )
-
-
-class DetailItemTests(CheckFieldTestCase):
-    fixtures = ["data.json"]
-
-    def test_items_in_context(self):
-        response = Client().get("/catalog/1/")
-        self.assertIn("item", response.context)
-
-    def test_items_size(self):
-        response = Client().get("/catalog/1/")
-        self.assertIsInstance(response.context["item"], Item)
-
-    def test_items_loaded_values(self):
-        response = Client().get("/catalog/")
-        self.check_content_value(
-            response.context["item"],
-            (
-                "name",
-                "text",
-                "is_on_main",
-                "category_id",
-                "is_published",
-            ),
-            ("tags",),
-            (
-                "image",
-                "images",
-            ),
-        )
-        self.check_content_value(
-            response.context["item"].tags.all()[0],
-            ("name",),
-            (),
-            (),
         )

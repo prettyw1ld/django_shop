@@ -25,6 +25,9 @@ class ImageBaseModel(django.db.models.Model):
         default=None,
     )
 
+    class Meta:
+        abstract = True
+
     def get_image_300x300(self):
         return get_thumbnail(
             self.image,
@@ -43,9 +46,6 @@ class ImageBaseModel(django.db.models.Model):
 
     def __str__(self):
         return self.image.name
-
-    class Meta:
-        abstract = True
 
 
 class Tag(PublishedBaseModel, NormalizedNameMixin):
@@ -149,11 +149,13 @@ class Item(PublishedBaseModel):
     updated = django.db.models.DateTimeField(
         verbose_name="время изменения",
         auto_now=True,
+        null=True,
     )
 
     created = django.db.models.DateTimeField(
         verbose_name="время создания",
         auto_now_add=True,
+        null=True,
     )
     objects = ItemsManager()
 
@@ -179,12 +181,12 @@ class MainImage(ImageBaseModel):
         verbose_name="Главное изображение",
     )
 
-    def __str__(self):
-        return self.item.name
-
     class Meta:
         verbose_name = "главное изображение"
         verbose_name_plural = "главные изображения"
+
+    def __str__(self):
+        return self.item.name
 
 
 class Image(ImageBaseModel):
