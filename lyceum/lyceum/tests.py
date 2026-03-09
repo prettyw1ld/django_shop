@@ -40,13 +40,14 @@ class RussianReverseTest(django.test.TestCase):
         self.assertIn("Я чайник".encode(), contents)
         self.assertIn("Я кинйач".encode(), contents)
 
-    def test_reverse_russian_words_every_twenty(self):
-        contents = {
+    def test_reverse_russian_words_on_twenty_requests(self):
+        contents = [
             django.test.Client().get(reverse("homepage:coffee")).content
             for _ in range(20)
-        }
+        ]
         self.assertIn("Я чайник".encode(), contents)
         self.assertIn("Я кинйач".encode(), contents)
+        self.assertEqual(contents.count("Я кинйач".encode()), 2)
 
     def test_mixed_reverse(self):
         test_cases = [
