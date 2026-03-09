@@ -49,6 +49,7 @@ class ImageBaseModel(django.db.models.Model):
 
 
 class Tag(PublishedBaseModel, NormalizedNameMixin):
+    objects = PublishedManager()
     slug = django.db.models.SlugField(
         max_length=200,
         unique=True,
@@ -63,6 +64,7 @@ class Tag(PublishedBaseModel, NormalizedNameMixin):
 
 
 class Category(PublishedBaseModel, NormalizedNameMixin):
+    objects = PublishedManager()
     slug = django.db.models.SlugField(
         max_length=200,
         unique=True,
@@ -104,26 +106,18 @@ class ItemsManager(PublishedManager):
                 is_published=True,
                 category__is_published=True,
             )
-            .order_by(
-                f"{Item.category.field.name}__{Category.name.field.name}",
-                Item.name.field.name,
-                Category.name.field.name,
-            )
-            .select_related(
+            .select_related("category")
+            .prefetch_related(
                 django.db.models.Prefetch(
-                    Item.tags.field.name,
-                    queryset=Tag.objects.published().only(
-                        Tag.name.field.name,
-                    ),
+                    "tags",
+                    queryset=Tag.objects.published().only("name"),
                 ),
             )
             .only(
-                Item.name.field.name,
-                Item.text.field.name,
-                Item.is_on_main.field.name,
-                Item.main_image.related.name,
-                f"{Item.category.field.name}__{Category.name.field.name}",
-                f"{Item.tags.field.name}__{Tag.name.field.name}",
+                "name",
+                "text",
+                "is_on_main",
+                "category__name",
             )
         )
 

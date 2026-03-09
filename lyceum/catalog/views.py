@@ -38,6 +38,6 @@ def item_detail(request, pk):
     }
     return django.shortcuts.render(
         request,
-        "catalog/item_detail.html",
+        "catalog/item.html",
         context,
     )

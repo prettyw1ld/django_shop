@@ -55,6 +55,16 @@ cd lyceum
 python3 manage.py migrate
 ```
 
+Сбор статических файлов
+```sh
+python3 manage.py collectstatic
+```
+
+Загрузка тестовых данных (фикстур)
+```sh
+python3 manage.py loaddata data.json
+```
+
 Создание суперпользователя:
 ```sh
 python3 manage.py createsuperuser

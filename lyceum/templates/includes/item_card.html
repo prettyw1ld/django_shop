@@ -4,7 +4,7 @@
   <div class="card-body">
     <h5 class="card-name">{{ item.name }}</h5>
     <p class="card-category">{{ item.category.name }}</p>
-    <p class="card-text">{{ item.text|truncatewords:10 }}</p>
+    <p class="card-text">{{ item.text | truncatewords_html:10 | safe}}</p>
     <p class="card-tags">
       {% for tag in item.tags.all %}
         {{ tag.name }}{% if not forloop.last %}, {% endif %}
