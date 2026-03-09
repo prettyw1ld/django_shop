@@ -3,63 +3,50 @@
   "model": "catalog.tag",
   "pk": 1,
   "fields": {
+    "canonical_name": "tegl",
+    "name": "тег 1",
     "is_published": true,
-    "name": "Пушистики",
-    "slug": "pushistiki_tag"
+    "slug": "tag-1"
   }
 },
 {
   "model": "catalog.tag",
   "pk": 2,
   "fields": {
+    "canonical_name": "teg2",
+    "name": "тег 2",
     "is_published": true,
-    "name": "Круто",
-    "slug": "cool"
+    "slug": "tag-2"
   }
 },
 {
   "model": "catalog.tag",
   "pk": 3,
   "fields": {
+    "canonical_name": "tege",
+    "name": "тег 3",
     "is_published": true,
-    "name": "Модно",
-    "slug": "fashionable"
+    "slug": "tag-3"
   }
 },
 {
   "model": "catalog.tag",
   "pk": 4,
   "fields": {
+    "canonical_name": "tega",
+    "name": "тег 4",
     "is_published": true,
-    "name": "Молодежно",
-    "slug": "modern"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 5,
-  "fields": {
-    "is_published": true,
-    "name": "Красивое",
-    "slug": "beautiful"
-  }
-},
-{
-  "model": "catalog.tag",
-  "pk": 6,
-  "fields": {
-    "is_published": true,
-    "name": "Для главной",
-    "slug": "for-main"
+    "slug": "tag-4"
   }
 },
 {
   "model": "catalog.category",
   "pk": 1,
   "fields": {
+    "canonical_name": "kategorijal",
+    "name": "категория 1",
     "is_published": true,
-    "name": "Пупсики",
-    "slug": "pupsiki-categ",
+    "slug": "cat-1",
     "weight": 100
   }
 },
@@ -67,104 +54,45 @@
   "model": "catalog.category",
   "pk": 2,
   "fields": {
+    "canonical_name": "kategorija2",
+    "name": "категория 2",
     "is_published": true,
-    "name": "Продукты",
-    "slug": "products-categ",
-    "weight": 100
-  }
-},
-{
-  "model": "catalog.category",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "name": "Электроника",
-    "slug": "electronics-categ",
-    "weight": 200
+    "slug": "cat-2",
+    "weight": 102
   }
 },
 {
   "model": "catalog.item",
   "pk": 1,
   "fields": {
+    "name": "товар 1",
     "is_published": true,
-    "is_on_main": true,
-    "name": "Деник",
-    "text": "Мой пушистик, превосходно, очень мягкий и красивый",
+    "text": "Превосходно, роскошно",
     "category": 1,
-    "tags": [1]
+    "is_on_main": true,
+    "updated": "2026-03-09T08:46:06.658Z",
+    "created": "2026-03-09T08:46:06.658Z",
+    "tags": [
+      1,
+      2
+    ]
   }
 },
 {
   "model": "catalog.item",
   "pk": 2,
   "fields": {
+    "name": "товар 2",
     "is_published": true,
-    "is_on_main": true,
-    "name": "Ститч",
-    "text": "Игрушка крутая, роскошно выглядит, превосходное качество",
+    "text": "Превосходно, роскошно",
     "category": 2,
-    "tags": [1, 2]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 3,
-  "fields": {
-    "is_published": true,
-    "is_on_main": false,
-    "name": "Чупакабра",
-    "text": "Роскошно, для людей с утонченным вкусом, превосходная игрушка",
-    "category": 1,
-    "tags": [3, 5]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 4,
-  "fields": {
-    "is_published": true,
     "is_on_main": true,
-    "name": "Панан",
-    "text": "Роскошно, в наше время, действительно роскошно и превосходно",
-    "category": 2,
-    "tags": [2, 3, 4]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 5,
-  "fields": {
-    "is_published": true,
-    "is_on_main": false,
-    "name": "Бибизянко",
-    "text": "Превосходно, милейшее существо, выглядит роскошно",
-    "category": 1,
-    "tags": [1, 2]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 6,
-  "fields": {
-    "is_published": true,
-    "is_on_main": true,
-    "name": "Смартфон",
-    "text": "Превосходный смартфон с роскошным дизайном",
-    "category": 3,
-    "tags": [6]
-  }
-},
-{
-  "model": "catalog.item",
-  "pk": 7,
-  "fields": {
-    "is_published": false,
-    "is_on_main": false,
-    "name": "Неопубликованный товар",
-    "text": "Превосходно, но еще не опубликовано",
-    "category": 3,
-    "tags": [6]
+    "updated": "2026-03-09T08:46:25.336Z",
+    "created": "2026-03-09T08:46:25.336Z",
+    "tags": [
+      3,
+      4
+    ]
   }
 }
 ]

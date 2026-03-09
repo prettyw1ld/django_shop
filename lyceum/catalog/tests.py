@@ -2,7 +2,6 @@ __all__ = []
 
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
-from django.urls import reverse
 import parameterized
 
 from catalog.models import Category, Item, Tag
@@ -256,36 +255,64 @@ class ModelsTests(TestCase):
         )
 
 
-class ContextTests(TestCase):
-    def setUp(self):
-        self.published_category = Category.objects.create(
-            is_published=True,
-            name="test_context_published_category",
-            slug="test_context_published_category",
-            weight=100,
-        )
-        self.published_tag = Tag.objects.create(
-            is_published=True,
-            name="test_context_published_tag",
-            slug="test_context_published_tag",
-        )
-        self.published_item = Item.objects.create(
-            name="test_context_published_item",
-            category=self.published_category,
-            text="превосходно роскошно",
-            is_published=True,
-            is_on_main=True,
-        )
-        self.published_item.tags.add(self.published_tag)
-        super(ContextTests, self).setUp()
+class CheckFieldTestCase(TestCase):
+    def check_content_value(
+        self,
+        item,
+        exists,
+        prefetched,
+        not_loaded,
+    ):
+        check_dict = item.__dict__
 
-    def tearDown(self):
-        Item.objects.all().delete()
-        Tag.objects.all().delete()
-        Category.objects.all().delete()
+        for value in exists:
+            self.assertIn(value, check_dict)
 
-        super(ContextTests, self).tearDown()
+        for value in prefetched:
+            self.assertIn(value, check_dict["_prefetched_objects_cache"])
 
-    def test_home_page_show_correct_context(self):
-        response = Client().get(reverse("homepage:home"))
+        for value in not_loaded:
+            self.assertNotIn(value, check_dict)
+
+
+class CatalogItemsTests(CheckFieldTestCase):
+    fixtures = ["data.json"]
+
+    def test_items_in_context(self):
+        response = Client().get("/catalog/")
         self.assertIn("items", response.context)
+
+    def test_items_size(self):
+        response = Client().get("/catalog/")
+        self.assertEqual(len(response.context["items"]), 2)
+
+    def test_items_types(self):
+        response = Client().get("/catalog/")
+        self.assertTrue(
+            all(
+                isinstance(
+                    item,
+                    Item,
+                )
+                for item in response.context["items"]
+            ),
+        )
+
+    def test_items_loaded_values(self):
+        response = Client().get("/catalog/")
+        for item in response.context["items"]:
+            self.check_content_value(
+                item,
+                (
+                    "name",
+                    "text",
+                    "is_on_main",
+                    "category_id",
+                    "is_published",
+                ),
+                ("tags",),
+                (
+                    "image",
+                    "images",
+                ),
+            )

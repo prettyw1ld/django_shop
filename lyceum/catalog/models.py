@@ -7,7 +7,11 @@ from django_ckeditor_5.fields import CKEditor5Field
 from sorl.thumbnail import get_thumbnail
 
 from catalog.validators import WordsValidator
-from core.models import NormalizedNameMixin, PublishedBaseModel
+from core.models import (
+    NormalizedNameMixin,
+    PublishedBaseModel,
+    PublishedManager,
+)
 
 
 def item_directory_path(instance, filename):
@@ -36,6 +40,9 @@ class ImageBaseModel(django.db.models.Model):
             crop="center",
             quality=51,
         )
+
+    def __str__(self):
+        return self.image.name
 
     class Meta:
         abstract = True
@@ -78,6 +85,49 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
         verbose_name_plural = "категории"
 
 
+class ItemsManager(PublishedManager):
+    def on_main(self):
+        return (
+            self.published()
+            .filter(
+                is_on_main=True,
+            )
+            .order_by(
+                Item.name.field.name,
+            )
+        )
+
+    def published(self):
+        return (
+            self.get_queryset()
+            .filter(
+                is_published=True,
+                category__is_published=True,
+            )
+            .order_by(
+                f"{Item.category.field.name}__{Category.name.field.name}",
+                Item.name.field.name,
+                Category.name.field.name,
+            )
+            .select_related(
+                django.db.models.Prefetch(
+                    Item.tags.field.name,
+                    queryset=Tag.objects.published().only(
+                        Tag.name.field.name,
+                    ),
+                ),
+            )
+            .only(
+                Item.name.field.name,
+                Item.text.field.name,
+                Item.is_on_main.field.name,
+                Item.main_image.related.name,
+                f"{Item.category.field.name}__{Category.name.field.name}",
+                f"{Item.tags.field.name}__{Tag.name.field.name}",
+            )
+        )
+
+
 class Item(PublishedBaseModel):
     text = CKEditor5Field(
         verbose_name="описание",
@@ -102,24 +152,29 @@ class Item(PublishedBaseModel):
         verbose_name="отображение на главной",
     )
 
+    updated = django.db.models.DateTimeField(
+        verbose_name="время изменения",
+        auto_now=True,
+    )
+
+    created = django.db.models.DateTimeField(
+        verbose_name="время создания",
+        auto_now_add=True,
+    )
+    objects = ItemsManager()
+
     class Meta:
         verbose_name = "товар"
         verbose_name_plural = "товары"
         default_related_name = "items"
 
-    @django.contrib.admin.display(description="Фото")
+    @django.contrib.admin.display(description="Изображение")
     def image_tmb(self):
-        if hasattr(self, "main_image") and self.main_image:
-            thumbnail = get_thumbnail(
-                self.main_image.image,
-                "50x50",
-                crop="center",
-                quality=51,
-            )
+        if self.main_image.image:
             return mark_safe(
-                f'<img src="{thumbnail.url}" width="50" height="50" />',
+                f'<img src="{self.main_image.get_image_50x50.url}">',
             )
-        return "Нет фото"
+        return "Нет изображения"
 
 
 class MainImage(ImageBaseModel):

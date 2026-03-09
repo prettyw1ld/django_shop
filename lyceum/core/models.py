@@ -9,6 +9,17 @@ import transliterate
 ONLY_LETTERS_REGEX = re.compile(r"[^\w]")
 
 
+class PublishedManager(django.db.models.Manager):
+    def get_queryset(self):
+        return super().get_queryset()
+
+    def published(self):
+        return self.get_queryset().filter(is_published=True)
+
+    def on_main(self):
+        return self.published().filter(is_on_main=True)
+
+
 class NormalizedNameMixin(django.db.models.Model):
     canonical_name = django.db.models.CharField(
         max_length=150,

@@ -22,14 +22,22 @@ def item_list(request):
 
 
 def item_detail(request, pk):
-    template = "catalog/item.html"
-    item = django.shortcuts.get_object_or_404(
-        catalog.models.Item.objects.filter(is_published=True)
-        .select_related("category", "main_image")
-        .prefetch_related("tags", "images"),
-        pk=pk,
+    queryset = catalog.models.Item.objects.published().prefetch_related(
+        django.db.models.Prefetch(
+            catalog.models.Item.images.field.related_query_name(),
+            queryset=catalog.models.Image.objects.only(
+                catalog.models.Image.image.field.name,
+                catalog.models.Image.item_id.field.name,
+            ),
+        ),
     )
+    item = django.shortcuts.get_object_or_404(queryset, pk=pk)
+
     context = {
         "item": item,
     }
-    return django.shortcuts.render(request, template, context)
+    return django.shortcuts.render(
+        request,
+        "catalog/item_detail.html",
+        context,
+    )
