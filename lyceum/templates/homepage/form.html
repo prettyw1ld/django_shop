@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Текстовая форма{% endblock %}
+
+{% block content %}
+<h1>Текстовая форма</h1>
+
+{% if messages %}
+    {% for message in messages %}
+        <div style="color: green; font-weight: bold; margin-bottom: 20px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <ul>
+        {{ form.as_ul }}
+    </ul>
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+{% endblock %}

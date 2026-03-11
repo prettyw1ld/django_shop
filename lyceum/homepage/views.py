@@ -6,6 +6,7 @@ import django.http
 import django.shortcuts
 
 import catalog.models
+import homepage.forms
 
 
 def coffee(request):
@@ -25,3 +26,23 @@ def index_render(request):
     }
 
     return django.shortcuts.render(request, template, context)
+
+
+def form(request):
+    template = "homepage/form.html"
+    form = homepage.forms.TextForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        text = form.cleaned_data["text"]
+        return django.shortcuts.redirect(
+            f"{django.shortcuts.reverse("homepage:echo_submit")}?text={text}",
+        )
+
+    context = {
+        "form": form,
+    }
+    return django.shortcuts.render(request, template, context)
+
+
+def echo_submit(request):
+    text = request.GET.get("text")
+    return django.http.HttpResponse(f"Вы отправили: {text}")
