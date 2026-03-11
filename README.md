@@ -5,7 +5,7 @@
 Учебный проект с использованием фреймворка Django. 
 
 ## Необходимое ПО
-- [Python](https://www.python.org/downloads/release/python-3120/) (3.12), версии подходящие под джанго 5.2: 3.10, 3.11, 3.12, 3.13, 3.14
+- [Python](https://www.python.org/downloads/release/python-3120/) (3.12), версии подходящие под джанго 5.2: 3.10, 3.11, 3.12, 3.13, (3.14 - начиная с django 5.2.8)
 - [Git](https://git-scm.com/install/linux)
 
 ## Использование
@@ -93,4 +93,4 @@ python3 manage.py runserver
 Чтобы был.
 
 ## ERD
-![ERD](db_schema.png)
+![ERD](ER.jpg)
