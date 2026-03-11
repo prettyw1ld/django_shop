@@ -90,6 +90,7 @@ db.sqlite3
 .idea/**/gradle.xml 
 .idea/**/libraries 
 *.iws /out/ 
+.idea/
 
 # Sublime Text
 *.tmlanguage.cache 
@@ -115,5 +116,11 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+#Project stuff
 media/
 send_mail/
+
+# sorl-thumbnail cache
+cache/
+
