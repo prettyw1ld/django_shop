@@ -1,22 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Обратная связь{% endblock %}
+{% load i18n %}
+{% block title %}{% translate "Обратная связь" %}{% endblock %}
 
 {% block content %}
-<h1>Обратная связь</h1>
+  <h1>{{ title }}</h1>
 
-{% if messages %}
+  {% if messages %}
     {% for message in messages %}
-        <div style="color: green; font-weight: bold; margin-bottom: 20px;">
-            {{ message }}
-        </div>
+      <div style="color: green; font-weight: bold; margin-bottom: 20px">
+        {{ message }}
+      </div>
     {% endfor %}
-{% endif %}
+  {% endif %}
 
-<form method="post">
+  <form method="post">
     {% csrf_token %}
     <ul>
-        {{ form.as_ul }}
+      {{ form.as_ul }}
     </ul>
     <button type="submit" class="btn btn-primary">Отправить</button>
-</form>
+  </form>
 {% endblock %}

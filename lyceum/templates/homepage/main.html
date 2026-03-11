@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Главная{% endblock title %}
+{% load i18n %}
+{% block title %}{% translate "Главная" %}{% endblock title %}
 {% block content %}
-  <h1>Главная страница</h1>
-    <div class="row">
-      {% for item in items %}
-        <div class="col-md-3 ">
-          {% include "includes/item_card.html" %}
-        </div>
-      {% endfor %}
-    </div>
+  <h1>{{ title }}</h1>
+  <div class="row">
+    {% for item in items %}
+      <div class="col-md-3">
+        {% include "includes/item_card.html" %}
+      </div>
+    {% endfor %}
+  </div>
 {% endblock content %}

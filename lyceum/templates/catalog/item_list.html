@@ -1,22 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Каталог{% endblock %}
+{% load i18n %}
+{% block title %}{% translate "Каталог" %}{% endblock title %}
 {% block content %}
-<h1>{{ title }}</h1>
-{% for item in items %}
-    {% if forloop.first %}
+  <h1>{{ title }}</h1>
+
+  {% if items %}
     <div>
-    {% endif %}
-    {% ifchanged item.category %}
-    <div class="row">
-    <div class="col-12 text-center">
-    <h1 class="display-4 fw-bold">{{ item.category.name }}</h1>
+      {% for item in items %}
+        {% ifchanged item.category %}
+          <div class="row">
+            <div class="col-12 text-center">
+              <h1 class="display-4 fw-bold">{{ item.category.name }}</h1>
+            </div>
+          </div>
+        {% endifchanged %}
+
+        {% include "includes/item_card.html" %}
+      {% endfor %}
     </div>
-    {% endifchanged %}
-    {% include "includes/item_card.html" %}
-    {% if forloop.last %}
-    </div>
-    {% endif %}
-{% empty %}
-<p>Список пуст. Йо, Админ, добавь инфы!</p>
-{% endfor %}
+  {% else %}
+    <p>Список пуст. Йо, Админ, добавь инфы!</p>
+  {% endif %}
 {% endblock %}

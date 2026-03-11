@@ -1,11 +1,15 @@
 __all__ = []
 
 import datetime
+import random
 
+import django.db.models
 import django.shortcuts
 from django.utils import timezone
 
 import catalog.models
+
+ITEMS_PER_PAGE = 5
 
 
 def item_list(request):
@@ -45,12 +49,14 @@ def item_detail(request, pk):
 
 def new_items(request):
     last_week = timezone.now() - datetime.timedelta(days=7)
-    items = (
+    ids = list(
         catalog.models.Item.objects.published()
         .filter(created__gte=last_week)
-        .order_by("?")[:5]
+        .values_list("id", flat=True),
     )
 
+    selected_ids = random.sample(ids, min(5, len(ids)))
+    items = catalog.models.Item.objects.published().filter(id__in=selected_ids)
     return django.shortcuts.render(
         request,
         "catalog/item_list.html",
@@ -62,7 +68,7 @@ def friday_items(request):
     items = (
         catalog.models.Item.objects.published()
         .filter(updated__week_day=6)
-        .order_by("-updated")[:5]
+        .order_by("-updated")[:ITEMS_PER_PAGE]
     )
 
     return django.shortcuts.render(
@@ -73,10 +79,8 @@ def friday_items(request):
 
 
 def unverified_items(request):
-    from django.db.models import F
-
     items = catalog.models.Item.objects.published().filter(
-        created=F("updated"),
+        created=django.db.models.F("updated"),
     )
 
     return django.shortcuts.render(

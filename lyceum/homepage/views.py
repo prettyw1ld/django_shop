@@ -44,7 +44,7 @@ def form(request):
 
 
 def echo_submit(request):
-    text = request.GET.get("text")
+    text = request.POST.get("text")
     return django.http.HttpResponse(
         text,
         content_type="text/plain; charset=utf-8",

@@ -151,10 +151,12 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static_dev",
 ]
+STATIC_ROOT = BASE_DIR / "static_dev"
+
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
-Custom_Color_Palette = [
+CUSTOM_COLOR_PALETTE = [
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
     {"color": "hsl(340, 82%, 52%)", "label": "Pink"},
     {"color": "hsl(291, 64%, 42%)", "label": "Purple"},
@@ -237,12 +239,12 @@ CKEDITOR_5_CONFIGS = {
                 "tableCellProperties",
             ],
             "tableProperties": {
-                "borderColors": Custom_Color_Palette,
-                "backgroundColors": Custom_Color_Palette,
+                "borderColors": CUSTOM_COLOR_PALETTE,
+                "backgroundColors": CUSTOM_COLOR_PALETTE,
             },
             "tableCellProperties": {
-                "borderColors": Custom_Color_Palette,
-                "backgroundColors": Custom_Color_Palette,
+                "borderColors": CUSTOM_COLOR_PALETTE,
+                "backgroundColors": CUSTOM_COLOR_PALETTE,
             },
         },
         "heading": {

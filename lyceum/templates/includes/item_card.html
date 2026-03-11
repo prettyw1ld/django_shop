@@ -1,16 +1,21 @@
-<div class="card" style="width: 18rem;">
-  <img src= "{{ item.main_image.get_image_300x300.url }}" class="card-img-top" alt="icon"/>
+{% load static %}
+<div class="card" style="width: 18rem">
+  {% if item.main_image %}
+    <img src="{{ item.main_image.get_image_300x300.url }}" class="card-img-top" alt="Изображение">
+  {% else %}
+    <img src='{% static "img/no_photo.jpg" %}' class="card-img-top" alt="Нет изображения">
+  {% endif %}
   <div class="card-body">
     <h5 class="card-name">{{ item.name }}</h5>
     <p class="card-category">{{ item.category.name }}</p>
-    <p class="card-text">{{ item.text | truncatewords_html:10 | safe}}</p>
+    <p class="card-text">{{ item.text | truncatewords_html:10 | safe }}</p>
     <p class="card-tags">
       {% for tag in item.tags.all %}
         {{ tag.name }}{% if not forloop.last %}, {% endif %}
       {% endfor %}
     </p>
     {% if item and item.id %}
-      <a href="{% url "catalog:item-detail" item.id %}" class="btn btn-primary">Подробнее</a>
+      <a href='{% url "catalog:item-detail" item.id %}' class="btn btn-primary">Подробнее</a>
     {% endif %}
   </div>
 </div>

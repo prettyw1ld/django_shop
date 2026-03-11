@@ -1,3 +1,8 @@
 [tool.black]
 line-length = 79
 skip-string-normalization = true
+
+[tool.djangofmt]
+line_length = 120
+indent_width = 2
+profile = "django"

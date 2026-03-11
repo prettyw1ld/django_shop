@@ -1,8 +1,9 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
-{% block title %}О проекте{% endblock title %}
+{% block title %}{% translate "О проекте" %}{% endblock title %}
 {% block content %}
-  <h1>О проекте</h1>
-  <img src="{% static "img/kitty_denik.jpg" %}"/>
+  <h1>{{ title }}</h1>
+  <img src='{% static "img/kitty_denik.jpg" %}'>
   <p>или о денике...</p>
 {% endblock content %}
