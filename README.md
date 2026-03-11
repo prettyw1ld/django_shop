@@ -71,6 +71,11 @@ python3 manage.py createsuperuser
 ```
 <sub>Введите имя пользователя (username), email и пароль.</sub>
 
+Создание переводов (компиляция):
+```sh
+django-admin compilemessages
+```
+
 Запуск приложения:
 ```sh
 python3 manage.py runserver
@@ -88,4 +93,4 @@ python3 manage.py runserver
 Чтобы был.
 
 ## ERD
-![ERD](db_schema.jpg)
+![ERD](db_schema.png)
