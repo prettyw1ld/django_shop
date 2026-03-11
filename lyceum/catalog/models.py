@@ -89,26 +89,17 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
 
 class ItemsManager(PublishedManager):
     def published(self):
+        tags_prefetch = django.db.models.Prefetch(
+            "tags",
+            queryset=Tag.objects.published().only("name"),
+        )
+
         return (
             self.get_queryset()
-            .filter(
-                is_published=True,
-                category__is_published=True,
-            )
+            .filter(is_published=True, category__is_published=True)
             .select_related("category")
-            .prefetch_related(
-                django.db.models.Prefetch(
-                    "tags",
-                    queryset=Tag.objects.published().only("name"),
-                ),
-            )
-            .only(
-                "id",
-                "name",
-                "text",
-                "category__id",
-                "category__name",
-            )
+            .prefetch_related(tags_prefetch)
+            .only("id", "name", "text", "category__id", "category__name")
         )
 
     def on_main(self):
@@ -119,7 +110,7 @@ class Item(PublishedBaseModel):
     text = CKEditor5Field(
         verbose_name="описание",
         help_text="Описание должно быть больше, чем из 2х слов и "
-        + " содержать слова: превосходно, роскошно",
+        " содержать слова: превосходно, роскошно",
         validators=[
             WordsValidator(
                 "превосходно",

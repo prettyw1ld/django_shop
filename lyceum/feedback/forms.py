@@ -1,3 +1,5 @@
+__all__ = []
+
 import django.core.validators
 import django.forms
 
@@ -20,7 +22,7 @@ class FeedbackForm(django.forms.Form):
         label="Обратная связь",
         widget=django.forms.Textarea,
         help_text="Напишите в этом поле все то,"
-        + " что хотели бы сказать разработчикам",
+        " что хотели бы сказать разработчикам",
     )
 
     mail = django.forms.EmailField(

@@ -1,3 +1,5 @@
+__all__ = []
+
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 import django.urls
