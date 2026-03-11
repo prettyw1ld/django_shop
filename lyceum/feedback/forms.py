@@ -1,4 +1,4 @@
-__all__ = []
+__all__ = ()
 
 import django.core.validators
 import django.forms

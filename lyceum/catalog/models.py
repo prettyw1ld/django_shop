@@ -1,4 +1,4 @@
-__all__ = []
+__all__ = ("Item", "Tag", "Category", "Image", "MainImage")
 
 import django.core.validators
 import django.db.models

@@ -1,4 +1,4 @@
-__all__ = []
+__all__ = ()
 
 import os
 from pathlib import Path

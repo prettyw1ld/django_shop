@@ -1,9 +1,8 @@
-__all__ = []
+__all__ = ()
 
 import re
 
 import django.core.exceptions
-import django.core.validators
 import django.utils.deconstruct
 
 WORDS_REGEX = re.compile(r"\w+|\W+")

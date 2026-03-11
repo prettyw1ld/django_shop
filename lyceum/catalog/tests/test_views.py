@@ -1,4 +1,4 @@
-__all__ = []
+__all__ = ()
 
 from django.test import Client, TestCase
 
