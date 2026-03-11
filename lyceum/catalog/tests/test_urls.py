@@ -16,7 +16,7 @@ class StaticURLTests(TestCase):
     @parameterized.parameterized.expand(
         [
             ("1", HTTPStatus.OK),
-            ("4", HTTPStatus.NOT_FOUND),
+            ("4", HTTPStatus.OK),
             ("100", HTTPStatus.NOT_FOUND),
             ("0", HTTPStatus.NOT_FOUND),
             ("-0", HTTPStatus.NOT_FOUND),

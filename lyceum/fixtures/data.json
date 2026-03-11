@@ -40,6 +40,16 @@
   }
 },
 {
+  "model": "catalog.tag",
+  "pk": 5,
+  "fields": {
+    "canonical_name": "teg5",
+    "name": "тег 5",
+    "is_published": true,
+    "slug": "tag-5"
+  }
+},
+{
   "model": "catalog.category",
   "pk": 1,
   "fields": {
@@ -93,6 +103,48 @@
       3,
       4
     ]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 3,
+  "fields": {
+    "name": "товар 3",
+    "is_published": true,
+    "text": "Превосходно, роскошно",
+    "category": 1,
+    "is_on_main": true,
+    "updated": "2026-03-11T10:00:00.000Z",
+    "created": "2026-03-11T10:00:00.000Z",
+    "tags": [1, 3, 5]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 4,
+  "fields": {
+    "name": "товар 4",
+    "is_published": true,
+    "text": "Превосходно, роскошно",
+    "category": 2,
+    "is_on_main": false,
+    "updated": "2026-03-11T10:00:00.000Z",
+    "created": "2026-03-11T10:00:00.000Z",
+    "tags": [2, 4]
+  }
+},
+{
+  "model": "catalog.item",
+  "pk": 5,
+  "fields": {
+    "name": "товар 5",
+    "is_published": true,
+    "text": "Превосходно, роскошно",
+    "category": 1,
+    "is_on_main": true,
+    "updated": "2026-03-11T10:00:00.000Z",
+    "created": "2026-03-11T10:00:00.000Z",
+    "tags": [1, 2, 3, 4, 5]
   }
 }
 ]

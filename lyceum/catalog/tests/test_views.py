@@ -34,7 +34,7 @@ class CatalogItemsTests(CheckFieldTestCase):
 
     def test_items_size(self):
         response = Client().get("/catalog/")
-        self.assertEqual(len(response.context["items"]), 2)
+        self.assertEqual(len(response.context["items"]), 5)
 
     def test_items_types(self):
         response = Client().get("/catalog/")
@@ -153,7 +153,7 @@ class CatalogNewItemsTests(CheckFieldTestCase):
 
     def test_new_items_size(self):
         response = Client().get("/catalog/new/")
-        self.assertEqual(len(response.context["items"]), 2)
+        self.assertEqual(len(response.context["items"]), 5)
 
     def test_new_items_types(self):
         response = Client().get("/catalog/new/")
@@ -195,7 +195,7 @@ class CatalogUnverifiedNewItemsTests(CheckFieldTestCase):
 
     def test_unverified_items_size(self):
         response = Client().get("/catalog/unverified/")
-        self.assertEqual(len(response.context["items"]), 1)
+        self.assertEqual(len(response.context["items"]), 4)
 
     def test_unverified_items_types(self):
         response = Client().get("/catalog/unverified/")
