@@ -15,12 +15,7 @@ def coffee(request):
 
 def index_render(request):
     template = "homepage/main.html"
-    items = (
-        catalog.models.Item.objects.filter(is_on_main=True)
-        .select_related("category")
-        .prefetch_related("tags")
-        .order_by("name")
-    )
+    items = catalog.models.Item.objects.on_main()
     context = {
         "items": items,
     }

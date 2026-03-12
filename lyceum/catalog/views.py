@@ -1,22 +1,16 @@
 __all__ = ()
 
-import datetime
-import random
-
 import django.db.models
 import django.shortcuts
-from django.utils import timezone
 
-import catalog.models
-
-ITEMS_PER_PAGE = 5
+from catalog.models import Category, Image, Item
 
 
 def item_list(request):
     template = "catalog/item_list.html"
-    items = catalog.models.Item.objects.published().order_by(
-        "category__name",
-        "name",
+    items = Item.objects.published().order_by(
+        f"{Item.category.field.name}__{Category.name.field.name}",
+        Item.name.field.name,
     )
 
     context = {
@@ -26,12 +20,12 @@ def item_list(request):
 
 
 def item_detail(request, pk):
-    queryset = catalog.models.Item.objects.published().prefetch_related(
+    queryset = Item.objects.published().prefetch_related(
         django.db.models.Prefetch(
-            catalog.models.Item.images.field.related_query_name(),
-            queryset=catalog.models.Image.objects.only(
-                catalog.models.Image.image.field.name,
-                catalog.models.Image.item_id.field.name,
+            Item.images.field.related_query_name(),
+            queryset=Image.objects.only(
+                Image.image.field.name,
+                Image.item_id.field.name,
             ),
         ),
     )
@@ -48,15 +42,7 @@ def item_detail(request, pk):
 
 
 def new_items(request):
-    last_week = timezone.now() - datetime.timedelta(days=7)
-    ids = list(
-        catalog.models.Item.objects.published()
-        .filter(created__gte=last_week)
-        .values_list("id", flat=True),
-    )
-
-    selected_ids = random.sample(ids, min(5, len(ids)))
-    items = catalog.models.Item.objects.published().filter(id__in=selected_ids)
+    items = Item.objects.new_items()
     return django.shortcuts.render(
         request,
         "catalog/item_list.html",
@@ -65,12 +51,7 @@ def new_items(request):
 
 
 def friday_items(request):
-    items = (
-        catalog.models.Item.objects.published()
-        .filter(updated__week_day=6)
-        .order_by("-updated")[:ITEMS_PER_PAGE]
-    )
-
+    items = Item.objects.friday_items()
     return django.shortcuts.render(
         request,
         "catalog/item_list.html",
@@ -79,8 +60,8 @@ def friday_items(request):
 
 
 def unverified_items(request):
-    items = catalog.models.Item.objects.published().filter(
-        created=django.db.models.F("updated"),
+    items = Item.objects.published().filter(
+        created=django.db.models.F(Item.updated.field.name),
     )
 
     return django.shortcuts.render(

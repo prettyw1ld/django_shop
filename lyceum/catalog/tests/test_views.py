@@ -2,7 +2,7 @@ __all__ = ()
 
 from django.test import Client, TestCase
 
-from catalog.models import Item
+from catalog.models import Image, Item, MainImage, Tag
 
 
 class CheckFieldTestCase(TestCase):
@@ -54,15 +54,15 @@ class CatalogItemsTests(CheckFieldTestCase):
             self.check_content_value(
                 item,
                 (
-                    "name",
-                    "text",
-                    "category_id",
+                    Item.name.field.name,
+                    Item.text.field.name,
+                    Item.category.field.attname,
                 ),
-                ("tags",),
+                (Item.tags.field.name,),
                 (
-                    "is_published",
-                    "image",
-                    "images",
+                    Item.is_published.field.name,
+                    MainImage.item.field.related_query_name(),
+                    Image.item.field.related_query_name(),
                 ),
             )
 
@@ -83,20 +83,20 @@ class DetailItemTests(CheckFieldTestCase):
         self.check_content_value(
             response.context["item"],
             (
-                "name",
-                "text",
-                "category_id",
+                Item.name.field.name,
+                Item.text.field.name,
+                Item.category.field.attname,
             ),
-            ("tags",),
+            (Item.tags.field.name,),
             (
-                "is_published",
-                "image",
-                "images",
+                Item.is_published.field.name,
+                MainImage.item.field.related_query_name(),
+                Image.item.field.related_query_name(),
             ),
         )
         self.check_content_value(
             response.context["item"].tags.all()[0],
-            ("name",),
+            (Tag.name.field.name,),
             (),
             (),
         )
@@ -131,15 +131,15 @@ class CatalogFridayItemsTests(CheckFieldTestCase):
             self.check_content_value(
                 item,
                 (
-                    "name",
-                    "text",
-                    "category_id",
+                    Item.name.field.name,
+                    Item.text.field.name,
+                    Item.category.field.attname,
                 ),
-                ("tags",),
+                (Item.tags.field.name,),
                 (
-                    "is_published",
-                    "image",
-                    "images",
+                    Item.is_published.field.name,
+                    MainImage.item.field.related_query_name(),
+                    Image.item.field.related_query_name(),
                 ),
             )
 
@@ -173,15 +173,15 @@ class CatalogNewItemsTests(CheckFieldTestCase):
             self.check_content_value(
                 item,
                 (
-                    "name",
-                    "text",
-                    "category_id",
+                    Item.name.field.name,
+                    Item.text.field.name,
+                    Item.category.field.attname,
                 ),
-                ("tags",),
+                (Item.tags.field.name,),
                 (
-                    "is_published",
-                    "image",
-                    "images",
+                    Item.is_published.field.name,
+                    MainImage.item.field.related_query_name(),
+                    Image.item.field.related_query_name(),
                 ),
             )
 
@@ -215,14 +215,14 @@ class CatalogUnverifiedNewItemsTests(CheckFieldTestCase):
             self.check_content_value(
                 item,
                 (
-                    "name",
-                    "text",
-                    "category_id",
+                    Item.name.field.name,
+                    Item.text.field.name,
+                    Item.category.field.attname,
                 ),
-                ("tags",),
+                (Item.tags.field.name,),
                 (
-                    "is_published",
-                    "image",
-                    "images",
+                    Item.is_published.field.name,
+                    MainImage.item.field.related_query_name(),
+                    Image.item.field.related_query_name(),
                 ),
             )

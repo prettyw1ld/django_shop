@@ -1,51 +1,21 @@
 __all__ = ("Item", "Tag", "Category", "Image", "MainImage")
 
+import django.contrib.admin
 import django.core.validators
 import django.db.models
 from django.utils.safestring import mark_safe
 from django_ckeditor_5.fields import CKEditor5Field
-from sorl.thumbnail import get_thumbnail
 
+from catalog.managers import ItemsManager
 from catalog.validators import WordsValidator
-from core.models import (
-    NormalizedNameMixin,
-    PublishedBaseModel,
+from core.managers import (
     PublishedManager,
 )
-
-
-def item_directory_path(instance, filename):
-    return f"catalog/{instance.item.id}/{filename}"
-
-
-class ImageBaseModel(django.db.models.Model):
-    image = django.db.models.ImageField(
-        "изображение",
-        upload_to=item_directory_path,
-        default=None,
-    )
-
-    class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.image.name
-
-    def get_image_300x300(self):
-        return get_thumbnail(
-            self.image,
-            "300x300",
-            crop="center",
-            quality=51,
-        )
-
-    def get_image_50x50(self):
-        return get_thumbnail(
-            self.image,
-            "50x50",
-            crop="center",
-            quality=51,
-        )
+from core.models import (
+    ImageBaseModel,
+    NormalizedNameMixin,
+    PublishedBaseModel,
+)
 
 
 class Tag(PublishedBaseModel, NormalizedNameMixin):
@@ -71,7 +41,7 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
         verbose_name="слаг",
         help_text="Максимум 200 символов",
     )
-    weight = django.db.models.IntegerField(
+    weight = django.db.models.PositiveSmallIntegerField(
         default=100,
         validators=[
             django.core.validators.MinValueValidator(1),
@@ -85,25 +55,6 @@ class Category(PublishedBaseModel, NormalizedNameMixin):
         ordering = ("weight", "id")
         verbose_name = "категория"
         verbose_name_plural = "категории"
-
-
-class ItemsManager(PublishedManager):
-    def published(self):
-        tags_prefetch = django.db.models.Prefetch(
-            "tags",
-            queryset=Tag.objects.published().only("name"),
-        )
-
-        return (
-            self.get_queryset()
-            .filter(is_published=True, category__is_published=True)
-            .select_related("category")
-            .prefetch_related(tags_prefetch)
-            .only("id", "name", "text", "category__id", "category__name")
-        )
-
-    def on_main(self):
-        return self.published().filter(is_on_main=True).order_by("name")
 
 
 class Item(PublishedBaseModel):
@@ -141,6 +92,7 @@ class Item(PublishedBaseModel):
         auto_now_add=True,
         null=True,
     )
+
     objects = ItemsManager()
 
     class Meta:

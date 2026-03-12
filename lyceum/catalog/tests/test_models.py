@@ -184,7 +184,7 @@ class ModelsTests(TestCase):
             test_category_1.save()
             test_category_2.full_clean()
             test_category_2.save()
-        except Exception:
+        except ValidationError:
             self.assertEqual(
                 Category.objects.count(),
                 categories_count + 1,
@@ -228,7 +228,7 @@ class ModelsTests(TestCase):
             test_tag_1.save()
             test_tag_2.full_clean()
             test_tag_2.save()
-        except Exception:
+        except ValidationError:
             self.assertEqual(
                 Tag.objects.count(),
                 tags_count + 1,
