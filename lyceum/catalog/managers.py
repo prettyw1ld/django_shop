@@ -32,7 +32,10 @@ class ItemsManager(PublishedManager):
         return (
             published.select_related(Item.category.field.name)
             .prefetch_related(tags_prefetch)
-            .defer(Item.is_published.field.name)
+            .defer(
+                Item.is_published.field.name,
+                Item.is_on_main.field.name,
+            )
         )
 
     def on_main(self):

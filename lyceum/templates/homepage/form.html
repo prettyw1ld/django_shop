@@ -12,11 +12,9 @@
     {% endfor %}
   {% endif %}
 
-  <form method="post">
+  <form action="{% url 'homepage:echo_submit' %}" method="post">
     {% csrf_token %}
-    <ul>
-      {{ form.as_ul }}
-    </ul>
-    <button type="submit" class="btn btn-primary">Отправить</button>
-  </form>
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
+</form>
 {% endblock %}

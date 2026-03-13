@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+__all__ = ()
+
 import os
 import sys
 

@@ -25,23 +25,26 @@ def index_render(request):
 
 def form(request):
     template = "homepage/form.html"
-    form = homepage.forms.TextForm(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        text = form.cleaned_data["text"]
-        return django.shortcuts.redirect(
-            f'{django.shortcuts.reverse("homepage:echo-submit")}?text={text}',
-        )
-
-    context = {
-        "form": form,
-    }
+    form = homepage.forms.TextForm()
+    context = {"form": form}
     return django.shortcuts.render(request, template, context)
 
 
 def echo_submit(request):
-    text = request.GET.get("text")
+    if request.method != "POST":
+        return django.http.HttpResponseNotAllowed(["POST"])
+
+    form = homepage.forms.TextForm(request.POST)
+    if form.is_valid():
+        text = form.cleaned_data["text"]
+        return django.http.HttpResponse(
+            text,
+            content_type="text/plain; charset=utf-8",
+            status=HTTPStatus.OK,
+        )
+
     return django.http.HttpResponse(
-        text,
+        "Invalid form data",
+        status=HTTPStatus.BAD_REQUEST,
         content_type="text/plain; charset=utf-8",
-        status=HTTPStatus.OK,
     )
