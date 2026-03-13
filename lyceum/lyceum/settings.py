@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 
 DJANGO_MAIL = os.getenv("DJANGO_MAIL", "from@example.com")
 DEBUG = load_bool("DJANGO_DEBUG", False)
-ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", False)
+ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 

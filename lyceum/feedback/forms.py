@@ -25,5 +25,9 @@ class FeedbackForm(django.forms.ModelForm):
             "mail": "max 150 символов",
         }
         widgets = {
-            "text": django.forms.Textarea(attrs={"rows": 5}),
+            "text": django.forms.Textarea(
+                attrs={"rows": 5, "class": "form-control"},
+            ),
+            "name": django.forms.TextInput(attrs={"class": "form-control"}),
+            "mail": django.forms.EmailInput(attrs={"class": "form-control"}),
         }

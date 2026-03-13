@@ -21,13 +21,9 @@
       <a class="nav-link" href='{% url "catalog:item-list" %}'>{% translate "Список товаров" %}</a>
     {% endif %}
   </li>
-      <li class="nav-item">
-      {% if view_name == "feedback:feedback" %}
-        <span class="nav-link active">{% translate "Обратная связь" %}</span>
-      {% else %}
-        <a class="nav-link" href='{% url "feedback:feedback" %}'>{% translate "Обратная связь" %}</a>
-      {% endif %}
-    </li>
+  <li class="nav-item">
+    <a class="nav-link" href='{% url "feedback:feedback" %}'>{% translate "Обратная связь" %}</a>
+  </li>
   {% if request.user.is_authenticated and request.user.is_staff %}
     <li class="nav-item">
       {% if view_name == "admin:index" %}

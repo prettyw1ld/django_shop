@@ -2,31 +2,41 @@ __all__ = ()
 
 import re
 
-from django.conf import settings
+import django.conf
 
 RUSSIAN_WORD_REGEX = re.compile(r"[а-яА-ЯёЁ]+")
 
 
 class ReverseRussianMiddleware:
+    cnt = 0
+
     def __init__(self, get_response):
         self.get_response = get_response
 
+    @classmethod
+    def check_need_reverse(cls):
+        if not django.conf.settings.ALLOW_REVERSE:
+            return False
+
+        cls.cnt += 1
+        if cls.cnt != 10:
+            return False
+
+        cls.cnt = 0
+        return True
+
     def __call__(self, request):
+        if not self.check_need_reverse():
+            return self.get_response(request)
+
         response = self.get_response(request)
+        content = response.content.decode(response.charset)
 
-        if not getattr(settings, "ALLOW_REVERSE", False):
-            return response
+        def replace_func(match):
+            word = match.group()
+            return word[::-1]
 
-        content_type = response.get("Content-Type", "")
-        if "text/html" in content_type or "text/plain" in content_type:
-            content = response.content.decode(response.charset)
+        transformed = RUSSIAN_WORD_REGEX.sub(replace_func, content)
 
-            def replace_func(match):
-                return match.group()[::-1]
-
-            transformed = RUSSIAN_WORD_REGEX.sub(replace_func, content)
-            response.content = transformed.encode(response.charset)
-            if "Content-Length" in response:
-                response["Content-Length"] = str(len(response.content))
-
+        response.content = transformed.encode("utf-8")
         return response

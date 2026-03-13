@@ -4,6 +4,7 @@ from http import HTTPStatus
 
 import django.http
 import django.shortcuts
+from django.views.decorators.http import require_GET, require_POST
 
 import catalog.models
 import homepage.forms
@@ -23,6 +24,7 @@ def index_render(request):
     return django.shortcuts.render(request, template, context)
 
 
+@require_GET
 def form(request):
     template = "homepage/form.html"
     form = homepage.forms.TextForm()
@@ -30,10 +32,8 @@ def form(request):
     return django.shortcuts.render(request, template, context)
 
 
+@require_POST
 def echo_submit(request):
-    if request.method != "POST":
-        return django.http.HttpResponseNotAllowed(["POST"])
-
     form = homepage.forms.TextForm(request.POST)
     if form.is_valid():
         text = form.cleaned_data["text"]

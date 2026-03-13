@@ -99,7 +99,7 @@ class TestModel(TestCase):
             data=form_data,
         )
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(feedback.models.Feedback.objects.count(), 1)
 
         fb = feedback.models.Feedback.objects.first()
