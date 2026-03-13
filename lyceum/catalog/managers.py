@@ -24,11 +24,15 @@ class ItemsManager(PublishedManager):
             ),
         )
 
+        published = self.get_queryset().filter(
+            is_published=True,
+            category__is_published=True,
+        )
+
         return (
-            self.get_queryset()
-            .filter(is_published=True, category__is_published=True)
-            .select_related(Item.category.field.name)
+            published.select_related(Item.category.field.name)
             .prefetch_related(tags_prefetch)
+            .defer(Item.is_published.field.name)
         )
 
     def on_main(self):

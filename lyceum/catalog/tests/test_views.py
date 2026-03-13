@@ -79,7 +79,7 @@ class DetailItemTests(CheckFieldTestCase):
         self.assertIsInstance(response.context["item"], Item)
 
     def test_items_loaded_values(self):
-        response = Client().get("/catalog/")
+        response = Client().get("/catalog/1/")
         self.check_content_value(
             response.context["item"],
             (
