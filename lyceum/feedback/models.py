@@ -13,7 +13,7 @@ class Feedback(django.db.models.Model):
     text = django.db.models.TextField(
         verbose_name="обратная связь",
         help_text="Напишите в этом поле все то,"
-        + " что хотели бы сказать разработчикам",
+        " что хотели бы сказать разработчикам",
     )
     created_on = django.db.models.DateTimeField(
         verbose_name="время создания",

@@ -1,3 +1,5 @@
+__all__ = ()
+
 import datetime
 import random
 
@@ -27,13 +29,6 @@ class ItemsManager(PublishedManager):
             .filter(is_published=True, category__is_published=True)
             .select_related(Item.category.field.name)
             .prefetch_related(tags_prefetch)
-            .only(
-                Item.id.field.name,
-                Item.name.field.name,
-                Item.text.field.name,
-                f"{Item.category.field.name}__id",
-                f"{Item.category.field.name}__name",
-            )
         )
 
     def on_main(self):
@@ -56,25 +51,22 @@ class ItemsManager(PublishedManager):
         )
 
         selected_ids = random.sample(ids, min(5, len(ids)))
-        items = Item.objects.published().filter(id__in=selected_ids)
-        return items
+        return Item.objects.published().filter(id__in=selected_ids)
 
     def friday_items(self):
         from catalog.models import Item
 
-        items = (
-            Item.objects.published()
-            .filter(updated__week_day=6)
-            .order_by(django.db.models.F(Item.updated.field.name).desc())[
-                :ITEMS_PER_PAGE
-            ]
+        published_items = Item.objects.published()
+        filtered_items = published_items.filter(updated__week_day=6)
+        ordered_items = filtered_items.order_by(
+            django.db.models.F(Item.updated.field.name).desc(),
         )
-        return items
+
+        return ordered_items[:ITEMS_PER_PAGE]
 
     def unverified_items(self):
         from catalog.models import Item
 
-        items = Item.objects.published().filter(
+        return Item.objects.published().filter(
             created=django.db.models.F(Item.updated.field.name),
         )
-        return items

@@ -44,6 +44,7 @@ class NormalizedNameMixin(django.db.models.Model):
             raise django.core.exceptions.ValidationError(
                 "Уже есть такой же элемент",
             )
+
         return super().clean()
 
     def _unify_similar_chars(self, text):
@@ -58,6 +59,7 @@ class NormalizedNameMixin(django.db.models.Model):
         }
         for wrong, correct in replacements.items():
             text = text.replace(wrong, correct)
+
         return text
 
     def _generate_canonical_name(self):
@@ -66,6 +68,7 @@ class NormalizedNameMixin(django.db.models.Model):
             transliterated = transliterate.translit(unified, reversed=True)
         except transliterate.exceptions.LanguageDetectionError:
             transliterated = unified
+
         return ONLY_LETTERS_REGEX.sub("", transliterated)
 
     def _save_table(self, *args, **kwargs):

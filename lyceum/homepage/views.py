@@ -29,7 +29,7 @@ def form(request):
     if request.method == "POST" and form.is_valid():
         text = form.cleaned_data["text"]
         return django.shortcuts.redirect(
-            f"{django.shortcuts.reverse("homepage:echo-submit")}?text={text}",
+            f'{django.shortcuts.reverse("homepage:echo-submit")}?text={text}',
         )
 
     context = {

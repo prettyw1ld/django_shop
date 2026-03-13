@@ -106,6 +106,7 @@ class Item(PublishedBaseModel):
             tmb = self.main_image.get_image_50x50()
             if tmb:
                 return mark_safe(f'<img src="{tmb.url}">')
+
         return "Нет изображения"
 
 

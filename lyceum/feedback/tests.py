@@ -30,7 +30,7 @@ class FormTests(TestCase):
         self.assertEqual(
             name_label,
             "Напишите в этом поле все то,"
-            + " что хотели бы сказать разработчикам",
+            " что хотели бы сказать разработчикам",
         )
 
     def test_mail_help_text(self):
@@ -70,6 +70,7 @@ class TestModel(TestCase):
             )
             self.form.full_clean()
             self.form.save()
+
         self.assertEqual(items_count, items_count)
 
     def test_able_create_one_feedback(self):

@@ -34,6 +34,7 @@ class TestModel(TestCase):
             self.item.full_clean()
             self.item.save()
             self.item.tags.add(TestModel.tag)
+
         self.assertEqual(Item.objects.count(), item_count)
 
     def test_able_create_one_letter(self):

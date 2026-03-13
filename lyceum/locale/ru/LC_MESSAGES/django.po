@@ -31,8 +31,8 @@ msgstr "О проекте"
 
 #: .\templates\includes\active_nav.html:19
 #: .\templates\includes\active_nav.html:21
-msgid "Каталог"
-msgstr "Каталог"
+msgid "Список товаров"
+msgstr "Список товаров"
 
 #: .\templates\includes\header.html:7
 msgid "амир"

@@ -29,7 +29,7 @@ msgstr "About"
 
 #: .\templates\includes\active_nav.html:19
 #: .\templates\includes\active_nav.html:21
-msgid "Каталог"
+msgid "Список товаров"
 msgstr "Catalog"
 
 #: .\templates\includes\header.html:7
