@@ -1,6 +1,7 @@
 __all__ = ()
 
 import django.forms
+
 from feedback.models import Feedback
 
 
@@ -12,7 +13,7 @@ class FeedbackForm(django.forms.ModelForm):
 
     class Meta:
         model = Feedback
-        exclude = ("created_on",)
+        exclude = ("created_on", "status")
         labels = {
             "name": "Имя",
             "text": "Обратная связь",

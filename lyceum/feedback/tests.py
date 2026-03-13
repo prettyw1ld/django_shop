@@ -3,6 +3,7 @@ __all__ = ()
 from django.core.exceptions import ValidationError
 from django.test import Client, TestCase
 import django.urls
+
 import feedback.forms
 import feedback.models
 
@@ -86,3 +87,21 @@ class TestModel(TestCase):
             feedback.models.Feedback.objects.count(),
             items_count + 1,
         )
+
+    def test_feedback_creates_db_entry(self):
+        form_data = {
+            "name": "Ivan",
+            "text": "Тестовый текст",
+            "mail": "test@example.com",
+        }
+        response = self.client.post(
+            django.urls.reverse("feedback:feedback"),
+            data=form_data,
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(feedback.models.Feedback.objects.count(), 1)
+
+        fb = feedback.models.Feedback.objects.first()
+        self.assertEqual(fb.name, "Ivan")
+        self.assertEqual(fb.status, "received")

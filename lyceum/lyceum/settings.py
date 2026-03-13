@@ -25,7 +25,7 @@ def load_bool(name, default):
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 
-DEFAULT_FROM_EMAIL = os.getenv("DJANGO_MAIL", "from@example.com")
+DJANGO_MAIL = os.getenv("DJANGO_MAIL", "from@example.com")
 DEBUG = load_bool("DJANGO_DEBUG", False)
 ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", False)
 
@@ -132,7 +132,7 @@ FIXTURE_DIRS = [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = BASE_DIR / "sent_mail"
+EMAIL_FILE_PATH = BASE_DIR / "send_mail"
 
 USE_I18N = True
 LANGUAGE_CODE = "ru"

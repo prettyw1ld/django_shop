@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
+
 from feedback.forms import FeedbackForm
 
 
@@ -16,7 +17,7 @@ def feedback(request):
             send_mail(
                 subject="Feedback Message",
                 message=fb.text,
-                from_email=settings.DEFAULT_FROM_EMAIL,
+                from_email=settings.DJANGO_MAIL,
                 recipient_list=[fb.mail],
                 fail_silently=False,
             )
