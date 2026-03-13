@@ -12,13 +12,13 @@ def feedback(request):
     if request.method == "POST":
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            fb = form.save()
-
+            cleaned_data = form.cleaned_data
+            form.save()
             send_mail(
                 subject="Feedback Message",
-                message=fb.text,
+                message=cleaned_data["text"],
                 from_email=settings.DJANGO_MAIL,
-                recipient_list=[fb.mail],
+                recipient_list=[cleaned_data["mail"]],
                 fail_silently=False,
             )
 

@@ -105,3 +105,13 @@ class TestModel(TestCase):
         fb = feedback.models.Feedback.objects.first()
         self.assertEqual(fb.name, "Ivan")
         self.assertEqual(fb.status, "received")
+
+    def test_invalid_email_error(self):
+        form_data = {
+            "name": "Ivan",
+            "text": "Hello",
+            "mail": "not-an-email",
+        }
+        form = feedback.forms.FeedbackForm(data=form_data)
+        self.assertFalse(form.is_valid())
+        self.assertIn("mail", form.errors)
