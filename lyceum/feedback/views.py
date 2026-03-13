@@ -8,27 +8,22 @@ from feedback.forms import FeedbackForm
 
 
 def feedback(request):
-    template = "feedback/feedback.html"
-    form = FeedbackForm(request.POST or None)
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            fb = form.save()
 
-    if form.is_valid():
-        name = form.cleaned_data.get("name")
-        text = form.cleaned_data.get("text")
-        mail = form.cleaned_data.get("mail")
+            send_mail(
+                subject="Feedback Message",
+                message=fb.text,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[fb.mail],
+                fail_silently=False,
+            )
 
-        full_message = f"Привет, {name}!\n\nТекст отправителя: {text}"
+            messages.success(request, "Спасибо за отзыв!")
+            return redirect("feedback:feedback")
+    else:
+        form = FeedbackForm()
 
-        send_mail(
-            subject="Обратная связь",
-            message=full_message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[mail],
-        )
-
-        messages.success(request, "Форма успешно отправлена!")
-        return redirect("feedback:feedback")
-
-    context = {
-        "form": form,
-    }
-    return render(request, template, context)
+    return render(request, "feedback/feedback.html", {"form": form})

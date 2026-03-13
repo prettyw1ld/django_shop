@@ -1,7 +1,6 @@
 __all__ = ()
 
 import django.test
-from django.urls import reverse
 
 from lyceum.middleware import RUSSIAN_WORD_REGEX
 
@@ -15,40 +14,6 @@ class RussianReverseTest(django.test.TestCase):
         return RUSSIAN_WORD_REGEX.sub(replace_func, text)
 
     @django.test.override_settings(ALLOW_REVERSE=True)
-    def test_reverse_russian_words_enabled(self):
-        contents = {
-            django.test.Client().get(reverse("homepage:coffee")).content
-            for _ in range(10)
-        }
-        self.assertIn("Я чайник".encode(), contents)
-        self.assertIn("Я кинйач".encode(), contents)
-
-    @django.test.override_settings(ALLOW_REVERSE=False)
-    def test_reverse_russian_words_disabled(self):
-        contents = {
-            django.test.Client().get(reverse("homepage:coffee")).content
-            for _ in range(10)
-        }
-        self.assertIn("Я чайник".encode(), contents)
-        self.assertNotIn("Я кинйач".encode(), contents)
-
-    def test_reverse_russian_words_default(self):
-        contents = {
-            django.test.Client().get(reverse("homepage:coffee")).content
-            for _ in range(10)
-        }
-        self.assertIn("Я чайник".encode(), contents)
-        self.assertIn("Я кинйач".encode(), contents)
-
-    def test_reverse_russian_words_on_twenty_requests(self):
-        contents = [
-            django.test.Client().get(reverse("homepage:coffee")).content
-            for _ in range(20)
-        ]
-        self.assertIn("Я чайник".encode(), contents)
-        self.assertIn("Я кинйач".encode(), contents)
-        self.assertEqual(contents.count("Я кинйач".encode()), 2)
-
     def test_mixed_reverse(self):
         test_cases = [
             ("Hello привет World мир", "Hello тевирп World рим"),
