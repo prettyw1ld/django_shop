@@ -115,3 +115,21 @@ class TestModel(TestCase):
         form = feedback.forms.FeedbackForm(data=form_data)
         self.assertFalse(form.is_valid())
         self.assertIn("mail", form.errors)
+
+    def test_uneble_create_feedback(self):
+        item_count = feedback.models.Feedback.objects.count()
+        form_data = {
+            "name": "Test",
+            "text": "Test",
+            "mail": "Test",
+        }
+        response = self.client.post(
+            django.urls.reverse("feedback:feedback"),
+            data=form_data,
+            follow=True,
+        )
+        self.assertTrue(response.context["form"].has_error("mail"))
+        self.assertEqual(
+            feedback.models.Feedback.objects.count(),
+            item_count,
+        )

@@ -8,8 +8,12 @@ from feedback.models import Feedback
 class FeedbackForm(django.forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field in self.fields.values():
-            field.widget.attrs["class"] = "form-control"
+        for field_name, field in self.fields.items():
+            css_classes = "form-control"
+            if self.errors.get(field_name):
+                css_classes += " is-invalid"
+
+            field.widget.attrs.update({"class": css_classes})
 
     class Meta:
         model = Feedback
