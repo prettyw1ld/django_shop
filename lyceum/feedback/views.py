@@ -10,7 +10,7 @@ from feedback.forms import FeedbackForm
 
 def feedback(request):
     if request.method == "POST":
-        form = FeedbackForm(request.POST)
+        form = FeedbackForm(request.POST or None)
         if form.is_valid():
             cleaned_data = form.cleaned_data
             form.save()

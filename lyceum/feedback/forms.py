@@ -8,16 +8,12 @@ from feedback.models import Feedback
 class FeedbackForm(django.forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            css_classes = "form-control"
-            if self.errors.get(field_name):
-                css_classes += " is-invalid"
-
-            field.widget.attrs.update({"class": css_classes})
+        for field in self.visible_fields():
+            field.field.widget.attrs["class"] = "form-control"
 
     class Meta:
         model = Feedback
-        exclude = ("created_on", "status")
+        exclude = ("id", "created_on", "status")
         labels = {
             "name": "Имя",
             "text": "Обратная связь",
@@ -27,11 +23,4 @@ class FeedbackForm(django.forms.ModelForm):
             "text": "Напишите в этом поле все то, "
             "что хотели бы сказать разработчикам",
             "mail": "max 150 символов",
-        }
-        widgets = {
-            "text": django.forms.Textarea(
-                attrs={"rows": 5, "class": "form-control"},
-            ),
-            "name": django.forms.TextInput(attrs={"class": "form-control"}),
-            "mail": django.forms.EmailInput(attrs={"class": "form-control"}),
         }
