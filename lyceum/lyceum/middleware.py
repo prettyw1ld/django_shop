@@ -4,6 +4,7 @@ import re
 
 import django.conf
 
+WORDS_REGEX = re.compile(r"\w+|\W+")
 RUSSIAN_WORD_REGEX = re.compile(r"[а-яА-ЯёЁ]+")
 
 
@@ -30,13 +31,13 @@ class ReverseRussianMiddleware:
             return self.get_response(request)
 
         response = self.get_response(request)
-        content = response.content.decode(response.charset)
+        content = response.content.decode()
+        words = WORDS_REGEX.findall(content)
 
-        def replace_func(match):
-            word = match.group()
-            return word[::-1]
+        transformed = [
+            word[::-1] if RUSSIAN_WORD_REGEX.search(word) else word
+            for word in words
+        ]
 
-        transformed = RUSSIAN_WORD_REGEX.sub(replace_func, content)
-
-        response.content = transformed.encode("utf-8")
+        response.content = "".join(transformed).encode("utf-8")
         return response
