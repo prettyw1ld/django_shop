@@ -13,11 +13,9 @@
     {% endfor %}
   {% endif %}
 
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    <ul>
-      {{ form.as_ul }}
-    </ul>
-    <button type="submit" class="btn btn-primary">Отправить</button>
+    {{ form.as_p }}
+    <button type="submit">Отправить</button>
   </form>
 {% endblock %}

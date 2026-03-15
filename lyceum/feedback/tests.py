@@ -1,6 +1,6 @@
 __all__ = ()
 
-from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase
 import django.urls
 
@@ -61,53 +61,6 @@ class TestModel(TestCase):
     def setUpClass(cls):
         super().setUpClass()
 
-    def test_unable_create_one_feedback(self):
-        items_count = feedback.models.Feedback.objects.count()
-        with self.assertRaises(ValidationError):
-            self.form = feedback.models.Feedback(
-                name="Зульфия",
-                text="Ну ничо такой сайтик да",
-                mail="zulfiyagmail.com",
-            )
-            self.form.full_clean()
-            self.form.save()
-
-        self.assertEqual(items_count, items_count)
-
-    def test_able_create_one_feedback(self):
-        items_count = feedback.models.Feedback.objects.count()
-        self.form = feedback.models.Feedback(
-            name="Зульфия",
-            text="Ну ничо такой сайтик да",
-            mail="zulfiya@gmail.com",
-        )
-        self.form.full_clean()
-        self.form.save()
-        self.assertEqual(
-            feedback.models.Feedback.objects.count(),
-            items_count + 1,
-        )
-
-    def test_feedback_creates_db_entry(self):
-        form_data = {
-            "name": "Ivan",
-            "text": "Тестовый текст",
-            "mail": "test@example.com",
-        }
-        response = self.client.post(
-            django.urls.reverse("feedback:feedback"),
-            data=form_data,
-        )
-
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(feedback.models.Feedback.objects.count(), 1)
-
-        fb = feedback.models.Feedback.objects.first()
-        self.assertEqual(fb.name, "Ivan")
-        self.assertEqual(fb.status, "received")
-        self.assertEqual(fb.mail, "test@example.com")
-        self.assertEqual(fb.text, "Тестовый текст")
-
     def test_invalid_email_error(self):
         form_data = {
             "name": "Ivan",
@@ -136,18 +89,41 @@ class TestModel(TestCase):
             item_count,
         )
 
-    def test_specific_feedback_creation(self):
-        test_feedback = feedback.models.Feedback.objects.create(
-            name="Петр Петров",
-            text="Отличный сайт, спасибо!",
-            mail="petr@example.com",
+
+class FeedbackFileTests(TestCase):
+    def test_file_upload_and_db_structure(self):
+        file1 = SimpleUploadedFile("test_file1.txt", b"content1")
+        file2 = SimpleUploadedFile("test_file2.txt", b"content2")
+
+        form_data = {
+            "name": "Тестер",
+            "mail": "test@example.com",
+            "text": "Проверка загрузки файлов",
+            "files": [file1, file2],
+        }
+
+        response = self.client.post(
+            django.urls.reverse("feedback:feedback"),
+            data=form_data,
+            follow=True,
         )
 
-        saved_feedback = feedback.models.Feedback.objects.get(
-            id=test_feedback.id,
-        )
+        self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(saved_feedback.name, "Петр Петров")
-        self.assertEqual(saved_feedback.text, "Отличный сайт, спасибо!")
-        self.assertEqual(saved_feedback.mail, "petr@example.com")
-        self.assertEqual(saved_feedback.status, "received")
+        self.assertEqual(
+            feedback.models.FeedbackPersonalData.objects.count(),
+            1,
+        )
+        self.assertEqual(feedback.models.Feedback.objects.count(), 1)
+
+        fb = feedback.models.Feedback.objects.first()
+        personal = feedback.models.FeedbackPersonalData.objects.first()
+
+        self.assertEqual(fb.personal_data, personal)
+        self.assertEqual(personal.mail, "test@example.com")
+
+        self.assertEqual(fb.files.count(), 2)
+
+        first_file = fb.files.first()
+        expected_path_part = f"uploads/{fb.id}/"
+        self.assertTrue(first_file.file.name.startswith(expected_path_part))
