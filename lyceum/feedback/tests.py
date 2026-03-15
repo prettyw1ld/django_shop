@@ -105,6 +105,8 @@ class TestModel(TestCase):
         fb = feedback.models.Feedback.objects.first()
         self.assertEqual(fb.name, "Ivan")
         self.assertEqual(fb.status, "received")
+        self.assertEqual(fb.mail, "test@example.com")
+        self.assertEqual(fb.text, "Тестовый текст")
 
     def test_invalid_email_error(self):
         form_data = {
@@ -116,7 +118,7 @@ class TestModel(TestCase):
         self.assertFalse(form.is_valid())
         self.assertIn("mail", form.errors)
 
-    def test_uneble_create_feedback(self):
+    def test_unable_create_feedback(self):
         item_count = feedback.models.Feedback.objects.count()
         form_data = {
             "name": "Test",

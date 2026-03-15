@@ -25,4 +25,4 @@ class FeedbackAdmin(django.contrib.admin.ModelAdmin):
 
 @django.contrib.admin.register(StatusLog)
 class StatusAdmin(django.contrib.admin.ModelAdmin):
-    list_display = ("user", "from_status", "to_status")
+    list_display = ("user", "from_status", "to")

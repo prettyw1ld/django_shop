@@ -45,7 +45,7 @@ class StatusLog(django.db.models.Model):
         max_length=20,
         db_column="from",
     )
-    to_status = django.db.models.CharField(
+    to = django.db.models.CharField(
         max_length=20,
         db_column="to",
     )
