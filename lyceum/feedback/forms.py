@@ -2,16 +2,19 @@ __all__ = ()
 
 import django.forms
 
-from feedback.models import Feedback
+from feedback.models import Feedback, FeedbackPersonalData
 
 
-class MultipleFileInput(django.forms.ClearableFileInput):
+class MultipleFileInput(django.forms.FileInput):
     allow_multiple_selected = True
 
 
 class MultipleFileField(django.forms.FileField):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput())
+        kwargs.setdefault(
+            "widget",
+            MultipleFileInput(attrs={"multiple": True}),
+        )
         super().__init__(*args, **kwargs)
 
     def clean(self, data, initial=None):
@@ -22,27 +25,19 @@ class MultipleFileField(django.forms.FileField):
         return single_file_clean(data, initial)
 
 
-class FeedbackForm(django.forms.ModelForm):
-    name = django.forms.CharField(label="Имя", max_length=150, required=False)
-    mail = django.forms.EmailField(
-        label="Почта",
-        max_length=150,
-        help_text="max 150 символов",
-    )
-    files = MultipleFileField(label="Файлы", required=False)
+class PersonalDataForm(django.forms.ModelForm):
+    class Meta:
+        model = FeedbackPersonalData
+        exclude = ("id",)
+        labels = {"name": "Имя", "mail": "Почта"}
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for field in self.visible_fields():
-            field.field.widget.attrs["class"] = "form-control"
 
-        self.fields["files"].widget.attrs["multiple"] = True
-
+class FeedbackContentForm(django.forms.ModelForm):
     class Meta:
         model = Feedback
-        fields = ("text",)
+        exclude = ("id", "created_on", "status", "personal_data")
         labels = {"text": "Обратная связь"}
-        help_texts = {
-            "text": "Напишите в этом поле все то,"
-            " что хотели бы сказать разработчикам",
-        }
+
+
+class FeedbackFileForm(django.forms.Form):
+    files = MultipleFileField(label="Файлы", required=False)

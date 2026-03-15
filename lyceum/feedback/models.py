@@ -5,7 +5,7 @@ import django.db.models
 
 
 def get_upload_path(instance, filename):
-    return f"uploads/{instance.feedback.id}/{filename}"
+    return f"uploads/{instance.feedback_id}/{filename}"
 
 
 class FeedbackPersonalData(django.db.models.Model):

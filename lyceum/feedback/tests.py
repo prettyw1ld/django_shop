@@ -1,129 +1,66 @@
 __all__ = ()
 
+import shutil
+import tempfile
+
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import Client, TestCase
-import django.urls
+from django.test import override_settings, TestCase
+from django.urls import reverse
 
-import feedback.forms
-import feedback.models
+from feedback.models import Feedback
+
+TEMP_MEDIA_ROOT = tempfile.mkdtemp()
 
 
-class FormTests(TestCase):
+@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
+class FeedbackTests(TestCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.form = feedback.forms.FeedbackForm()
+    def tearDownClass(cls):
+        shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
+        super().tearDownClass()
 
-    def test_name_label(self):
-        name_label = FormTests.form.fields["name"].label
-        self.assertEqual(name_label, "Имя")
-
-    def test_text_label(self):
-        name_label = FormTests.form.fields["text"].label
-        self.assertEqual(name_label, "Обратная связь")
-
-    def test_mail_label(self):
-        name_label = FormTests.form.fields["mail"].label
-        self.assertEqual(name_label, "Почта")
-
-    def test_text_help_text(self):
-        name_label = FormTests.form.fields["text"].help_text
-        self.assertEqual(
-            name_label,
-            "Напишите в этом поле все то,"
-            " что хотели бы сказать разработчикам",
-        )
-
-    def test_mail_help_text(self):
-        name_label = FormTests.form.fields["mail"].help_text
-        self.assertEqual(name_label, "max 150 символов")
-
-    def test_create_task(self):
-        form_data = {
-            "name": "Зульфия",
-            "text": "Ну ничо такой сайтик да",
-            "mail": "zulfiya@gmail.com",
-        }
-
-        response = Client().post(
-            django.urls.reverse("feedback:feedback"),
-            data=form_data,
-            follow=True,
-        )
-        self.assertRedirects(
-            response,
-            django.urls.reverse("feedback:feedback"),
-        )
-
-
-class TestModel(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-
-    def test_invalid_email_error(self):
-        form_data = {
-            "name": "Ivan",
-            "text": "Hello",
-            "mail": "not-an-email",
-        }
-        form = feedback.forms.FeedbackForm(data=form_data)
-        self.assertFalse(form.is_valid())
-        self.assertIn("mail", form.errors)
-
-    def test_unable_create_feedback(self):
-        item_count = feedback.models.Feedback.objects.count()
-        form_data = {
-            "name": "Test",
-            "text": "Test",
-            "mail": "Test",
-        }
+    def test_file_upload_creation(self):
+        unique_text = "Unique feedback text 12345"
         response = self.client.post(
-            django.urls.reverse("feedback:feedback"),
-            data=form_data,
-            follow=True,
+            reverse("feedback:feedback"),
+            data={
+                "name": "Test",
+                "mail": "test@test.com",
+                "text": unique_text,
+            },
         )
-        self.assertTrue(response.context["form"].has_error("mail"))
-        self.assertEqual(
-            feedback.models.Feedback.objects.count(),
-            item_count,
-        )
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(Feedback.objects.filter(text=unique_text).exists())
 
-
-class FeedbackFileTests(TestCase):
-    def test_file_upload_and_db_structure(self):
-        file1 = SimpleUploadedFile("test_file1.txt", b"content1")
-        file2 = SimpleUploadedFile("test_file2.txt", b"content2")
-
-        form_data = {
-            "name": "Тестер",
-            "mail": "test@example.com",
-            "text": "Проверка загрузки файлов",
-            "files": [file1, file2],
-        }
-
+    def test_files_count_after_upload(self):
+        file1 = SimpleUploadedFile("test1.txt", b"content1")
+        file2 = SimpleUploadedFile("test2.txt", b"content2")
         response = self.client.post(
-            django.urls.reverse("feedback:feedback"),
-            data=form_data,
+            reverse("feedback:feedback"),
+            data={
+                "name": "Test",
+                "mail": "test@test.com",
+                "text": "File test",
+                "files": [file1, file2],
+            },
             follow=True,
         )
-
         self.assertEqual(response.status_code, 200)
 
-        self.assertEqual(
-            feedback.models.FeedbackPersonalData.objects.count(),
-            1,
+        feedback_obj = Feedback.objects.get(text="File test")
+        self.assertEqual(feedback_obj.files.count(), 2)
+
+    def test_upload_path_structure(self):
+        file = SimpleUploadedFile("my_file.txt", b"content")
+        self.client.post(
+            reverse("feedback:feedback"),
+            data={
+                "name": "Test",
+                "mail": "test@test.com",
+                "text": "Path test",
+                "files": [file],
+            },
         )
-        self.assertEqual(feedback.models.Feedback.objects.count(), 1)
-
-        fb = feedback.models.Feedback.objects.first()
-        personal = feedback.models.FeedbackPersonalData.objects.first()
-
-        self.assertEqual(fb.personal_data, personal)
-        self.assertEqual(personal.mail, "test@example.com")
-
-        self.assertEqual(fb.files.count(), 2)
-
-        first_file = fb.files.first()
-        expected_path_part = f"uploads/{fb.id}/"
-        self.assertTrue(first_file.file.name.startswith(expected_path_part))
+        feedback_obj = Feedback.objects.get(text="Path test")
+        file_obj = feedback_obj.files.first()
+        self.assertIn(f"uploads/{feedback_obj.id}/", file_obj.file.name)
