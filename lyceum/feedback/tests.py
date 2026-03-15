@@ -135,3 +135,19 @@ class TestModel(TestCase):
             feedback.models.Feedback.objects.count(),
             item_count,
         )
+
+    def test_specific_feedback_creation(self):
+        test_feedback = feedback.models.Feedback.objects.create(
+            name="Петр Петров",
+            text="Отличный сайт, спасибо!",
+            mail="petr@example.com",
+        )
+
+        saved_feedback = feedback.models.Feedback.objects.get(
+            id=test_feedback.id,
+        )
+
+        self.assertEqual(saved_feedback.name, "Петр Петров")
+        self.assertEqual(saved_feedback.text, "Отличный сайт, спасибо!")
+        self.assertEqual(saved_feedback.mail, "petr@example.com")
+        self.assertEqual(saved_feedback.status, "received")
