@@ -4,7 +4,7 @@ import shutil
 import tempfile
 
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import override_settings, TestCase
+from django.test import Client, override_settings, TestCase
 from django.urls import reverse
 
 from feedback.models import Feedback
@@ -64,3 +64,22 @@ class FeedbackTests(TestCase):
         feedback_obj = Feedback.objects.get(text="Path test")
         file_obj = feedback_obj.files.first()
         self.assertIn(f"uploads/{feedback_obj.id}/", file_obj.file.name)
+
+    def test_unable_create_feedback(self):
+        item_count = Feedback.objects.count()
+        form_data = {
+            "name": "Test",
+            "mail": "testtest.com",
+            "text": "Path test",
+        }
+
+        response = Client().post(
+            reverse("feedback:feedback"),
+            data=form_data,
+            follow=True,
+        )
+        self.assertTrue(response.context["form"].has_error("mail"))
+        self.assertEqual(
+            Feedback.objects.count(),
+            item_count,
+        )

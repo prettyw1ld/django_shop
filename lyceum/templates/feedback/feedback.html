@@ -16,13 +16,13 @@
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <h3>Личные данные</h3>
-    {{ form_author.as_p }}
+    {{ author.as_p }}
 
     <h3>Ваш отзыв</h3>
-    {{ form_content.as_p }}
+    {{ content.as_p }}
 
     <h3>Прикрепить файлы</h3>
-    {{ form_files.as_p }}
+    {{ files.as_p }}
     <button type="submit">Отправить</button>
   </form>
 {% endblock %}

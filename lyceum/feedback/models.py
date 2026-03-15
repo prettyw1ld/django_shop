@@ -4,8 +4,8 @@ from django.conf import settings
 import django.db.models
 
 
-def get_upload_path(instance, filename):
-    return f"uploads/{instance.feedback_id}/{filename}"
+def get_upload_path(self, filename):
+    return f"uploads/{self.feedback_id}/{filename}"
 
 
 class FeedbackPersonalData(django.db.models.Model):
