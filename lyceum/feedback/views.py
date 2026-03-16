@@ -14,17 +14,21 @@ from feedback.models import FeedbackFile
 
 
 def feedback(request):
-    author = PersonalDataForm()
-    content = FeedbackContentForm()
-    files = FeedbackFileForm()
+    author_form = PersonalDataForm()
+    content_form = FeedbackContentForm()
+    files_form = FeedbackFileForm()
 
     if request.method == "POST" or None:
-        author = PersonalDataForm(request.POST)
-        content = FeedbackContentForm(request.POST)
-        files = FeedbackFileForm(request.POST, request.FILES)
-        if author.is_valid() and content.is_valid() and files.is_valid():
-            personal_data = author.save()
-            feedback = content.save(commit=False)
+        author_form = PersonalDataForm(request.POST or None)
+        content_form = FeedbackContentForm(request.POST or None)
+        files_form = FeedbackFileForm(request.POST or None, request.FILES)
+        if (
+            author_form.is_valid()
+            and content_form.is_valid()
+            and files_form.is_valid()
+        ):
+            personal_data = author_form.save()
+            feedback = content_form.save(commit=False)
             feedback.personal_data = personal_data
             feedback.save()
             for f in request.FILES.getlist("files"):
@@ -32,9 +36,9 @@ def feedback(request):
 
             send_mail(
                 subject="Feedback Message",
-                message=content.cleaned_data["text"],
+                message=content_form.cleaned_data["text"],
                 from_email=settings.DJANGO_MAIL,
-                recipient_list=[author.cleaned_data["mail"]],
+                recipient_list=[author_form.cleaned_data["mail"]],
                 fail_silently=False,
             )
 
@@ -42,9 +46,9 @@ def feedback(request):
             return redirect("feedback:feedback")
 
     context = {
-        "author": author,
-        "content": content,
-        "files": files,
+        "author": author_form,
+        "content": content_form,
+        "files": files_form,
     }
 
     return render(request, "feedback/feedback.html", context)
