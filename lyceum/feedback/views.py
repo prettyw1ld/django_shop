@@ -14,21 +14,21 @@ from feedback.models import FeedbackFile
 
 
 def feedback(request):
-    post_data = request.POST if request.method == "POST" else None
-    files_data = request.FILES if request.method == "POST" else None
-    author = PersonalDataForm(post_data)
-    content = FeedbackContentForm(post_data)
-    files = FeedbackFileForm(post_data, files_data)
-    if request.method == "POST":
-        if author.is_valid() and content.is_valid() and files.is_valid():
-            personal_data_obj = author.save()
+    author = PersonalDataForm()
+    content = FeedbackContentForm()
+    files = FeedbackFileForm()
 
-            feedback_obj = content.save(commit=False)
-            feedback_obj.personal_data = personal_data_obj
-            feedback_obj.save()
-            files = request.FILES.getlist("files")
-            for f in files:
-                FeedbackFile.objects.create(feedback=feedback_obj, file=f)
+    if request.method == "POST" or None:
+        author = PersonalDataForm(request.POST)
+        content = FeedbackContentForm(request.POST)
+        files = FeedbackFileForm(request.POST, request.FILES)
+        if author.is_valid() and content.is_valid() and files.is_valid():
+            personal_data = author.save()
+            feedback = content.save(commit=False)
+            feedback.personal_data = personal_data
+            feedback.save()
+            for f in request.FILES.getlist("files"):
+                FeedbackFile.objects.create(feedback=feedback, file=f)
 
             send_mail(
                 subject="Feedback Message",

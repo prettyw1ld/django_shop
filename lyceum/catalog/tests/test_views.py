@@ -153,7 +153,7 @@ class CatalogNewItemsTests(CheckFieldTestCase):
 
     def test_new_items_size(self):
         response = Client().get("/catalog/new/")
-        self.assertEqual(len(response.context["items"]), 4)
+        self.assertEqual(len(response.context["items"]), 3)
 
     def test_new_items_types(self):
         response = Client().get("/catalog/new/")

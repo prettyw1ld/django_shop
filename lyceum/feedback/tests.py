@@ -1,23 +1,25 @@
 __all__ = ()
 
-import shutil
 import tempfile
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, override_settings, TestCase
 from django.urls import reverse
 
+import feedback.forms
 from feedback.models import Feedback
 
-TEMP_MEDIA_ROOT = tempfile.mkdtemp()
 
-
-@override_settings(MEDIA_ROOT=TEMP_MEDIA_ROOT)
+@override_settings(
+    MEDIA_ROOT=tempfile.TemporaryDirectory().name,
+)
 class FeedbackTests(TestCase):
     @classmethod
-    def tearDownClass(cls):
-        shutil.rmtree(TEMP_MEDIA_ROOT, ignore_errors=True)
-        super().tearDownClass()
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.form = feedback.forms.FeedbackContentForm()
+        cls.files_form = feedback.forms.FeedbackFileForm()
+        cls.author_form = feedback.forms.PersonalDataForm()
 
     def test_file_upload_creation(self):
         unique_text = "Unique feedback text 12345"
@@ -64,6 +66,14 @@ class FeedbackTests(TestCase):
         feedback_obj = Feedback.objects.get(text="Path test")
         file_obj = feedback_obj.files.first()
         self.assertIn(f"uploads/{feedback_obj.id}/", file_obj.file.name)
+
+    def test_name_label(self):
+        name_label = self.author_form.fields["name"].label
+        self.assertEqual(name_label, "Имя")
+
+    def test_help_text(self):
+        name_help_text = self.author_form.fields["name"].help_text
+        self.assertEqual(name_help_text, "Введите ваше имя")
 
     def test_unable_create_feedback(self):
         item_count = Feedback.objects.count()
