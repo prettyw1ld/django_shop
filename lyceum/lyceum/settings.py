@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "core.apps.CoreConfig",
     "download.apps.DownloadConfig",
     "feedback.apps.FeedbackConfig",
+    "users.apps.UsersConfig",
     # Не_мои_приложения
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",

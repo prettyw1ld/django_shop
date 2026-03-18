@@ -27,7 +27,7 @@ class FeedbackTests(TestCase):
             reverse("feedback:feedback"),
             data={
                 "name": "Test",
-                "mail": "test@test.com",
+                "mail": "popik@test.com",
                 "text": unique_text,
             },
         )
@@ -41,7 +41,7 @@ class FeedbackTests(TestCase):
             reverse("feedback:feedback"),
             data={
                 "name": "Test",
-                "mail": "test@test.com",
+                "mail": "denik@test.com",
                 "text": "File test",
                 "files": [file1, file2],
             },
@@ -58,7 +58,7 @@ class FeedbackTests(TestCase):
             reverse("feedback:feedback"),
             data={
                 "name": "Test",
-                "mail": "test@test.com",
+                "mail": "domir@test.com",
                 "text": "Path test",
                 "files": [file],
             },
