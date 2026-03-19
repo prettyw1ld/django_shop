@@ -1,6 +1,7 @@
 __all__ = ()
 
 import django.forms
+from django.utils.translation import gettext_lazy as _
 
 from feedback.models import Feedback, FeedbackPersonalData
 
@@ -36,10 +37,13 @@ class PersonalDataForm(CssModelForm):
     class Meta:
         model = FeedbackPersonalData
         exclude = ("id",)
-        labels = {"name": "Имя", "mail": "Почта"}
+        labels = {
+            "name": _("Имя"),
+            "mail": _("Почта"),
+        }
         help_texts = {
-            "name": "Введите ваше имя",
-            "mail": "Введите ваш email",
+            "name": _("Введите ваше имя"),
+            "mail": _("Введите ваш email"),
         }
 
 
@@ -47,9 +51,9 @@ class FeedbackContentForm(CssModelForm):
     class Meta:
         model = Feedback
         exclude = ("id", "created_on", "status", "personal_data")
-        labels = {"text": "Обратная связь"}
+        labels = {"text": _("Обратная связь")}
         help_texts = {
-            "text": "Напишите ваш отзыв",
+            "text": _("Напишите ваш отзыв"),
         }
 
 
@@ -60,7 +64,7 @@ class FeedbackFileForm(django.forms.Form):
             field.field.widget.attrs["class"] = "form-control"
 
     files = MultipleFileField(
-        label="Файлы",
+        label=_("Файлы"),
         required=False,
-        help_text="Прикрепите файлы к отзыву",
+        help_text=_("Прикрепите файлы к отзыву"),
     )

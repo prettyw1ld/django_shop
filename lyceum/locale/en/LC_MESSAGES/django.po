@@ -47,3 +47,54 @@ msgstr "Admin-panel"
 
 msgid "Обратная связь"
 msgstr "Feedback"
+
+msgid "Деник"
+msgstr "Denik"
+
+msgid "ЧаВо"
+msgstr "FAQs"
+
+msgid "Ценники"
+msgstr "Pricing"
+
+msgid "Медиа"
+msgstr "Media"
+
+msgid "Особенности"
+msgstr "Features"
+
+msgid "Подробнее"
+msgstr "Detail"
+
+msgid "Личные данные"
+msgstr "Personal information"
+
+msgid "Ваш отзыв"
+msgstr "Your feedback"
+
+msgid "Прикрепить файлы"
+msgstr "Add files"
+
+msgid "Отправить"
+msgstr "Send"
+
+msgid "Имя"
+msgstr "Name"
+
+msgid "Почта"
+msgstr "Email"
+
+msgid "Введите ваше имя"
+msgstr "Enter your name"
+
+msgid "Введите ваш email"
+msgstr "Enter your email"
+
+msgid "Напишите ваш отзыв"
+msgstr "Write your review"
+
+msgid "Файлы"
+msgstr "Files"
+
+msgid "Прикрепите файлы к отзыву"
+msgstr "Attach files to your review"

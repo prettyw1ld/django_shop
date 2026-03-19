@@ -3,7 +3,7 @@ __all__ = ()
 import django.db.models
 import django.shortcuts
 
-from catalog.models import Category, Image, Item
+from catalog.models import Category, Item
 
 
 def item_list(request):
@@ -21,15 +21,7 @@ def item_list(request):
 
 def item_detail(request, pk):
     template = "catalog/item.html"
-    queryset = Item.objects.published().prefetch_related(
-        django.db.models.Prefetch(
-            Item.images.field.related_query_name(),
-            queryset=Image.objects.only(
-                Image.image.field.name,
-                Image.item_id.field.name,
-            ),
-        ),
-    )
+    queryset = Item.objects.detailed_item
     item = django.shortcuts.get_object_or_404(queryset, pk=pk)
 
     context = {

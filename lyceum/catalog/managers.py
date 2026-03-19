@@ -38,6 +38,19 @@ class ItemsManager(PublishedManager):
             )
         )
 
+    def detailed_item(self):
+        from catalog.models import Item, Image
+
+        return self.published().prefetch_related(
+            django.db.models.Prefetch(
+                Item.images.field.related_query_name(),
+                queryset=Image.objects.only(
+                    Image.image.field.name,
+                    Image.item_id.field.name,
+                ),
+            ),
+        )
+
     def on_main(self):
         from catalog.models import Item
 

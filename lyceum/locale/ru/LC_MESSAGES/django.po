@@ -49,3 +49,54 @@ msgstr "Админ-панель"
 
 msgid "Обратная связь"
 msgstr "Обратная связь"
+
+msgid "Деник"
+msgstr "Деник"
+
+msgid "ЧаВо"
+msgstr "ЧаВо"
+
+msgid "Ценники"
+msgstr "Ценники"
+
+msgid "Медиа"
+msgstr "Медиа"
+
+msgid "Новое"
+msgstr "Новое"
+
+msgid "Подробнее"
+msgstr "Подробнее"
+
+msgid "Личные данные"
+msgstr "Личные данные"
+
+msgid "Ваш отзыв"
+msgstr "Ваш отзыв"
+
+msgid "Прикрепить файлы"
+msgstr "Прикрепить файлы"
+
+msgid "Отправить"
+msgstr "Отправить"
+
+msgid "Имя"
+msgstr "Имя"
+
+msgid "Почта"
+msgstr "Почта"
+
+msgid "Введите ваше имя"
+msgstr "Введите ваше имя"
+
+msgid "Введите ваш email"
+msgstr "Введите ваш email"
+
+msgid "Напишите ваш отзыв"
+msgstr "Напишите ваш отзыв"
+
+msgid "Файлы"
+msgstr "Файлы"
+
+msgid "Прикрепите файлы к отзыву"
+msgstr "Прикрепите файлы к отзыву"
