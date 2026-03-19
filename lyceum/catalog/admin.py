@@ -10,6 +10,7 @@ class CategoryAdmin(django.contrib.admin.ModelAdmin):
     list_display = (
         catalog.models.Category.name.field.name,
         catalog.models.Category.weight.field.name,
+        catalog.models.Category.canonical_name.field.name,
     )
     list_display_links = (catalog.models.Category.name.field.name,)
 

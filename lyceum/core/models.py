@@ -51,11 +51,21 @@ class NormalizedNameMixin(django.db.models.Model):
         text = text.lower()
         replacements = {
             "0": "o",
+            "i": "l",
             "1": "l",
             "3": "e",
             "4": "a",
+            "8": "b",
             "$": "s",
             "@": "a",
+            "ё": "e",
+            "ё": "e",
+            "е": "e",
+            "й": "и",
+            "з": "3",
+            "р": "p",
+            "ъ": "b",
+            "ь": "b",
         }
         for wrong, correct in replacements.items():
             text = text.replace(wrong, correct)

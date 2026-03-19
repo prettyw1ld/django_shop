@@ -123,7 +123,7 @@ class MainImage(ImageBaseModel):
         verbose_name_plural = "главные изображения"
 
     def __str__(self):
-        return self.item.name
+        return self.item.name[:15]
 
 
 class Image(ImageBaseModel):

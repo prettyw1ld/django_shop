@@ -14,11 +14,12 @@ from feedback.models import FeedbackFile
 
 
 def feedback(request):
+    template = "feedback/feedback.html"
     author_form = PersonalDataForm()
     content_form = FeedbackContentForm()
     files_form = FeedbackFileForm()
 
-    if request.method == "POST" or None:
+    if request.method == "POST":
         author_form = PersonalDataForm(request.POST or None)
         content_form = FeedbackContentForm(request.POST or None)
         files_form = FeedbackFileForm(request.POST or None, request.FILES)
@@ -51,4 +52,4 @@ def feedback(request):
         "files": files_form,
     }
 
-    return render(request, "feedback/feedback.html", context)
+    return render(request, template, context)

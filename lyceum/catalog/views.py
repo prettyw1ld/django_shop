@@ -20,6 +20,7 @@ def item_list(request):
 
 
 def item_detail(request, pk):
+    template = "catalog/item.html"
     queryset = Item.objects.published().prefetch_related(
         django.db.models.Prefetch(
             Item.images.field.related_query_name(),
@@ -36,36 +37,39 @@ def item_detail(request, pk):
     }
     return django.shortcuts.render(
         request,
-        "catalog/item.html",
+        template,
         context,
     )
 
 
 def new_items(request):
+    template = "catalog/item_list.html"
     items = Item.objects.new_items()
     return django.shortcuts.render(
         request,
-        "catalog/item_list.html",
+        template,
         {"items": items, "title": "Новинки"},
     )
 
 
 def friday_items(request):
+    template = "catalog/item_list.html"
     items = Item.objects.friday_items()
     return django.shortcuts.render(
         request,
-        "catalog/item_list.html",
+        template,
         {"items": items, "title": "Пятница"},
     )
 
 
 def unverified_items(request):
+    template = "catalog/item_list.html"
     items = Item.objects.published().filter(
         created=django.db.models.F(Item.updated.field.name),
     )
 
     return django.shortcuts.render(
         request,
-        "catalog/item_list.html",
+        template,
         {"items": items, "title": "Непроверенное"},
     )
