@@ -8,7 +8,7 @@ from catalog.models import Category, Item
 
 def item_list(request):
     template = "catalog/item_list.html"
-    items = Item.objects.published().order_by(
+    items = Item.objects.main_image().order_by(
         f"{Item.category.field.name}__{Category.name.field.name}",
         Item.name.field.name,
     )
@@ -21,7 +21,7 @@ def item_list(request):
 
 def item_detail(request, pk):
     template = "catalog/item.html"
-    queryset = Item.objects.detailed_item
+    queryset = Item.objects.detailed_item()
     item = django.shortcuts.get_object_or_404(queryset, pk=pk)
 
     context = {

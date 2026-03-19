@@ -38,6 +38,9 @@ class ItemsManager(PublishedManager):
             )
         )
 
+    def main_image(self):
+        return self.published().select_related("main_image")
+
     def detailed_item(self):
         from catalog.models import Item, Image
 

@@ -170,26 +170,26 @@ class ModelsTests(TestCase):
 
     def test_normalized_category_negative(self):
         categories_count = Category.objects.count()
-        try:
-            test_category_1 = Category(
-                name="test_123$$",
-                weight=100,
-                slug="test-cat",
-            )
-            test_category_2 = Category(
-                name="test_123",
-                weight=100,
-                slug="test-cat-real",
-            )
-            test_category_1.full_clean()
-            test_category_1.save()
+
+        test_category_1 = Category(
+            name="test_123%",
+            weight=100,
+            slug="test-cat",
+        )
+        test_category_1.full_clean()
+        test_category_1.save()
+
+        test_category_2 = Category(
+            name="test_123",
+            weight=100,
+            slug="test-cat-real",
+        )
+
+        with self.assertRaises(ValidationError):
             test_category_2.full_clean()
             test_category_2.save()
-        except ValidationError:
-            self.assertEqual(
-                Category.objects.count(),
-                categories_count + 1,
-            )
+
+        self.assertEqual(Category.objects.count(), categories_count + 1)
 
     def test_normalized_category_positive(self):
         categories_count = Category.objects.count()
