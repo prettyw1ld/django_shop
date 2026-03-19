@@ -45,15 +45,15 @@ class HomepageItemsTests(CheckFieldTestCase):
     fixtures = ["data.json"]
 
     def test_items_in_context(self):
-        response = Client().get("/")
+        response = self.client.get(reverse("homepage:home"))
         self.assertIn("items", response.context)
 
     def test_items_size(self):
-        response = Client().get("/")
+        response = self.client.get(reverse("homepage:home"))
         self.assertEqual(len(response.context["items"]), 4)
 
     def test_items_types(self):
-        response = Client().get("/")
+        response = self.client.get(reverse("homepage:home"))
         self.assertTrue(
             all(
                 isinstance(
@@ -65,7 +65,7 @@ class HomepageItemsTests(CheckFieldTestCase):
         )
 
     def test_items_loaded_values(self):
-        response = Client().get("/")
+        response = self.client.get(reverse("homepage:home"))
         for item in response.context["items"]:
             self.check_content_value(
                 item,

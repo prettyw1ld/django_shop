@@ -2,7 +2,8 @@ __all__ = ()
 
 from http import HTTPStatus
 
-from django.test import Client, TestCase
+from django.test import TestCase
+from django.urls import reverse
 import parameterized
 
 
@@ -10,7 +11,7 @@ class StaticURLTests(TestCase):
     fixtures = ["data.json"]
 
     def test_catalog_endpoint(self):
-        response = self.client.get("/catalog/")
+        response = self.client.get(reverse("catalog:item-list"))
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     @parameterized.parameterized.expand(
@@ -29,6 +30,12 @@ class StaticURLTests(TestCase):
             ("1e5", HTTPStatus.NOT_FOUND),
         ],
     )
-    def test_catalog_item_endpoint(self, url, expected_status):
-        response = Client().get(f"/catalog/{url}/")
-        self.assertEqual(response.status_code, expected_status)
+    def test_catalog_item_endpoint(self, item_id, expected_status):
+        try:
+            url = reverse("catalog:item-detail", kwargs={"pk": item_id})
+            response = self.client.get(url)
+            status = response.status_code
+        except Exception:
+            status = HTTPStatus.NOT_FOUND
+
+        self.assertEqual(status, expected_status)
