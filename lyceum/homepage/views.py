@@ -2,7 +2,6 @@ __all__ = ()
 
 from http import HTTPStatus
 
-from django.contrib.auth.decorators import login_required
 from django.db.models import F
 import django.http
 import django.shortcuts
@@ -13,12 +12,13 @@ import catalog.models
 import homepage.forms
 
 
-@login_required
 @require_GET
 def coffee(request):
-    profile = request.user.profile
-    profile.coffee_count = F("coffee_count") + 1
-    profile.save(update_fields=["coffee_count"])
+    if request.user.is_authenticated:
+        profile = request.user.profile
+        profile.coffee_count = F("coffee_count") + 1
+        profile.save(update_fields=["coffee_count"])
+
     return django.http.HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
 
 

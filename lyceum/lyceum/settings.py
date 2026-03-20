@@ -20,7 +20,6 @@ def load_bool(name, default):
         "t",
         "yes",
         "y",
-        "",
     }
 
 

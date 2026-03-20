@@ -68,3 +68,6 @@ class FeedbackFileForm(django.forms.Form):
         required=False,
         help_text=_("Прикрепите файлы к отзыву"),
     )
+
+
+FeedbackForm = FeedbackContentForm
