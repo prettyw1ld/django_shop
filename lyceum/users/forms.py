@@ -22,6 +22,10 @@ class Profile(django.forms.ModelForm):
     class Meta:
         model = users.models.Profile
         fields = ("image", "bio", "birthday", "coffee_count")
+        labels = {
+            "birthday": "birthday",
+            "coffee_count": "coffee_count",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

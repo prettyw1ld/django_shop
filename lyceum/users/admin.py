@@ -24,6 +24,11 @@ class ProfileInline(django.contrib.admin.StackedInline):
 
 @django.contrib.admin.register(users.models.Profile)
 class ProfileAdmin(django.contrib.admin.ModelAdmin):
+    list_display = ("user", "birthday", "coffee_count")
+    list_filter = ("birthday",)
+    search_fields = ("user__username",)
+    readonly_fields = (users.models.Profile.coffee_count.field.name,)
+
     def has_delete_permission(self, request, obj=None):
         return False
 
