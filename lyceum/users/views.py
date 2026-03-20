@@ -13,6 +13,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from users.forms import Profile, SignUpForm, User
+import users.models
 
 user_ = get_user_model()
 
@@ -93,7 +94,7 @@ def profile(request):
     except user_.DoesNotExist:
         return HttpResponse("Пользователь не найден", status=404)
 
-    profile = user.profile
+    profile, _ = users.models.Profile.objects.get_or_create(user=user)
 
     form_profile = Profile(
         request.POST or None,

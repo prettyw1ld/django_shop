@@ -22,6 +22,12 @@ class ProfileInline(django.contrib.admin.StackedInline):
         return False
 
 
+@django.contrib.admin.register(users.models.Profile)
+class ProfileAdmin(django.contrib.admin.ModelAdmin):
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
 django.contrib.admin.site.unregister(django.contrib.auth.models.User)
 
 
