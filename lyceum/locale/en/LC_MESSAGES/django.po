@@ -81,6 +81,9 @@ msgstr "Send"
 msgid "Имя"
 msgstr "Name"
 
+msgid "Фамилия"
+msgstr "Surname"
+
 msgid "Почта"
 msgstr "Email"
 

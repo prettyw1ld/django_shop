@@ -83,6 +83,9 @@ msgstr "Отправить"
 msgid "Имя"
 msgstr "Имя"
 
+msgid "Фамилия"
+msgstr "Фамилия"
+
 msgid "Почта"
 msgstr "Почта"
 
