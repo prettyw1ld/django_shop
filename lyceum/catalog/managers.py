@@ -58,7 +58,7 @@ class ItemsManager(PublishedManager):
         from catalog.models import Item
 
         return (
-            self.published()
+            self.main_image()
             .filter(is_on_main=True)
             .order_by(Item.name.field.name)
         )
