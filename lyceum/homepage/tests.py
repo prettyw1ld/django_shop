@@ -2,10 +2,14 @@ __all__ = ()
 
 from http import HTTPStatus
 
+from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
 
 from catalog.models import Item
+from users.models import Profile
+
+User = get_user_model()
 
 
 class StaticURLTests(TestCase):
@@ -15,6 +19,15 @@ class StaticURLTests(TestCase):
 
 
 class CoffeeViewTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="testuser",
+            password="testpass123",
+        )
+        Profile.objects.create(user=self.user)
+        self.client = Client()
+        self.client.login(username="testuser", password="testpass123")
+
     def test_coffee_status_code(self):
         response = self.client.get(reverse("homepage:coffee"))
         self.assertEqual(response.status_code, HTTPStatus.IM_A_TEAPOT)

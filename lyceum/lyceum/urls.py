@@ -3,6 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 import django.contrib.auth.urls
 from django.urls import include, path
+
 import users.urls
 
 urlpatterns = [

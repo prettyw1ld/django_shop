@@ -2,8 +2,8 @@ __all__ = ()
 
 from http import HTTPStatus
 
-from django.db.models import F
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 import django.http
 import django.shortcuts
 from django.views.decorators.http import require_GET, require_POST

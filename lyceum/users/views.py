@@ -1,17 +1,20 @@
 __all__ = ()
 
+
 from datetime import timedelta
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
-from .forms import SignUpForm
+from .forms import Profile, SignUpForm, User
 
-User = get_user_model()
+user_ = get_user_model()
 
 
 def signup_view(request):
@@ -46,8 +49,8 @@ def signup_view(request):
 def activate_view(request, username):
     user = get_user_model()
     try:
-        user = user.objects.get(username=username)
-    except user.DoesNotExist:
+        user = user_.objects.get(username=username)
+    except user_.DoesNotExist:
         return HttpResponse("Пользователь не найден", status=404)
 
     if timezone.now() - user.date_joined > timedelta(hours=12):
@@ -61,7 +64,7 @@ def activate_view(request, username):
 def user_list(request):
     template = "users/user_list.html"
     users = (
-        User.objects.filter(is_active=True).prefetch_related("profile").all()
+        user_.objects.filter(is_active=True).prefetch_related("profile").all()
     )
     return render(request, template, {"users": users})
 
@@ -69,11 +72,49 @@ def user_list(request):
 def user_detail(request, user_id):
     template = "users/user_detail.html"
     try:
-        user = User.objects.select_related("profile").get(
+        user = user_.objects.select_related("profile").get(
             id=user_id,
             is_active=True,
         )
-    except User.DoesNotExist:
+    except user_.DoesNotExist:
         return HttpResponse("Пользователь не найден", status=404)
 
     return render(request, template, {"user": user})
+
+
+@login_required
+def profile(request):
+    template = "users/profile.html"
+    try:
+        user = user_.objects.select_related("profile").get(
+            id=request.user.id,
+            is_active=True,
+        )
+    except user_.DoesNotExist:
+        return HttpResponse("Пользователь не найден", status=404)
+
+    profile = user.profile
+
+    form_profile = Profile(
+        request.POST or None,
+        request.FILES,
+        instance=profile,
+    )
+    form_user = User(request.POST or None, instance=user)
+
+    if request.method == "POST":
+        if form_profile.is_valid() and form_user.is_valid():
+            form_profile.save()
+            form_user.save()
+            messages.success(request, "Профиль успешно обновлен!")
+            return redirect("users:profile")
+
+    return render(
+        request,
+        template,
+        {
+            "form_profile": form_profile,
+            "form_user": form_user,
+            "user": user,
+        },
+    )

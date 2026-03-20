@@ -46,6 +46,7 @@ password_reset_complete_view = (
 
 user_list_view = users.views.user_list
 user_detail_view = users.views.user_detail
+profile_view = users.views.profile
 
 urlpatterns = [
     django.urls.path("login/", login_view, name="login"),
@@ -92,4 +93,5 @@ urlpatterns = [
         name="user-detail",
     ),
     django.urls.path("", user_list_view, name="user-list"),
+    django.urls.path("profile/", profile_view, name="profile"),
 ]

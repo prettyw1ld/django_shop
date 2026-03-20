@@ -2,61 +2,61 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-4">
-      {% if user.profile.image %}
-        <img 
-          src="{{ user.profile.image.url }}" 
-          class="img-fluid rounded"
-          alt="{{ user.username }}"
-        >
-      {% else %}
-        <div 
-          class="bg-secondary d-flex align-items-center justify-content-center rounded"
-          style="height: 300px;"
-        >
-          <span class="text-white">{% translate "Нет фото" %}</span>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-4">
+        {% if user.profile.image %}
+          <img
+            src="{{ user.profile.image.url }}"
+            class="img-fluid rounded"
+            alt="{{ user.username }}"
+          >
+        {% else %}
+          <div
+            class="bg-secondary d-flex align-items-center justify-content-center rounded"
+            style="height: 300px"
+          >
+            <span class="text-white">{% translate "Нет фото" %}</span>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-8">
+        <h2>{{ user.username }}</h2>
+
+        <div class="mt-4">
+          <dl class="row">
+            <dt class="col-sm-4">{% translate "Почта" %}</dt>
+            <dd class="col-sm-8">{{ user.email }}</dd>
+
+            <dt class="col-sm-4">{% translate "Имя" %}</dt>
+            <dd class="col-sm-8">
+              {% if user.first_name %}
+                {{ user.first_name }}
+              {% else %}
+                <span class="text-muted fst-italic">{% translate "не указано" %}</span>
+              {% endif %}
+            </dd>
+
+            <dt class="col-sm-4">{% translate "Фамилия" %}</dt>
+            <dd class="col-sm-8">
+              {% if user.last_name %}
+                {{ user.last_name }}
+              {% else %}
+                <span class="text-muted fst-italic">{% translate "не указано" %}</span>
+              {% endif %}
+            </dd>
+
+            {% if user.profile.birthday %}
+              <dt class="col-sm-4">{% translate "Дата рождения" %}</dt>
+              <dd class="col-sm-8">{{ user.profile.birthday|date:"d.m.Y" }}</dd>
+            {% endif %}
+
+            <dt class="col-sm-4">{% translate "Попытки кофе" %}</dt>
+            <dd class="col-sm-8">{{ user.profile.coffee_count }}</dd>
+          </dl>
         </div>
-      {% endif %}
-    </div>
-    
-    <div class="col-md-8">
-      <h2>{{ user.username }}</h2>
-      
-      <div class="mt-4">
-        <dl class="row">
-          <dt class="col-sm-4">{% translate "Почта" %}</dt>
-          <dd class="col-sm-8">{{ user.email }}</dd>
-          
-          <dt class="col-sm-4">{% translate "Имя" %}</dt>
-          <dd class="col-sm-8">
-            {% if user.first_name %}
-              {{ user.first_name }}
-            {% else %}
-              <span class="text-muted fst-italic">{% translate "не указано" %}</span>
-            {% endif %}
-          </dd>
-          
-          <dt class="col-sm-4">{% translate "Фамилия" %}</dt>
-          <dd class="col-sm-8">
-            {% if user.last_name %}
-              {{ user.last_name }}
-            {% else %}
-              <span class="text-muted fst-italic">{% translate "не указано" %}</span>
-            {% endif %}
-          </dd>
-          
-          {% if user.profile.birthday %}
-            <dt class="col-sm-4">{% translate "Дата рождения" %}</dt>
-            <dd class="col-sm-8">{{ user.profile.birthday|date:"d.m.Y" }}</dd>
-          {% endif %}
-          
-          <dt class="col-sm-4">{% translate "Попытки кофе" %}</dt>
-          <dd class="col-sm-8">{{ user.profile.coffee_count }}</dd>
-        </dl>
       </div>
     </div>
   </div>
-</div>
 {% endblock content %}

@@ -2,58 +2,58 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container mt-5">
-  <h2 class="mb-4">{% translate "Список пользователей" %}</h2>
-  
-  {% if users %}
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-      {% for user in users %}
-        <div class="col">
-          <a href="{% url 'users:user-detail' user.id %}" class="text-decoration-none">
-            <div class="card h-100 text-center">
-              {% if user.profile.image %}
-                <img 
-                  src="{{ user.profile.image.url }}" 
-                  class="card-img-top" 
-                  alt="{{ user.username }}"
-                  style="height: 250px; object-fit: cover;"
-                >
-              {% else %}
-                <div 
-                  class="card-img-top bg-secondary d-flex align-items-center justify-content-center"
-                  style="height: 250px;"
-                >
-                  <span class="text-white">{% translate "Нет фото" %}</span>
+  <div class="container mt-5">
+    <h2 class="mb-4">{% translate "Список пользователей" %}</h2>
+
+    {% if users %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for user in users %}
+          <div class="col">
+            <a href="{% url 'users:user-detail' user.id %}" class="text-decoration-none">
+              <div class="card h-100 text-center">
+                {% if user.profile.image %}
+                  <img
+                    src="{{ user.profile.image.url }}"
+                    class="card-img-top"
+                    alt="{{ user.username }}"
+                    style="height: 250px; object-fit: cover"
+                  >
+                {% else %}
+                  <div
+                    class="card-img-top bg-secondary d-flex align-items-center justify-content-center"
+                    style="height: 250px"
+                  >
+                    <span class="text-white">{% translate "Нет фото" %}</span>
+                  </div>
+                {% endif %}
+
+                <div class="card-body">
+                  <h5 class="card-title">{{ user.username }}</h5>
+
+                  {% if user.profile.birthday %}
+                    <p class="card-text text-muted">
+                      <small>
+                        {% translate "Дата рождения" %}:
+                        {{ user.profile.birthday|date:"d.m" }}
+                      </small>
+                    </p>
+                  {% endif %}
+
+                  {% if user.first_name or user.last_name %}
+                    <p class="card-text">
+                      <small>{{ user.first_name }} {{ user.last_name }}</small>
+                    </p>
+                  {% endif %}
                 </div>
-              {% endif %}
-              
-              <div class="card-body">
-                <h5 class="card-title">{{ user.username }}</h5>
-                
-                {% if user.profile.birthday %}
-                  <p class="card-text text-muted">
-                    <small>
-                      {% translate "Дата рождения" %}: 
-                      {{ user.profile.birthday|date:"d.m" }}
-                    </small>
-                  </p>
-                {% endif %}
-                
-                {% if user.first_name or user.last_name %}
-                  <p class="card-text">
-                    <small>{{ user.first_name }} {{ user.last_name }}</small>
-                  </p>
-                {% endif %}
               </div>
-            </div>
-          </a>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="alert alert-info">
-      {% translate "Нет активных пользователей" %}
-    </div>
-  {% endif %}
-</div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info">
+        {% translate "Нет активных пользователей" %}
+      </div>
+    {% endif %}
+  </div>
 {% endblock content %}

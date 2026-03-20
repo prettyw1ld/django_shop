@@ -194,3 +194,18 @@ msgstr "not specified"
 
 msgid "Попытки кофе"
 msgstr "Coffee attempts"
+
+msgid "Информация"
+msgstr "Information"
+
+msgid "Мой профиль"
+msgstr "My Profile"
+
+msgid "Фото не загружено"
+msgstr "Photo not uploaded"
+
+msgid "Сохранить"
+msgstr "Save"
+
+msgid "Выпить кофе"
+msgstr "Have some coffee"

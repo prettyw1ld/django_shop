@@ -290,6 +290,6 @@ CKEDITOR_5_CONFIGS = {
 
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
 
-LOGIN_URL = reverse_lazy("login")
-LOGIN_REDIRECT_URL = reverse_lazy("profile")
-LOGOUT_REDIRECT_URL = reverse_lazy("login")
+LOGIN_URL = reverse_lazy("users:login")
+LOGIN_REDIRECT_URL = reverse_lazy("users:profile")
+LOGOUT_REDIRECT_URL = reverse_lazy("users:login")
