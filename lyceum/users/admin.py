@@ -32,6 +32,9 @@ class UserAdmin(django.contrib.admin.ModelAdmin):
     inlines = (ProfileInline,)
     list_display = ("username", "email", "get_coffee_count")
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
     def get_coffee_count(self, obj):
         return obj.profile.coffee_count
 

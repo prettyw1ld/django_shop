@@ -21,7 +21,12 @@ class SignUpForm(UserCreationForm):
 class Profile(django.forms.ModelForm):
     class Meta:
         model = users.models.Profile
-        fields = ("image", "bio", "birthday")
+        fields = ("image", "bio", "birthday", "coffee_count")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["coffee_count"].widget.attrs["readonly"] = True
+        self.fields["coffee_count"].disabled = True
 
 
 class User(django.forms.ModelForm):
