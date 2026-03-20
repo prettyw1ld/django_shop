@@ -216,24 +216,26 @@ class ModelsTests(TestCase):
 
     def test_normalized_tag_negative(self):
         tags_count = Tag.objects.count()
-        try:
-            test_tag_1 = Tag(
-                name="test_12345$$",
-                slug="test-catik",
-            )
-            test_tag_2 = Tag(
-                name="test_12345",
-                slug="test-catik-real",
-            )
-            test_tag_1.full_clean()
-            test_tag_1.save()
+
+        test_tag_1 = Tag(
+            name="test_12345%",
+            slug="test-catik",
+        )
+        test_tag_1.full_clean()
+        test_tag_1.save()
+        test_tag_2 = Tag(
+            name="test_12345",
+            slug="test-catik-real",
+        )
+
+        with self.assertRaises(ValidationError):
             test_tag_2.full_clean()
             test_tag_2.save()
-        except ValidationError:
-            self.assertEqual(
-                Tag.objects.count(),
-                tags_count + 1,
-            )
+
+        self.assertEqual(
+            Tag.objects.count(),
+            tags_count + 1,
+        )
 
     def test_normalized_tag_positive(self):
         tags_count = Tag.objects.count()

@@ -1,5 +1,6 @@
 import django.contrib.auth.views
 import django.urls
+
 import users.views
 
 app_name = "users"
