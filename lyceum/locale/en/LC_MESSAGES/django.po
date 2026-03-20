@@ -173,3 +173,21 @@ msgstr "Thanks for spending some quality time with our website today."
 
 msgid "Log in again"
 msgstr "Log in again"
+
+msgid "Список пользователей"
+msgstr "Users"
+
+msgid "Нет фото"
+msgstr "No photo"
+
+msgid "Дата рождения"
+msgstr "Birthday"
+
+msgid "Нет активных пользователей"
+msgstr "No active users"
+
+msgid "не указано"
+msgstr "not specified"
+
+msgid "Попытки кофе"
+msgstr "Coffee attempts"

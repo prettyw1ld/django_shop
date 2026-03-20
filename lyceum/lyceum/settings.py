@@ -26,6 +26,7 @@ def load_bool(name, default):
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 
+DEFAULT_USER_IS_ACTIVE = load_bool("DJANGO_DEFAULT_USER_IS_ACTIVE", False)
 DJANGO_MAIL = os.getenv("DJANGO_MAIL", "from@example.com")
 DEBUG = load_bool("DJANGO_DEBUG", False)
 ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
@@ -72,6 +73,7 @@ if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
     INTERNAL_IPS = os.getenv("DJANGO_INTERNAL_IPS", "127.0.0.1").split(",")
+    DEFAULT_USER_IS_ACTIVE = True
 
 ROOT_URLCONF = "lyceum.urls"
 
