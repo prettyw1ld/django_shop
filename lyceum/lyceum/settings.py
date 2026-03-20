@@ -3,6 +3,7 @@ __all__ = ()
 import os
 from pathlib import Path
 
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
 
@@ -286,3 +287,7 @@ CKEDITOR_5_CONFIGS = {
 }
 
 CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
+
+LOGIN_URL = reverse_lazy("login")
+LOGIN_REDIRECT_URL = reverse_lazy("profile")
+LOGOUT_REDIRECT_URL = reverse_lazy("login")

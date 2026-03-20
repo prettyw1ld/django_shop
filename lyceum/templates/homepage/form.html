@@ -1,8 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Текстовая форма{% endblock %}
+{% load i18n %}
+{% block title %}{% translate "Текстовая форма" %}{% endblock %}
 
 {% block content %}
-  <h1>Текстовая форма</h1>
+  <h1>{% translate "Текстовая форма" %}</h1>
 
   {% if messages %}
     {% for message in messages %}
@@ -15,6 +16,6 @@
   <form action="{% url 'homepage:echo_submit' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Отправить</button>
+    <button type="submit">{% translate "Отправить" %}</button>
   </form>
 {% endblock %}

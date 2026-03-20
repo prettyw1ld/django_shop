@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <h2 class="mb-4">{% translate "Войти" %}</h2>
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label for="id_username" class="form-label">{% translate "Имя пользователя" %}</label>
+            <input type="text" class="form-control" id="id_username" name="username" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="id_password" class="form-label">{% translate "Пароль" %}</label>
+            <input type="password" class="form-control" id="id_password" name="password" required>
+          </div>
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+
+          <button type="submit" class="btn btn-primary w-100">{% translate "Подтвердить" %}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

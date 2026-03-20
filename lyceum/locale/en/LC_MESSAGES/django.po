@@ -98,3 +98,78 @@ msgstr "Files"
 
 msgid "Прикрепите файлы к отзыву"
 msgstr "Attach files to your review"
+
+msgid "Текстовая форма"
+msgstr "Text form"
+
+msgid "Войти"
+msgstr "Login"
+
+msgid "Имя пользователя"
+msgstr "Username"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Подтвердить"
+msgstr "Submit"
+
+msgid "Изменить пароль"
+msgstr "Change password"
+
+msgid "Старый пароль"
+msgstr "Old password"
+
+msgid "Новый пароль"
+msgstr "New password"
+
+msgid "Подтвердить пароль"
+msgstr "Confirm password"
+
+msgid "Успешно!"
+msgstr "Success!"
+
+msgid "Пароль успешно изменён."
+msgstr "Password successfully changed."
+
+msgid "Вернуться на главную"
+msgstr "Back to homepage"
+
+msgid "Сброс пароля"
+msgstr "Password reset"
+
+msgid "Введите адрес электронной почты, связанный с вашей учетной записью, и мы отправим вам инструкции по восстановлению пароля."
+msgstr "Enter the email address associated with your account, and we will send you instructions for password recovery."
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Проверьте электронную почту"
+msgstr "Check your email"
+
+msgid "Письмо с инструкциями по восстановлению пароля отправлено на ваш адрес электронной почты. Пожалуйста, проверьте входящую корзину и следуйте инструкциям."
+msgstr "An email with password recovery instructions has been sent to your email address. Please check your inbox and follow the instructions."
+
+msgid "Установить новый пароль"
+msgstr "Set new password"
+
+msgid "Установить пароль"
+msgstr "Set password"
+
+msgid "Ошибка!"
+msgstr "Error!"
+
+msgid "Ссылка для восстановления пароля недействительна или истекла."
+msgstr "The password recovery link is invalid or expired."
+
+msgid "Запросить новую ссылку"
+msgstr "Request new link"
+
+msgid "Пароль был успешно восстановлен. Вы можете войти в свою учетную запись с новым паролем."
+msgstr "Your password has been successfully reset. You can now log in with your new password."
+
+msgid "Thanks for spending some quality time with the web site today."
+msgstr "Thanks for spending some quality time with our website today."
+
+msgid "Log in again"
+msgstr "Log in again"

@@ -2,15 +2,23 @@ __all__ = ()
 
 from http import HTTPStatus
 
+from django.db.models import F
+from django.contrib.auth.decorators import login_required
 import django.http
 import django.shortcuts
 from django.views.decorators.http import require_GET, require_POST
+
 
 import catalog.models
 import homepage.forms
 
 
+@login_required
+@require_GET
 def coffee(request):
+    profile = request.user.profile
+    profile.coffee_count = F("coffee_count") + 1
+    profile.save(update_fields=["coffee_count"])
     return django.http.HttpResponse("Я чайник", status=HTTPStatus.IM_A_TEAPOT)
 
 
