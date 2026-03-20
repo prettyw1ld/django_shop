@@ -34,6 +34,7 @@ class Profile(django.db.models.Model):
         upload_to=image_path,
     )
     coffee_count = django.db.models.PositiveIntegerField(
+        "количество сваренных чашек кофе",
         default=0,
         help_text="Количество попыток сварить кофе",
     )

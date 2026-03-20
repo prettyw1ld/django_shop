@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
-from .forms import Profile, SignUpForm, User
+from users.forms import Profile, SignUpForm, User
 
 user_ = get_user_model()
 

@@ -1,7 +1,7 @@
 __all__ = ()
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 import django.forms
 
 import users.models
@@ -21,10 +21,20 @@ class SignUpForm(UserCreationForm):
 class Profile(django.forms.ModelForm):
     class Meta:
         model = users.models.Profile
-        fields = ("image", "birthday", "bio")
+        fields = ("image", "bio", "birthday")
 
 
 class User(django.forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ("email", "username", "first_name", "last_name")
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = get_user_model()
+
+
+class CustomUserChangeForm(UserChangeForm):
+    class Meta(UserChangeForm.Meta):
+        model = get_user_model()

@@ -59,7 +59,6 @@ class NormalizedNameMixin(django.db.models.Model):
             "$": "s",
             "@": "a",
             "ё": "e",
-            "ё": "e",
             "е": "e",
             "й": "и",
             "з": "3",
