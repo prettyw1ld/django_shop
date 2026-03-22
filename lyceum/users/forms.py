@@ -20,7 +20,8 @@ class UserCreationForm(BootrapFormMixin, UserCreationForm):
             users.models.User.username.field.name,
             users.models.User.email.field.name,
         )
-    exclude = (users.models.User.password .field.name,)
+
+    exclude = (users.models.User.password.field.name,)
 
 
 class UserChangeForm(BootrapFormMixin, UserChangeForm):
@@ -30,7 +31,7 @@ class UserChangeForm(BootrapFormMixin, UserChangeForm):
             users.models.User.first_name.field.name,
             users.models.User.last_name.field.name,
         )
-        exclude = (users.models.User.password .field.name,)
+        exclude = (users.models.User.password.field.name,)
 
 
 class UpdateProfileForm(BootrapFormMixin, django.forms.ModelForm):
