@@ -23,6 +23,8 @@ def load_bool(name, default):
     }
 
 
+MAX_AUTH_ATTEMPTS = int(os.getenv("DJANGO_MAX_AUTH_ATTEMPTS", 10))
+
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 
 DEFAULT_USER_IS_ACTIVE = load_bool("DJANGO_DEFAULT_USER_IS_ACTIVE", False)
