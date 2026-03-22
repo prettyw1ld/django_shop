@@ -89,6 +89,11 @@ urlpatterns = [
         name="activate",
     ),
     django.urls.path(
+        "reactivate/<pk>/",
+        users.views.reactivate_view,
+        name="reactivate",
+    ),
+    django.urls.path(
         "<int:user_id>/",
         user_detail_view,
         name="user-detail",

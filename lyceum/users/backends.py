@@ -2,6 +2,7 @@ __all__ = ()
 
 import django.conf
 import django.contrib.auth
+import django.core.mail
 from django.utils import timezone
 
 import users.models
@@ -31,7 +32,8 @@ class AuthBackend(django.contrib.auth.backends.ModelBackend):
                 user.date_block = timezone.now()
                 user.save()
                 activate_url = django.urls.reverse(
-                    "users:reactivate", kwargs={"pk": user.id},
+                    "users:reactivate",
+                    kwargs={"pk": user.id},
                 )
                 django.core.mail.send_mail(
                     subject="Блокировка аккаунта",

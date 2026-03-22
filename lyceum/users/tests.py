@@ -8,6 +8,8 @@ from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils import timezone
 
+from users.models import Profile
+
 User = get_user_model()
 
 
@@ -67,3 +69,27 @@ class SignupActivationTest(TestCase):
             self.assertEqual(response.status_code, 302)
             user.refresh_from_db()
             self.assertFalse(user.is_active)
+
+
+class LoginTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username="testuser",
+            password="StrongPass123!",
+            email="damirka228@yandex.ru",
+        )
+        self.user.save()
+        Profile.objects.create(user=self.user)
+
+    def test_email_login(self):
+        with self.settings(DEFAULT_USER_IS_ACTIVE=True):
+            response = self.client.post(
+                reverse("users:login"),
+                {
+                    "username": "testuser",
+                    "password": "StrongPass123!",
+                },
+            )
+            self.assertEqual(response.status_code, 302)
+            self.assertIn(reverse("users:profile"), response.url)

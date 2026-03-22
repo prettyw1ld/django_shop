@@ -1,10 +1,67 @@
 __all__ = ()
 
+import sys
+
 import django.contrib.auth.models
 import django.db.models
+import sorl.thumbnail
+
+
+def _make_email_unique():
+    email_field = django.contrib.auth.models.User
+    email_field._meta.get_field("email")
+    email_field._unique = True
+
+
+if "makemigrations" not in sys.argv and "migrate" not in sys.argv:
+    _make_email_unique()
+
+
+class UserManager(django.contrib.auth.models.UserManager):
+    CANONICAL_DOMAINS = {
+        "ya.ru": "yandex.ru",
+        "yandex.com": "yandex.ru",
+    }
+    DOTS = {
+        "yandex.ru": "-",
+        "gmail.com": "",
+    }
+
+    def get_queryset(self):
+        return super().get_queryset().select_related("profile")
+
+    def active(self):
+        return self.get_queryset().filter(is_active=True)
+
+    def by_mail(self, email):
+        normalize_email = self.normalize_email(email)
+        return self.active().get(email=normalize_email)
+
+    @classmethod
+    def normalize_email(cls, email):
+        email = super().normalize_email(email).lower()
+        try:
+            email_name, domain_part = email.strip().rsplit("@", 1)
+            email_name, _ = email_name.split("+", 1)
+
+            domain_part = cls.CANONICAL_DOMAINS.get(domain_part, domain_part)
+            domain_part = cls.CANONICAL_DOMAINS.get(domain_part, domain_part)
+
+            email_name = email_name.replace(
+                ".",
+                cls.DOTS.get(domain_part, "."),
+            )
+        except ValueError:
+            pass
+        else:
+            email = "@".join([email_name, domain_part.lower()])
+
+        return email
 
 
 class User(django.contrib.auth.models.User):
+    objects = UserManager()
+
     class Meta:
         proxy = True
 
@@ -27,18 +84,34 @@ class Profile(django.db.models.Model):
         "дата рождения",
         null=True,
         blank=True,
-        default=None,
     )
     image = django.db.models.ImageField(
         "аватарка",
         null=True,
+        blank=True,
         upload_to=image_path,
     )
     coffee_count = django.db.models.PositiveIntegerField(
-        "количество сваренных чашек кофе",
+        "чашки кофе",
         default=0,
-        help_text="Количество попыток сварить кофе",
     )
+    attempts_count = django.db.models.PositiveIntegerField(
+        "попыток входа",
+        default=0,
+    )
+    block_date = django.db.models.DateTimeField(
+        "дата блокировки",
+        null=True,
+        blank=True,
+    )
+
+    def get_image_300x300(self):
+        return sorl.thumbnail.get_thumbnail(
+            self.image,
+            "300x300",
+            crop="center",
+            quality=51,
+        )
 
     class Meta:
         verbose_name = "профиль пользователя"

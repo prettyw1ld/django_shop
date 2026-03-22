@@ -67,6 +67,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # Мои_мидлвейр
     "lyceum.middleware.ReverseRussianMiddleware",
+    "users.middleware.LoadUserMiddleware",
 ]
 
 
@@ -103,6 +104,10 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     },
 }
+
+AUTHENTICATION_BACKENDS = [
+    "users.backends.AuthBackend",
+]
 
 
 AUTH_PASSWORD_VALIDATORS = [
