@@ -41,7 +41,7 @@ class SignupActivationTest(TestCase):
                 "email": "test@test.com",
             },
         )
-        self.client.get(reverse("users:activate", args=["testuser"]))
+        self.client.get(reverse("users:activate", kwargs={"pk": 1}))
         user = User.objects.get(username="testuser")
         self.assertTrue(user.is_active)
 
@@ -62,8 +62,8 @@ class SignupActivationTest(TestCase):
             user.save()
 
             response = self.client.get(
-                reverse("users:activate", args=["testuser"]),
+                reverse("users:activate", kwargs={"pk": 1}),
             )
-            self.assertEqual(response.status_code, 410)
+            self.assertEqual(response.status_code, 302)
             user.refresh_from_db()
             self.assertFalse(user.is_active)

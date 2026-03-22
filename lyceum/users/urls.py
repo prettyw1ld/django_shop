@@ -84,7 +84,7 @@ urlpatterns = [
     ),
     django.urls.path("signup/", users.views.signup_view, name="signup"),
     django.urls.path(
-        "activate/<str:username>/",
+        "activate/<pk>/",
         users.views.activate_view,
         name="activate",
     ),

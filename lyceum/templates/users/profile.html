@@ -11,9 +11,6 @@
           {% csrf_token %}
 
           <h5 class="mb-3">{% translate "Личные данные" %}</h5>
-          {{ form_user.as_p }}
-
-          <h5 class="mb-3 mt-4">{% translate "Профиль" %}</h5>
           {% if user.profile.image %}
             <img
               src="{{ user.profile.image.url }}"
@@ -24,26 +21,9 @@
           {% else %}
             <p>{% translate "Фото не загружено" %}</p>
           {% endif %}
+          {{ user_form.as_p }}
+          {{ profile_form.as_p }}
           {{ form_profile.as_p }}
-
-          <div class="card mt-3">
-            <div class="card-body">
-              <h6 class="card-title">{% translate "Информация" %}</h6>
-              <p class="card-text" id="birthday">
-                <strong>{% translate "Дата рождения" %}:</strong>
-                {% if user.profile.birthday %}
-                  {{ user.profile.birthday|date:"d.m.Y" }}
-                {% else %}
-                  <span class="text-muted">{% translate "не указано" %}</span>
-                {% endif %}
-              </p>
-              <p class="card-text" id="coffee_count">
-                <strong>{% translate "Попытки кофе" %}:</strong>
-                {{ user.profile.coffee_count }}
-              </p>
-            </div>
-          </div>
-
           <button type="submit" class="btn btn-primary w-100 mt-3">
             {% translate "Сохранить" %}
           </button>

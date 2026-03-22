@@ -16,6 +16,7 @@ class Profile(django.db.models.Model):
     user = django.db.models.OneToOneField(
         django.contrib.auth.models.User,
         on_delete=django.db.models.CASCADE,
+        verbose_name="пользователь",
     )
     bio = django.db.models.TextField(
         "о себе",
@@ -40,8 +41,8 @@ class Profile(django.db.models.Model):
     )
 
     class Meta:
-        verbose_name = "Профиль пользователя"
-        verbose_name_plural = "Профили пользователей"
+        verbose_name = "профиль пользователя"
+        verbose_name_plural = "профили пользователей"
 
     def __str__(self):
         return f"Профиль {self.user.username}"

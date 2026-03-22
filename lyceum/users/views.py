@@ -5,117 +5,103 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+import django.urls
 from django.utils import timezone
 
-from users.forms import Profile, SignUpForm, User
+from users.forms import UpdateProfileForm, UserChangeForm, UserCreationForm
 import users.models
-
-user_ = get_user_model()
 
 
 def signup_view(request):
+    form = UserCreationForm(request.POST or None)
+    context = {"form": form}
     template = "users/signup.html"
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = settings.DEFAULT_USER_IS_ACTIVE
-            user.is_staff = False
-            user.is_superuser = False
-            user.save()
 
-            activation_link = request.build_absolute_uri(
-                f"/activate/{user.username}/",
-            )
-            send_mail(
-                subject="Подтверждение регистрации",
-                message=f"Для активации аккаунта перейдите по ссылке:\n"
-                f"{activation_link}\n\nСсылка действительна 12 часов.",
-                from_email=settings.DJANGO_MAIL,
-                recipient_list=[user.email],
-                fail_silently=False,
-            )
-            return redirect("homepage:home")
-    else:
-        form = SignUpForm()
+    if request.method == "POST" and form.is_valid():
+        user = form.save()
+        user.is_active = settings.DEFAULT_USER_IS_ACTIVE
+        user.save()
+        profile = users.models.Profile.objects.create(user=user)
+        profile.save()
 
-    return render(request, template, {"form": form})
+        activation_link = (
+            django.urls.reverse("users:activate", kwargs={"pk": user.id}),
+        )
+        send_mail(
+            subject="Подтверждение регистрации",
+            message=f"Для активации аккаунта перейдите по ссылке:\n"
+            f"{activation_link}\n\nСсылка действительна 12 часов.",
+            from_email=settings.DJANGO_MAIL,
+            recipient_list=[user.email],
+            fail_silently=False,
+        )
+        return redirect(django.urls.reverse("homepage:home"))
+
+    return render(request, template, context)
 
 
-def activate_view(request, username):
-    user = get_user_model()
-    try:
-        user = user_.objects.get(username=username)
-    except user_.DoesNotExist:
-        return HttpResponse("Пользователь не найден", status=404)
+def activate_view(request, pk):
+    user = users.models.User.objects.get(pk=pk)
+    if user.date_joined + timedelta(hours=12) > timezone.now():
+        user.is_active = True
+        user.save()
 
-    if timezone.now() - user.date_joined > timedelta(hours=12):
-        return HttpResponse("Ссылка устарела", status=410)
+    return redirect(django.urls.reverse("homepage:home"))
 
-    user.is_active = True
-    user.save()
-    return redirect("login")
+
+def reactivate_view(request, pk):
+    user = users.models.User.objects.get(pk=pk)
+    if user.date_block + timedelta(hours=7) > timezone.now():
+        user.is_active = True
+        user.save()
+
+    return redirect(django.urls.reverse("homepage:home"))
 
 
 def user_list(request):
+    context = {"users": users.models.User.objects.active()}
     template = "users/user_list.html"
-    users = (
-        user_.objects.filter(is_active=True).prefetch_related("profile").all()
+    return render(request, template, context)
+
+
+def user_detail(request, pk: int):
+    search_user = get_object_or_404(
+        users.models.User.objects.active(),
+        pk=pk,
     )
-    return render(request, template, {"users": users})
-
-
-def user_detail(request, user_id):
+    context = {"user": search_user}
     template = "users/user_detail.html"
-    try:
-        user = user_.objects.select_related("profile").get(
-            id=user_id,
-            is_active=True,
-        )
-    except user_.DoesNotExist:
-        return HttpResponse("Пользователь не найден", status=404)
 
-    return render(request, template, {"user": user})
+    return render(request, template, context)
 
 
 @login_required
 def profile(request):
     template = "users/profile.html"
-    try:
-        user = user_.objects.select_related("profile").get(
-            id=request.user.id,
-            is_active=True,
-        )
-    except user_.DoesNotExist:
-        return HttpResponse("Пользователь не найден", status=404)
-
-    profile, _ = users.models.Profile.objects.get_or_create(user=user)
-
-    form_profile = Profile(
+    user_form = UserChangeForm(
         request.POST or None,
-        request.FILES,
-        instance=profile,
+        instance=request.user,
     )
-    form_user = User(request.POST or None, instance=user)
-
-    if request.method == "POST":
-        if form_profile.is_valid() and form_user.is_valid():
-            form_profile.save()
-            form_user.save()
-            messages.success(request, "Профиль успешно обновлен!")
-            return redirect("users:profile")
-
-    return render(
-        request,
-        template,
-        {
-            "form_profile": form_profile,
-            "form_user": form_user,
-            "user": user,
-        },
+    profile_form = UpdateProfileForm(
+        request.POST or None,
+        instance=request.user.profile,
     )
+    context = {
+        "user_form": user_form,
+        "profile_form": profile_form,
+    }
+
+    if (
+        request.method == "POST"
+        and user_form.is_valid()
+        and profile_form.is_valid()
+    ):
+        user_form.save()
+        profile_form.save()
+        messages.success(request, "Профиль успешно обновлен")
+        return redirect(django.urls.reverse("users:profile"))
+
+    return render(request, template, context)
