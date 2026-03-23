@@ -3,6 +3,7 @@ __all__ = ()
 from datetime import timedelta
 from unittest.mock import patch
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
@@ -78,18 +79,52 @@ class LoginTest(TestCase):
             username="testuser",
             password="StrongPass123!",
             email="damirka228@yandex.ru",
+            is_active=True,
         )
-        self.user.save()
         Profile.objects.create(user=self.user)
 
+    def test_username_login(self):
+        response = self.client.post(
+            reverse("users:login"),
+            {
+                "username": "testuser",
+                "password": "StrongPass123!",
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse("users:profile"), response.url)
+
     def test_email_login(self):
-        with self.settings(DEFAULT_USER_IS_ACTIVE=True):
-            response = self.client.post(
+        response = self.client.post(
+            reverse("users:login"),
+            {
+                "username": "damirka228@yandex.ru",
+                "password": "StrongPass123!",
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(reverse("users:profile"), response.url)
+
+    def test_blocked_login(self):
+        for _ in range(settings.MAX_AUTH_ATTEMPTS):
+            self.client.post(
                 reverse("users:login"),
                 {
                     "username": "testuser",
-                    "password": "StrongPass123!",
+                    "password": "WrongPass123!",
                 },
             )
-            self.assertEqual(response.status_code, 302)
-            self.assertIn(reverse("users:profile"), response.url)
+
+        response = self.client.post(
+            reverse("users:login"),
+            {
+                "username": "testuser",
+                "password": "StrongPass123!",
+            },
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            "Эта учетная запись отключена.",
+        )

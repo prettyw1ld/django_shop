@@ -102,9 +102,6 @@ msgstr "Files"
 msgid "Прикрепите файлы к отзыву"
 msgstr "Attach files to your review"
 
-msgid "Текстовая форма"
-msgstr "Text form"
-
 msgid "Войти"
 msgstr "Login"
 

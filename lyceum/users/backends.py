@@ -1,6 +1,6 @@
 __all__ = ()
 
-import django.conf
+from django.conf import settings
 import django.contrib.auth
 import django.core.mail
 from django.utils import timezone
@@ -18,6 +18,9 @@ class AuthBackend(django.contrib.auth.backends.ModelBackend):
         except users.models.User.DoesNotExist:
             return None
         else:
+            if not hasattr(user, "profile"):
+                users.models.Profile.objects.create(user=user)
+
             if user.check_password(password):
                 user.profile.attempts_count = 0
                 user.profile.save()
@@ -29,7 +32,7 @@ class AuthBackend(django.contrib.auth.backends.ModelBackend):
                 >= django.conf.settings.MAX_AUTH_ATTEMPTS
             ):
                 user.is_active = False
-                user.date_block = timezone.now()
+                user.profile.block_date = timezone.now()
                 user.save()
                 activate_url = django.urls.reverse(
                     "users:reactivate",
@@ -41,7 +44,7 @@ class AuthBackend(django.contrib.auth.backends.ModelBackend):
                     "слишком большого количества неудачных попыток входа. "
                     "Для разблокировки перейдите по ссылке:"
                     f"\n{activate_url}\n\nСсылка действительна 7 часов.",
-                    from_email=django.conf.settings.DJANGO_MAIL,
+                    from_email=settings.DJANGO_MAIL,
                     recipient_list=[user.email],
                     fail_silently=False,
                 )

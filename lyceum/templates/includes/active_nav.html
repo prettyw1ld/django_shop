@@ -37,6 +37,29 @@
       <a class="nav-link" href='{% url "catalog:item-list" %}'>{% translate "Список товаров" %}</a>
     {% endif %}
   </li>
+  {% if request.user.is_authenticated %}
+    <li class="nav-item">
+      {% if view_name == "users:profile" %}
+        <span class="nav-link active">{{ request.user.username }}</span>
+      {% else %}
+        <a class="nav-link" href='{% url "users:profile" %}'>{{ request.user.username }}</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+      <form method="post" action="{% url 'users:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="nav-link btn btn-link">Выйти</button>
+      </form>
+    </li>
+  {% else %}
+    <li class="nav-item">
+      {% if view_name == "users:login" %}
+        <span class="nav-link active">{% translate "Войти" %}</span>
+      {% else %}
+        <a class="nav-link" href='{% url "users:login" %}'>{% translate "Войти" %}</a>
+      {% endif %}
+    </li>
+  {% endif %}
   <div class="language-switcher ms-3">
     <form action="{% url 'set_language' %}" method="post" class="d-inline-block">
       {% csrf_token %}
