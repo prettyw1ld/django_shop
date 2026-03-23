@@ -44,8 +44,11 @@ class SignupActivationTest(TestCase):
                 "email": "test@test.com",
             },
         )
-        self.client.post(reverse("users:activate", kwargs={"pk": 1}))
         user = User.objects.get(username="testuser")
+        self.client.get(
+            reverse("users:activate", kwargs={"pk": user.pk}),
+        )
+        user.refresh_from_db()
         self.assertTrue(user.is_active)
 
     @patch("django.core.mail.send_mail")
@@ -65,7 +68,7 @@ class SignupActivationTest(TestCase):
             user.save()
 
             response = self.client.get(
-                reverse("users:activate", kwargs={"pk": 1}),
+                reverse("users:activate", kwargs={"pk": user.pk}),
             )
             self.assertEqual(response.status_code, 302)
             user.refresh_from_db()
