@@ -27,10 +27,7 @@ class AuthBackend(django.contrib.auth.backends.ModelBackend):
                 return user
 
             user.profile.attempts_count += 1
-            if (
-                user.profile.attempts_count
-                >= settings.MAX_AUTH_ATTEMPTS
-            ):
+            if user.profile.attempts_count >= settings.MAX_AUTH_ATTEMPTS:
                 user.is_active = False
                 user.profile.block_date = timezone.now()
                 user.save()
