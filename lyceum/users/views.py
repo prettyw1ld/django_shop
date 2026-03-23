@@ -45,10 +45,9 @@ def signup_view(request):
 
 
 def activate_view(request, pk):
-    user = users.models.User.objects.get(pk=pk)
-    if (
-        user.profile.block_date
-        and user.profile.block_date + timedelta(hours=7) > timezone.now()
+    user = get_object_or_404(users.models.User, pk=pk)
+    if not user.is_active and timezone.now() - user.date_joined <= timedelta(
+        hours=12
     ):
         user.is_active = True
         user.save()
