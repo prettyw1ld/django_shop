@@ -57,10 +57,7 @@ def activate_view(request, pk):
 
 def reactivate_view(request, pk):
     user = users.models.User.objects.get(pk=pk)
-    if (
-        user.profile.block_date is not None
-        and user.profile.block_date + timedelta(hours=7) > timezone.now()
-    ):
+    if user.profile.block_date + timedelta(weeks=1) > timezone.now():
         user.is_active = True
         user.save()
 
