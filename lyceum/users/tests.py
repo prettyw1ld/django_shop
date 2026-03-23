@@ -44,7 +44,7 @@ class SignupActivationTest(TestCase):
                 "email": "test@test.com",
             },
         )
-        self.client.get(reverse("users:activate", kwargs={"pk": 1}))
+        self.client.post(reverse("users:activate", kwargs={"pk": 1}))
         user = User.objects.get(username="testuser")
         self.assertTrue(user.is_active)
 
