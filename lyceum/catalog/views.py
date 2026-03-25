@@ -65,3 +65,4 @@ def unverified_items(request):
         template,
         {"items": items, "title": "Непроверенное"},
     )
+
