@@ -45,9 +45,12 @@ password_reset_complete_view = (
     )
 )
 
-user_list_view = users.views.user_list
-user_detail_view = users.views.user_detail
-profile_view = users.views.profile
+signup_view = users.views.SignUpView.as_view()
+activate_view = users.views.ActivateView.as_view()
+reactivate_view = users.views.ReactivateView.as_view()
+user_detail_view = users.views.UserDetailView.as_view()
+user_list_view = users.views.UserListView.as_view()
+profile_view = users.views.ProfileView.as_view()
 
 urlpatterns = [
     django.urls.path("login/", login_view, name="login"),
@@ -82,15 +85,19 @@ urlpatterns = [
         password_reset_complete_view,
         name="password_reset_complete",
     ),
-    django.urls.path("signup/", users.views.signup_view, name="signup"),
+    django.urls.path(
+        "signup/",
+        signup_view,
+        name="signup",
+    ),
     django.urls.path(
         "activate/<pk>/",
-        users.views.activate_view,
+        activate_view,
         name="activate",
     ),
     django.urls.path(
         "reactivate/<pk>/",
-        users.views.reactivate_view,
+        reactivate_view,
         name="reactivate",
     ),
     django.urls.path(
@@ -99,5 +106,9 @@ urlpatterns = [
         name="user-detail",
     ),
     django.urls.path("", user_list_view, name="user-list"),
-    django.urls.path("profile/", profile_view, name="profile"),
+    django.urls.path(
+        "profile/",
+        profile_view,
+        name="profile",
+    ),
 ]

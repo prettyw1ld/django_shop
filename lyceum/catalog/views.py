@@ -1,68 +1,38 @@
 __all__ = ()
 
-import django.db.models
-import django.shortcuts
+import django.views.generic
 
 from catalog.models import Category, Item
 
 
-def item_list(request):
-    template = "catalog/item_list.html"
-    items = Item.objects.main_image().order_by(
+class ItemListView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    queryset = Item.objects.main_image().order_by(
         f"{Item.category.field.name}__{Category.name.field.name}",
         Item.name.field.name,
     )
 
-    context = {
-        "items": items,
-    }
-    return django.shortcuts.render(request, template, context)
 
-
-def item_detail(request, pk):
-    template = "catalog/item.html"
+class ItemDetailView(django.views.generic.DetailView):
+    template_name = "catalog/item.html"
+    context_object_name = "item"
     queryset = Item.objects.detailed_item()
-    item = django.shortcuts.get_object_or_404(queryset, pk=pk)
-
-    context = {
-        "item": item,
-    }
-    return django.shortcuts.render(
-        request,
-        template,
-        context,
-    )
 
 
-def new_items(request):
-    template = "catalog/item_list.html"
-    items = Item.objects.new_items()
-    return django.shortcuts.render(
-        request,
-        template,
-        {"items": items, "title": "Новинки"},
-    )
+class NewItemsView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    queryset = Item.objects.new_items()
 
 
-def friday_items(request):
-    template = "catalog/item_list.html"
-    items = Item.objects.friday_items()
-    return django.shortcuts.render(
-        request,
-        template,
-        {"items": items, "title": "Пятница"},
-    )
+class FridayItemsView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    queryset = Item.objects.friday_items()
 
 
-def unverified_items(request):
-    template = "catalog/item_list.html"
-    items = Item.objects.published().filter(
-        created=django.db.models.F(Item.updated.field.name),
-    )
-
-    return django.shortcuts.render(
-        request,
-        template,
-        {"items": items, "title": "Непроверенное"},
-    )
-
+class UnverifiedItemsView(django.views.generic.ListView):
+    template_name = "catalog/item_list.html"
+    context_object_name = "items"
+    queryset = Item.objects.unverified_items()
