@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 import django.views.generic
+import django.views.generic.base
 
 from feedback.forms import (
     FeedbackContentForm,
@@ -14,7 +15,10 @@ from feedback.forms import (
 from feedback.models import FeedbackFile
 
 
-class FeedbackView(django.views.generic.View):
+class FeedbackView(
+    django.views.generic.View,
+    django.views.generic.base.TemplateResponseMixin,
+):
     template_name = "feedback/feedback.html"
 
     def get_forms(self, data=None, files=None):

@@ -81,6 +81,7 @@ class UserDetailView(django.views.generic.DetailView):
 
 class ProfileView(
     django.contrib.auth.mixins.LoginRequiredMixin,
+    django.views.generic.base.TemplateResponseMixin,
     django.views.generic.View,
 ):
     template_name = "users/profile.html"
@@ -109,7 +110,7 @@ class ProfileView(
         forms["user_form"].save()
         forms["profile_form"].save()
         messages.success(self.request, "Профиль успешно обновлен")
-        return django.shortcuts.redirect(django.urls.reverse("users:profile"))
+        return redirect(django.urls.reverse("users:profile"))
 
     def forms_invalid(self, forms):
         return self.render_to_response(forms)

@@ -206,3 +206,117 @@ msgstr "Save"
 
 msgid "Выпить кофе"
 msgstr "Have some coffee"
+
+msgid "Оценки"
+msgstr "Ratings"
+
+msgid "Оценок пока нет"
+msgstr "No ratings yet"
+
+msgid "Ваша оценка:"
+msgstr "Your rating:"
+
+msgid "Изменить"
+msgstr "Edit"
+
+msgid "Оценить"
+msgstr "Rate"
+
+msgid "Удалить оценку"
+msgstr "Delete rating"
+
+msgid "Войдите"
+msgstr "Log in"
+
+msgid ", чтобы оставить оценку"
+msgstr " to leave a rating"
+
+msgid "← Назад к списку"
+msgstr "← Back to list"
+
+msgid "Средняя оценка:"
+msgstr "Average rating:"
+
+msgid "оценок"
+msgstr "ratings"
+
+msgid "Оценка"
+msgstr "Score"
+
+msgid "слаг"
+msgstr "slug"
+
+msgid "тег"
+msgstr "tag"
+
+msgid "теги"
+msgstr "tags"
+
+msgid "Максимум 200 символов"
+msgstr "Maximum 200 characters"
+
+msgid "вес"
+msgstr "weight"
+
+msgid "Максимум 32767"
+msgstr "Maximum 32767"
+
+msgid "категория"
+msgstr "category"
+
+msgid "категории"
+msgstr "categories"
+
+msgid "описание"
+msgstr "description"
+
+msgid "Описание должно быть больше, чем из 2х слов и "
+msgstr "Description must be more than 2 words and "
+
+msgid "Выберите категорию"
+msgstr "Select a category"
+
+msgid "отображение на главной"
+msgstr "display on main page"
+
+msgid "время изменения"
+msgstr "updated at"
+
+msgid "время создания"
+msgstr "created at"
+
+msgid "товар"
+msgstr "product"
+
+msgid "товары"
+msgstr "products"
+
+msgid "главное изображение"
+msgstr "main image"
+
+msgid "главные изображения"
+msgstr "main images"
+
+msgid "изображения"
+msgstr "images"
+
+msgid "фото"
+msgstr "photo"
+
+msgid "главное"
+msgstr "main"
+
+msgid "Скачать оригинал"
+msgstr "Download original"
+
+msgid "Предыдущий"
+msgstr "Previous"
+
+msgid "Следующий"
+msgstr "Next"
+
+msgid "Категория:"
+msgstr "Category:"
+
+msgid "Теги:"
+msgstr "Tags:"
