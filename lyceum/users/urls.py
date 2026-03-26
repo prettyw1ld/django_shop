@@ -101,7 +101,7 @@ urlpatterns = [
         name="reactivate",
     ),
     django.urls.path(
-        "<int:user_id>/",
+        "<int:pk>/",
         user_detail_view,
         name="user-detail",
     ),
