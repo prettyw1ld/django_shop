@@ -1,3 +1,4 @@
+{% load static %}
 {% load i18n %}
 <ul class="nav nav-item">
   {% if request.user.is_authenticated and request.user.is_staff %}
@@ -80,3 +81,17 @@
     </form>
   </div>
 </ul>
+{% if birthdays_users %}
+  <div id="birthday-banner" style="text-align: center; padding: 8px;">
+    {% for user in birthdays_users %}
+      <div class="birthday-slide" style="display: none;">
+        {% translate "С днем рождения, " %} {{ user.first_name }} — {{ user.email }} 🎂
+      </div>
+    {% endfor %}
+  {% else %}
+    <div style="text-align: center; padding: 8px;">
+      {% translate "Сегодня нет дней рождения" %}
+    </div>
+  {% endif %}
+  </div>
+  <script src="{% static 'js/birthdays.js' %}"></script>

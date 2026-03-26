@@ -114,4 +114,3 @@ class ProfileView(
 
     def forms_invalid(self, forms):
         return self.render_to_response(forms)
-

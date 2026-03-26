@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 DEFAULT_USER_IS_ACTIVE = load_bool("DJANGO_DEFAULT_USER_IS_ACTIVE", False)
 DJANGO_MAIL = os.getenv("DJANGO_MAIL", "from@example.com")
 DEBUG = load_bool("DJANGO_DEBUG", False)
-ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
+ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", False)
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
@@ -91,6 +91,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "lyceum.context_processors.birthdays",
             ],
         },
     },
