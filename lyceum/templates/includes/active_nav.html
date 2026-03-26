@@ -70,7 +70,7 @@
     <li class="nav-item">
       <form method="post" action="{% url 'users:logout' %}">
         {% csrf_token %}
-        <button type="submit" class="nav-link btn btn-link">Выйти</button>
+        <button type="submit" class="nav-link btn btn-link">{% translate "Выйти" %}</button>
       </form>
     </li>
   {% else %}
@@ -113,7 +113,7 @@
   <div id="birthday-banner" style="text-align: center; padding: 8px">
     {% for user in birthdays_users %}
       <div class="birthday-slide" style="display: none">
-        {% translate "С днем рождения, " %} {{ user.first_name }} — {{ user.email }} 🎂
+        {% translate "С днем рождения " %} {{ user.first_name }} — {{ user.email }} 🎂
       </div>
     {% endfor %}
     {% else %}

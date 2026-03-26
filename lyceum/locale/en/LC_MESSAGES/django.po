@@ -323,3 +323,18 @@ msgstr "Category:"
 
 msgid "Теги:"
 msgstr "Tags:"
+
+msgid "С днем рождения "
+msgstr "Happy Birthday "
+
+msgid "Выйти"
+msgstr "Logout"
+
+msgid "Новое"
+msgstr "New"
+
+msgid "Пятница"
+msgstr "Friday"
+
+msgid "Непроверенное"
+msgstr "Unverified"
