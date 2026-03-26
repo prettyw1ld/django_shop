@@ -27,8 +27,8 @@ class SignUpView(django.views.generic.FormView):
         profile = users.models.Profile.objects.create(user=user)
         profile.save()
 
-        activation_link = (
-            django.urls.reverse("users:activate", kwargs={"pk": user.id}),
+        activation_link = django.urls.reverse(
+            "users:activate", kwargs={"pk": user.id},
         )
         send_mail(
             subject="Подтверждение регистрации",
