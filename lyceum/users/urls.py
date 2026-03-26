@@ -5,7 +5,7 @@ import users.views
 
 app_name = "users"
 
-login_view = django.contrib.auth.views.LoginView.as_view(
+login_view = users.views.LoginView.as_view(
     template_name="users/login.html",
 )
 

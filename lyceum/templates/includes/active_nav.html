@@ -38,6 +38,27 @@
       <a class="nav-link" href='{% url "catalog:item-list" %}'>{% translate "Список товаров" %}</a>
     {% endif %}
   </li>
+  <li class="nav-item">
+    {% if view_name == "catalog:new-items" %}
+      <span class="nav-link active">{% translate "Новое" %}</span>
+    {% else %}
+      <a class="nav-link" href='{% url "catalog:new-items" %}'>{% translate "Новое" %}</a>
+    {% endif %}
+  </li>
+  <li class="nav-item">
+    {% if view_name == "catalog:friday-items" %}
+      <span class="nav-link active">{% translate "Пятница" %}</span>
+    {% else %}
+      <a class="nav-link" href='{% url "catalog:friday-items" %}'>{% translate "Пятница" %}</a>
+    {% endif %}
+  </li>
+  <li class="nav-item">
+    {% if view_name == "catalog:unverified-items" %}
+      <span class="nav-link active">{% translate "Непроверенное" %}</span>
+    {% else %}
+      <a class="nav-link" href='{% url "catalog:unverified-items" %}'>{% translate "Непроверенное" %}</a>
+    {% endif %}
+  </li>
   {% if request.user.is_authenticated %}
     <li class="nav-item">
       {% if view_name == "users:profile" %}
@@ -58,6 +79,13 @@
         <span class="nav-link active">{% translate "Войти" %}</span>
       {% else %}
         <a class="nav-link" href='{% url "users:login" %}'>{% translate "Войти" %}</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+      {% if view_name == "users:signup" %}
+        <span class="nav-link active">{% translate "Регистрация" %}</span>
+      {% else %}
+        <a class="nav-link" href='{% url "users:signup" %}'>{% translate "Регистрация" %}</a>
       {% endif %}
     </li>
   {% endif %}

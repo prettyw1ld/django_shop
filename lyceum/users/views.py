@@ -28,7 +28,8 @@ class SignUpView(django.views.generic.FormView):
         profile.save()
 
         activation_link = django.urls.reverse(
-            "users:activate", kwargs={"pk": user.id},
+            "users:activate",
+            kwargs={"pk": user.id},
         )
         send_mail(
             subject="Подтверждение регистрации",
@@ -39,6 +40,25 @@ class SignUpView(django.views.generic.FormView):
             fail_silently=False,
         )
         return redirect(django.urls.reverse("homepage:home"))
+
+
+class LoginView(django.contrib.auth.views.LoginView):
+    def form_invalid(self, form):
+        username = form.data.get("username")
+        if username:
+            try:
+                user = users.models.User.objects.get(username=username)
+                if not user.is_active:
+                    form.add_error(
+                        None,
+                        "Аккаунт не активирован. "
+                        "Проверьте почту для активации.",
+                    )
+
+            except users.models.User.DoesNotExist:
+                pass
+
+        return super().form_invalid(form)
 
 
 class ActivateView(django.views.generic.View):
