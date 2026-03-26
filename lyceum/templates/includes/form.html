@@ -1,6 +1,6 @@
 <form method="{{ method|default:'post' }}" {% if enctype %}enctype="{{ enctype }}"{% endif %} novalidate>
   {% csrf_token %}
-
+  {% load i18n %}
   {% if form.non_field_errors %}
     <div class="alert alert-danger">
       {{ form.non_field_errors }}
@@ -24,5 +24,6 @@
     {% endif %}
   {% endfor %}
 
-  <button type="submit" class="btn btn-primary w-100">{{ button_text|default:"Подтвердить" }}</button>
+  {% translate "Подтвердить" as default_text %}
+  <button type="submit" class="btn btn-primary w-100">{{ button_text|default:default_text }}</button>
 </form>

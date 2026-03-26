@@ -36,6 +36,9 @@ msgstr "Catalog"
 msgid "амир"
 msgstr "amir"
 
+msgid "Зарегистрироваться"
+msgstr "SignUp"
+
 msgid "Русский"
 msgstr "Русский"
 
