@@ -16,7 +16,5 @@ class DownloadView(django.views.generic.View):
         if not file_path.is_file():
             raise django.http.Http404
 
-        return django.http.FileResponse(
-            open(file_path, "rb"),
-            as_attachment=True,
-        )
+        with open(file_path, "rb") as f:
+            return django.http.FileResponse(f, as_attachment=True)

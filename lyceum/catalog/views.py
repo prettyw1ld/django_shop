@@ -53,6 +53,12 @@ class ItemDetailView(django.views.generic.DetailView):
 
         form = RatingForm(request.POST, instance=user_rating)
         if form.is_valid():
+            if form.cleaned_data["score"] is None:
+                if user_rating is not None:
+                    user_rating.delete()
+
+                return django.shortcuts.redirect(request.path)
+
             rating = form.save(commit=False)
             rating.user = request.user
             rating.item = self.object
@@ -67,13 +73,17 @@ class ItemDetailView(django.views.generic.DetailView):
 class NewItemsView(django.views.generic.ListView):
     template_name = "catalog/item_list.html"
     context_object_name = "items"
-    queryset = Item.objects.new_items()
+
+    def get_queryset(self):
+        return Item.objects.new_items()
 
 
 class FridayItemsView(django.views.generic.ListView):
     template_name = "catalog/item_list.html"
     context_object_name = "items"
-    queryset = Item.objects.friday_items()
+
+    def get_queryset(self):
+        return Item.objects.new_items()
 
 
 class UnverifiedItemsView(django.views.generic.ListView):

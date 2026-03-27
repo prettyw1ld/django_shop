@@ -338,3 +338,6 @@ msgstr "Friday"
 
 msgid "Непроверенное"
 msgstr "Unverified"
+
+msgid "Сегодня нет дней рождения"
+msgstr "No Birthday`s today"
