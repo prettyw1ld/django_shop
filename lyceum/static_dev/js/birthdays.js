@@ -1,4 +1,7 @@
 (function () {
+    const serverBanner = document.getElementById("server-birthday-banner");
+    if (serverBanner) serverBanner.style.display = "none";
+    
     const now = new Date();
     const todayMonth = now.getMonth() + 1;
     const todayDay = now.getDate();
