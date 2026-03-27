@@ -112,7 +112,12 @@
 {% if birthdays_users %}
   <div id="birthday-banner" style="text-align: center; padding: 8px">
     {% for user in birthdays_users %}
-      <div class="birthday-slide" style="display: none">
+      <div
+        class="birthday-slide"
+        style="display: none"
+        data-month="{{ user.profile__birthday.month }}"
+        data-day="{{ user.profile__birthday.day }}"
+      >
         {% translate "С днем рождения " %} {{ user.first_name }} — {{ user.email }} 🎂
       </div>
     {% endfor %}
