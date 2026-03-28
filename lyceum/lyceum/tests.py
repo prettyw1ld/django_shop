@@ -56,7 +56,6 @@ class ContextProcessorsTest(django.test.TestCase):
             {
                 "first_name": "Олег",
                 "email": "testuser@example.com",
-                "profile__birthday": today,
             },
             birthdays_users,
         )

@@ -1,19 +1,9 @@
 (function () {
-    const serverBanner = document.getElementById("server-birthday-banner");
-    if (serverBanner) serverBanner.style.display = "none";
-    
-    const now = new Date();
-    const todayMonth = now.getMonth() + 1;
-    const todayDay = now.getDate();
-    
-    const slides = [...document.querySelectorAll(".birthday-slide")].filter(el => {
-        return (
-            parseInt(el.dataset.month) === todayMonth &&
-            parseInt(el.dataset.day) === todayDay
-        );
-    });
+    document.cookie = "django_timezone=" + Intl.DateTimeFormat().resolvedOptions().timeZone + ";path=/";
 
-    if (slides.length === 0) return
+    const slides = [...document.querySelectorAll(".birthday-slide")];
+
+    if (slides.length === 0) return;
 
     let current = 0;
     slides[current].style.display = "block";

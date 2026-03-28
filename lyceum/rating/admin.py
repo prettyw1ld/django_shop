@@ -11,5 +11,6 @@ class RatingAdmin(django.contrib.admin.ModelAdmin):
         rating.models.Rating.score.field.name,
         rating.models.Rating.user.field.name,
         rating.models.Rating.item.field.name,
+        rating.models.Rating.date_rate.field.name,
     )
     list_display_links = (rating.models.Rating.score.field.name,)

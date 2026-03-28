@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "feedback.apps.FeedbackConfig",
     "users.apps.UsersConfig",
     "rating.apps.RatingConfig",
+    "statistic.apps.StatisticConfig",
     # Не_мои_приложения
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     # Мои_мидлвейр
     "lyceum.middleware.ReverseRussianMiddleware",
     "users.middleware.LoadUserMiddleware",
+    "lyceum.middleware.TimezoneMiddleware",
 ]
 
 
@@ -156,7 +158,7 @@ LOCALE_PATHS = [
     BASE_DIR / "locale",
 ]
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Yekaterinburg"
 USE_TZ = True
 
 STATIC_URL = "/static/"

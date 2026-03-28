@@ -35,6 +35,11 @@ class Rating(django.db.models.Model):
             django.core.validators.MaxValueValidator(5),
         ],
     )
+    date_rate = django.db.models.DateTimeField(
+        "дата оценки",
+        auto_now=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = "рейтинг"
