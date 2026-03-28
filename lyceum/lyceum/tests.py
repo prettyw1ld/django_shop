@@ -46,7 +46,7 @@ class ContextProcessorsTest(django.test.TestCase):
             is_active=True,
         )
         profile = Profile.objects.create(user=user)
-        today = django.utils.timezone.now().date()
+        today = django.utils.timezone.localdate()
         profile.birthday = today
         profile.save()
         url = reverse("homepage:home")
@@ -68,7 +68,7 @@ class ContextProcessorsTest(django.test.TestCase):
             is_active=False,
         )
         profile = Profile.objects.create(user=user)
-        today = django.utils.timezone.now().date()
+        today = django.utils.timezone.localdate()
         profile.birthday = today
         user.save()
         profile.save()

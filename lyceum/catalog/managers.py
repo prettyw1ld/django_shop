@@ -93,3 +93,41 @@ class ItemsManager(PublishedManager):
         return Item.objects.published().filter(
             created=django.db.models.F(Item.updated.field.name),
         )
+
+    def worst_item(self, user):
+        from catalog.models import Item
+
+        published_items = Item.objects.published()
+        return (
+            published_items.filter(ratings__user=user)
+            .annotate(
+                user_score=django.db.models.Min("ratings__score"),
+                last_rated=django.db.models.Max("ratings__date_rate"),
+            )
+            .order_by("user_score", "-last_rated")
+            .first()
+        )
+
+    def best_item(self, user):
+        from catalog.models import Item
+
+        published_items = Item.objects.published()
+        return (
+            published_items.filter(ratings__user=user)
+            .annotate(
+                user_score=django.db.models.Max("ratings__score"),
+                last_rated=django.db.models.Max("ratings__date_rate"),
+            )
+            .order_by("-user_score", "-last_rated")
+            .first()
+        )
+
+    def list_rated_by_user(self, user):
+        from catalog.models import Item
+
+        published_items = Item.objects.published()
+        return (
+            published_items.filter(ratings__user=user)
+            .annotate(user_score=django.db.models.F("ratings__score"))
+            .order_by("-user_score", "-updated")
+        )

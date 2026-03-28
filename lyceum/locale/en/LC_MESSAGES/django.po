@@ -40,10 +40,10 @@ msgid "Зарегистрироваться"
 msgstr "SignUp"
 
 msgid "Русский"
-msgstr "Русский"
+msgstr "Russian"
 
 msgid "English"
-msgstr "Английский"
+msgstr "English"
 
 msgid "Админ-панель"
 msgstr "Admin-panel"
@@ -245,6 +245,42 @@ msgstr "ratings"
 
 msgid "Оценка"
 msgstr "Score"
+
+msgid "Количество оценок"
+msgstr "Number of ratings"
+
+msgid "Средняя оценка"
+msgstr "Average rating"
+
+msgid "Нет оценок"
+msgstr "No ratings"
+
+msgid "Последняя максимальная оценка"
+msgstr "Latest maximum rating"
+
+msgid "Нет максимальных оценок"
+msgstr "No maximum ratings"
+
+msgid "Последняя минимальная оценка"
+msgstr "Latest minimum rating"
+
+msgid "Нет минимальных оценок"
+msgstr "No minimum ratings"
+
+msgid "Моя статистика"
+msgstr "My statistics"
+
+msgid "Лучший товар"
+msgstr "Best product"
+
+msgid "Худший товар"
+msgstr "Worst product"
+
+msgid "Оценённые товары"
+msgstr "Rated products"
+
+msgid "Вы ещё не оценили ни одного товара"
+msgstr "You haven't rated any products yet"
 
 msgid "слаг"
 msgstr "slug"

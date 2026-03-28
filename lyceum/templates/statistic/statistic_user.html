@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h2>{% translate "Моя статистика" %}</h2>
+
+  <p>{% translate "Количество оценок" %}: {{ rating_count }}</p>
+  <p>{% translate "Средняя оценка" %}: {{ rating_avg|floatformat:2 }}</p>
+
+  {% if best_item %}
+    <p>{% translate "Лучший товар" %}: <a href="{% url 'catalog:item-detail' best_item.id %}">{{ best_item.name }}</a></p>
+  {% endif %}
+
+  {% if worst_item %}
+    <p>{% translate "Худший товар" %}: <a href="{% url 'catalog:item-detail' worst_item.id %}">{{ worst_item.name }}</a></p>
+  {% endif %}
+
+  <h2>{% translate "Оценённые товары" %}</h2>
+  {% if items %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {% for item in items %}
+        <div class="col">
+          <p>{% translate "Оценка" %}: {{ item.user_score }}</p>
+          {% include "includes/item_card.html" %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>{% translate "Вы ещё не оценили ни одного товара" %}</p>
+  {% endif %}
+{% endblock content %}
