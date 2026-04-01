@@ -377,3 +377,9 @@ msgstr "Unverified"
 
 msgid "Сегодня нет дней рождения"
 msgstr "No Birthday`s today"
+
+msgid "Все товары"
+msgstr "All products"
+
+msgid "Статистика"
+msgstr "Statistics"

@@ -7,10 +7,10 @@ from statistic import views
 app_name = "statistic"
 
 urlpatterns = [
-    path("", views.StatisticUserView.as_view(), name="statistic_user"),
+    path("", views.StatisticUserView.as_view(), name="statistic-user"),
     path(
         "<int:pk>/",
         views.StatisticItemDetailView.as_view(),
-        name="statistic_item-detail",
+        name="statistic-item-detail",
     ),
 ]

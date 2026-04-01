@@ -83,7 +83,7 @@ class FridayItemsView(django.views.generic.ListView):
     context_object_name = "items"
 
     def get_queryset(self):
-        return Item.objects.new_items()
+        return Item.objects.friday_items()
 
 
 class UnverifiedItemsView(django.views.generic.ListView):

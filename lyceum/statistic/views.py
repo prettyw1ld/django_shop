@@ -10,7 +10,7 @@ from catalog.models import Item
 
 class StatisticUserView(
     django.contrib.auth.mixins.LoginRequiredMixin,
-    django.views.generic.View,
+    django.views.generic.TemplateView,
 ):
     template_name = "statistic/statistic_user.html"
 

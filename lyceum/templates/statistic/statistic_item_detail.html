@@ -12,7 +12,8 @@
   {% endif %}
 
   {% if last_max_user %}
-    <p>{% translate "Последняя максимальная оценка" %}: 
+    <p>
+      {% translate "Последняя максимальная оценка" %}:
       {{ last_max_user.score }} — {{ last_max_user.user.username }}
     </p>
   {% else %}
@@ -20,7 +21,8 @@
   {% endif %}
 
   {% if last_min_user %}
-    <p>{% translate "Последняя минимальная оценка" %}: 
+    <p>
+      {% translate "Последняя минимальная оценка" %}:
       {{ last_min_user.score }} — {{ last_min_user.user.username }}
     </p>
   {% else %}
