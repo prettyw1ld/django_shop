@@ -3,6 +3,7 @@ __all__ = ()
 from django.conf import settings
 import django.contrib.auth
 import django.core.mail
+import django.urls
 from django.utils import timezone
 
 import users.models

@@ -6,14 +6,12 @@ import django.db.models
 
 
 class Rating(django.db.models.Model):
-    SCORE_CHOICES = [
-        ("", "— Без оценки —"),
-        (1, "Ненависть"),
-        (2, "Неприязнь"),
-        (3, "Нейтрально"),
-        (4, "Обожание"),
-        (5, "Любовь"),
-    ]
+    class Score(django.db.models.IntegerChoices):
+        HATE = 1, "Ненависть"
+        DISLIKE = 2, "Неприязнь"
+        NEUTRAL = 3, "Нейтрально"
+        ADORE = 4, "Обожание"
+        LOVE = 5, "Любовь"
 
     user = django.db.models.ForeignKey(
         django.contrib.auth.get_user_model(),
@@ -29,7 +27,7 @@ class Rating(django.db.models.Model):
     )
     score = django.db.models.PositiveSmallIntegerField(
         "оценка",
-        choices=SCORE_CHOICES,
+        choices=Score.choices,
         validators=[
             django.core.validators.MinValueValidator(1),
             django.core.validators.MaxValueValidator(5),

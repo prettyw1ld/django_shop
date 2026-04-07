@@ -55,14 +55,6 @@ class FormView(django.views.generic.FormView):
 
 
 class EchoView(django.views.generic.View):
-    def get(self, request):
-        form = homepage.forms.TextForm()
-        return django.shortcuts.render(
-            request,
-            "homepage/form.html",
-            {"form": form},
-        )
-
     def post(self, request):
         form = homepage.forms.TextForm(request.POST)
         if form.is_valid():

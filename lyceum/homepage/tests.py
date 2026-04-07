@@ -7,6 +7,7 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 from catalog.models import Item
+from core.tests import CheckFieldTestCase
 from users.models import Profile
 
 User = get_user_model()
@@ -32,26 +33,6 @@ class CoffeeViewTest(TestCase):
         response = self.client.get(reverse("homepage:coffee"))
         self.assertEqual(response.status_code, HTTPStatus.IM_A_TEAPOT)
         self.assertEqual(response.content.decode(), "Я чайник")
-
-
-class CheckFieldTestCase(TestCase):
-    def check_content_value(
-        self,
-        item,
-        exists,
-        prefetched,
-        not_loaded,
-    ):
-        check_dict = item.__dict__
-
-        for value in exists:
-            self.assertIn(value, check_dict)
-
-        for value in prefetched:
-            self.assertIn(value, check_dict["_prefetched_objects_cache"])
-
-        for value in not_loaded:
-            self.assertNotIn(value, check_dict)
 
 
 class HomepageItemsTests(CheckFieldTestCase):

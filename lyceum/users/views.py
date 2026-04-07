@@ -79,9 +79,15 @@ class ActivateView(django.views.generic.View):
 
 class ReactivateView(django.views.generic.View):
     def get(self, request, pk):
-        user = users.models.User.objects.get(pk=pk)
-        if user.profile.block_date + timedelta(weeks=1) > timezone.now():
+        user = get_object_or_404(users.models.User, pk=pk)
+        if (
+            user.profile.block_date
+            and user.profile.block_date + timedelta(weeks=1) > timezone.now()
+        ):
             user.is_active = True
+            user.profile.attempts_count = 0
+            user.profile.block_date = None
+            user.profile.save()
             user.save()
 
         return redirect(django.urls.reverse("homepage:home"))
