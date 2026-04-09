@@ -383,3 +383,6 @@ msgstr "All products"
 
 msgid "Статистика"
 msgstr "Statistics"
+
+msgid "Регистрация"
+msgstr "SignUp"

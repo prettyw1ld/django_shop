@@ -1,19 +1,21 @@
 {% load static %}
 {% load i18n %}
 <div class="container">
-  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <header class="d-flex flex-wrap py-3 mb-4 border-bottom">
     <a
-      href="{% url 'feedback:feedback' %}"
-      class="d-flex align-items-center mb-3 mb-md-0 mx-auto text-dark text-decoration-none"
+      href="{% url 'homepage:home' %}"
+      class="d-flex align-items-center mb-3 mb-md-0 me-auto text-dark text-decoration-none"
     >
-      <img
-        src='{% static "img/fav/web-app-manifest-192x192.png" %}'
-        alt="Logo"
-        width="30"
-        height="30"
-        class="d-inline-block align-text-top"
-      >
-      <span class="fs-4">{% trans "амир" %}</span>
+      <div class="me-auto">
+        <img
+          src='{% static "img/fav/web-app-manifest-192x192.png" %}'
+          alt="Logo"
+          width="30"
+          height="30"
+          class="d-inline-block align-text-top"
+        >
+        <span class="fs-4">{% trans "амир" %}</span>
+      </div>
     </a>
 
     {% with request.resolver_match.view_name as view_name %}
