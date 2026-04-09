@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load thumbnail %}
+{% load i18n %}
 
 {% block title %}{{ item.name }}{% endblock title %}
 
@@ -13,13 +14,13 @@
             {% if item.main_image %}
               <div class="carousel-item active">
                 {% thumbnail item.main_image.image "600x400" crop="center" quality=70 as im %}
-                <img src="{{ im.url }}" class="d-block w-100" alt="{{ item.name }} - главное">
+                <img src="{{ im.url }}" class="d-block w-100" alt="{{ item.name }}  - {% translate 'главное' %}">
                 <div class="carousel-caption d-none d-md-block">
                   <a
                     href="{% url 'download:file' item.main_image.image.name %}"
                     class="btn btn-dark btn-sm"
                   >
-                    Скачать оригинал
+                    {% translate "Скачать оригинал" %}
                   </a>
                 </div>
                 {% empty %}
@@ -38,7 +39,7 @@
                 >
                 <div class="carousel-caption d-none d-md-block">
                   <a href="{% url 'download:file' image.image.name %}" class="btn btn-dark btn-sm">
-                    Скачать оригинал
+                    {% translate "Скачать оригинал" %}
                   </a>
                 </div>
                 {% empty %}
@@ -62,7 +63,7 @@
               data-bs-slide="prev"
             >
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Предыдущий</span>
+              <span class="visually-hidden">{% translate "Предыдущий" %}</span>
             </button>
             <button
               class="carousel-control-next"
@@ -71,7 +72,7 @@
               data-bs-slide="next"
             >
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Следующий</span>
+              <span class="visually-hidden">{% translate "Следующий" %}</span>
             </button>
           {% endif %}
         </div>
@@ -79,7 +80,7 @@
 
       <div class="col-md-6">
         <h1>{{ item.name }}</h1>
-        <p class="text-muted">Категория: {{ item.category.name }}</p>
+        <p class="text-muted">{% translate "Категория:" %} {{ item.category.name }}</p>
 
         <div class="mt-3">
           {{ item.text|safe }}
@@ -87,15 +88,55 @@
 
         {% if item.tags.all %}
           <p class="mt-3">
-            <strong>Теги:</strong>
+            <strong>{% translate "Теги:" %}</strong>
             {% for tag in item.tags.all %}
               <span class="badge bg-secondary">{{ tag.name }}</span>
             {% endfor %}
           </p>
         {% endif %}
 
+        <div class="mt-4">
+          <h5>{% translate "Оценки" %}</h5>
+
+          {% if rating_count %}
+            <p>
+              {% translate "Средняя оценка:" %}
+              <strong>{{ rating_avg|floatformat:1 }}</strong> ({{ rating_count }}
+              {% translate "оценок" %})
+            </p>
+          {% else %}
+            <p class="text-muted">{% translate "Оценок пока нет" %}</p>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+            <form method="post">
+              {% csrf_token %}
+
+              {% if user_rating %}
+                <p>{% translate "Ваша оценка:" %} <strong>{{ user_rating.get_score_display }}</strong></p>
+              {% endif %}
+
+              {{ rating_form.as_p }}
+
+              <button type="submit" class="btn btn-primary btn-sm">
+                {% if user_rating %}{% translate "Изменить" %}{% else %}{% translate "Оценить" %}{% endif %}
+              </button>
+
+              {% if user_rating %}
+                <button type="submit" name="delete" class="btn btn-outline-danger btn-sm">
+                  {% translate "Удалить оценку" %}
+                </button>
+              {% endif %}
+            </form>
+          {% else %}
+            <p class="text-muted">
+              <a href="{% url 'users:login' %}">{% translate "Войдите" %}</a>{% translate ", чтобы оставить оценку" %}
+            </p>
+          {% endif %}
+        </div>
+
         <a href="{% url 'catalog:item-list' %}" class="btn btn-outline-primary mt-3">
-          ← Назад к списку
+          {% translate "← Назад к списку" %}
         </a>
       </div>
     </div>

@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fake-key")
 DEFAULT_USER_IS_ACTIVE = load_bool("DJANGO_DEFAULT_USER_IS_ACTIVE", False)
 DJANGO_MAIL = os.getenv("DJANGO_MAIL", "from@example.com")
 DEBUG = load_bool("DJANGO_DEBUG", False)
-ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", True)
+ALLOW_REVERSE = load_bool("DJANGO_ALLOW_REVERSE", False)
 
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "*").split(",")
 
@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     "download.apps.DownloadConfig",
     "feedback.apps.FeedbackConfig",
     "users.apps.UsersConfig",
+    "rating.apps.RatingConfig",
+    "statistic.apps.StatisticConfig",
     # Не_мои_приложения
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
@@ -68,6 +70,7 @@ MIDDLEWARE = [
     # Мои_мидлвейр
     "lyceum.middleware.ReverseRussianMiddleware",
     "users.middleware.LoadUserMiddleware",
+    "lyceum.middleware.TimezoneMiddleware",
 ]
 
 
@@ -90,6 +93,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "lyceum.context_processors.birthdays",
             ],
         },
     },
@@ -154,14 +158,14 @@ LOCALE_PATHS = [
     BASE_DIR / "locale",
 ]
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Yekaterinburg"
 USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static_dev",
 ]
-STATIC_ROOT = "/static_dev"
+STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"

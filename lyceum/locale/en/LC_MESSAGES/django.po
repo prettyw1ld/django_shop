@@ -36,11 +36,14 @@ msgstr "Catalog"
 msgid "амир"
 msgstr "amir"
 
+msgid "Зарегистрироваться"
+msgstr "SignUp"
+
 msgid "Русский"
-msgstr "Русский"
+msgstr "Russian"
 
 msgid "English"
-msgstr "Английский"
+msgstr "English"
 
 msgid "Админ-панель"
 msgstr "Admin-panel"
@@ -206,3 +209,177 @@ msgstr "Save"
 
 msgid "Выпить кофе"
 msgstr "Have some coffee"
+
+msgid "Оценки"
+msgstr "Ratings"
+
+msgid "Оценок пока нет"
+msgstr "No ratings yet"
+
+msgid "Ваша оценка:"
+msgstr "Your rating:"
+
+msgid "Изменить"
+msgstr "Edit"
+
+msgid "Оценить"
+msgstr "Rate"
+
+msgid "Удалить оценку"
+msgstr "Delete rating"
+
+msgid "Войдите"
+msgstr "Log in"
+
+msgid ", чтобы оставить оценку"
+msgstr " to leave a rating"
+
+msgid "← Назад к списку"
+msgstr "← Back to list"
+
+msgid "Средняя оценка:"
+msgstr "Average rating:"
+
+msgid "оценок"
+msgstr "ratings"
+
+msgid "Оценка"
+msgstr "Score"
+
+msgid "Количество оценок"
+msgstr "Number of ratings"
+
+msgid "Средняя оценка"
+msgstr "Average rating"
+
+msgid "Нет оценок"
+msgstr "No ratings"
+
+msgid "Последняя максимальная оценка"
+msgstr "Latest maximum rating"
+
+msgid "Нет максимальных оценок"
+msgstr "No maximum ratings"
+
+msgid "Последняя минимальная оценка"
+msgstr "Latest minimum rating"
+
+msgid "Нет минимальных оценок"
+msgstr "No minimum ratings"
+
+msgid "Моя статистика"
+msgstr "My statistics"
+
+msgid "Лучший товар"
+msgstr "Best product"
+
+msgid "Худший товар"
+msgstr "Worst product"
+
+msgid "Оценённые товары"
+msgstr "Rated products"
+
+msgid "Вы ещё не оценили ни одного товара"
+msgstr "You haven't rated any products yet"
+
+msgid "слаг"
+msgstr "slug"
+
+msgid "тег"
+msgstr "tag"
+
+msgid "теги"
+msgstr "tags"
+
+msgid "Максимум 200 символов"
+msgstr "Maximum 200 characters"
+
+msgid "вес"
+msgstr "weight"
+
+msgid "Максимум 32767"
+msgstr "Maximum 32767"
+
+msgid "категория"
+msgstr "category"
+
+msgid "категории"
+msgstr "categories"
+
+msgid "описание"
+msgstr "description"
+
+msgid "Описание должно быть больше, чем из 2х слов и "
+msgstr "Description must be more than 2 words and "
+
+msgid "Выберите категорию"
+msgstr "Select a category"
+
+msgid "отображение на главной"
+msgstr "display on main page"
+
+msgid "время изменения"
+msgstr "updated at"
+
+msgid "время создания"
+msgstr "created at"
+
+msgid "товар"
+msgstr "product"
+
+msgid "товары"
+msgstr "products"
+
+msgid "главное изображение"
+msgstr "main image"
+
+msgid "главные изображения"
+msgstr "main images"
+
+msgid "изображения"
+msgstr "images"
+
+msgid "фото"
+msgstr "photo"
+
+msgid "главное"
+msgstr "main"
+
+msgid "Скачать оригинал"
+msgstr "Download original"
+
+msgid "Предыдущий"
+msgstr "Previous"
+
+msgid "Следующий"
+msgstr "Next"
+
+msgid "Категория:"
+msgstr "Category:"
+
+msgid "Теги:"
+msgstr "Tags:"
+
+msgid "С днем рождения "
+msgstr "Happy Birthday "
+
+msgid "Выйти"
+msgstr "Logout"
+
+msgid "Новое"
+msgstr "New"
+
+msgid "Пятница"
+msgstr "Friday"
+
+msgid "Непроверенное"
+msgstr "Unverified"
+
+msgid "Сегодня нет дней рождения"
+msgstr "No Birthday`s today"
+
+msgid "Все товары"
+msgstr "All products"
+
+msgid "Статистика"
+msgstr "Statistics"

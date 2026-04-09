@@ -1,5 +1,5 @@
 [flake8]
-application-import-names = about, catalog, core, download, feedback, homepage, lyceum, users
+application-import-names = about, catalog, core, download, feedback, homepage, lyceum, users, rating, statistic
 import-order-style = google
 inline-quotes = double
 max-line-length = 79

@@ -1,20 +1,8 @@
 __all__ = ()
 
-import sys
-
 import django.contrib.auth.models
 import django.db.models
 import sorl.thumbnail
-
-
-def _make_email_unique():
-    email_field = django.contrib.auth.models.User
-    email_field._meta.get_field("email")
-    email_field._unique = True
-
-
-if "makemigrations" not in sys.argv and "migrate" not in sys.argv:
-    _make_email_unique()
 
 
 class UserManager(django.contrib.auth.models.UserManager):

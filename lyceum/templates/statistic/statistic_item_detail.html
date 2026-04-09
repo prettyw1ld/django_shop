@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+  <h2>{{ item.name }}</h2>
+  {% if rating_avg is not None %}
+    <p>{% translate "Количество оценок" %}: {{ rating_count }}</p>
+    <p>{% translate "Средняя оценка" %}: {{ rating_avg|floatformat:2 }}</p>
+  {% else %}
+    <p>{% translate "Нет оценок" %}</p>
+  {% endif %}
+
+  {% if last_max_user %}
+    <p>
+      {% translate "Последняя максимальная оценка" %}:
+      {{ last_max_user.score }} — {{ last_max_user.user.username }}
+    </p>
+  {% else %}
+    <p>{% translate "Нет максимальных оценок" %}</p>
+  {% endif %}
+
+  {% if last_min_user %}
+    <p>
+      {% translate "Последняя минимальная оценка" %}:
+      {{ last_min_user.score }} — {{ last_min_user.user.username }}
+    </p>
+  {% else %}
+    <p>{% translate "Нет минимальных оценок" %}</p>
+  {% endif %}
+  <div class="row row-cols-1 row-cols-md-2 g-2">
+    {% if item.main_image %}
+      <img src="{{ item.main_image.get_image_300x300.url }}" alt="Изображение">
+    {% else %}
+      <img src='{% static "img/no_photo.jpg" %}' alt="Нет изображения">
+    {% endif %}
+  </div>
+{% endblock content %}

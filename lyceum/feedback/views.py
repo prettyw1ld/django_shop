@@ -3,7 +3,9 @@ __all__ = ()
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
+import django.views.generic
+import django.views.generic.base
 
 from feedback.forms import (
     FeedbackContentForm,
@@ -13,43 +15,49 @@ from feedback.forms import (
 from feedback.models import FeedbackFile
 
 
-def feedback(request):
-    template = "feedback/feedback.html"
-    author_form = PersonalDataForm()
-    content_form = FeedbackContentForm()
-    files_form = FeedbackFileForm()
+class FeedbackView(
+    django.views.generic.View,
+    django.views.generic.base.TemplateResponseMixin,
+):
+    template_name = "feedback/feedback.html"
 
-    if request.method == "POST":
-        author_form = PersonalDataForm(request.POST or None)
-        content_form = FeedbackContentForm(request.POST or None)
-        files_form = FeedbackFileForm(request.POST or None, request.FILES)
-        if (
-            author_form.is_valid()
-            and content_form.is_valid()
-            and files_form.is_valid()
-        ):
-            personal_data = author_form.save()
-            feedback = content_form.save(commit=False)
-            feedback.personal_data = personal_data
-            feedback.save()
-            for f in request.FILES.getlist("files"):
-                FeedbackFile.objects.create(feedback=feedback, file=f)
+    def get_forms(self, data=None, files=None):
+        return {
+            "author": PersonalDataForm(data),
+            "content": FeedbackContentForm(data),
+            "files": FeedbackFileForm(data, files),
+        }
 
-            send_mail(
-                subject="Feedback Message",
-                message=content_form.cleaned_data["text"],
-                from_email=settings.DJANGO_MAIL,
-                recipient_list=[author_form.cleaned_data["mail"]],
-                fail_silently=False,
-            )
+    def get(self, request, *args, **kwargs):
+        return self.render_to_response(self.get_forms())
 
-            messages.success(request, "Спасибо за отзыв!")
-            return redirect("feedback:feedback")
+    def post(self, request, *args, **kwargs):
+        forms = self.get_forms(request.POST, request.FILES)
 
-    context = {
-        "author": author_form,
-        "content": content_form,
-        "files": files_form,
-    }
+        if all(form.is_valid() for form in forms.values()):
+            return self.forms_valid(forms)
 
-    return render(request, template, context)
+        return self.forms_invalid(forms)
+
+    def forms_valid(self, forms):
+        personal_data = forms["author"].save()
+        feedback = forms["content"].save(commit=False)
+        feedback.personal_data = personal_data
+        feedback.save()
+
+        for f in self.request.FILES.getlist("files"):
+            FeedbackFile.objects.create(feedback=feedback, file=f)
+
+        send_mail(
+            subject="Feedback Message",
+            message=forms["content"].cleaned_data["text"],
+            from_email=settings.DJANGO_MAIL,
+            recipient_list=[forms["author"].cleaned_data["mail"]],
+            fail_silently=False,
+        )
+
+        messages.success(self.request, "Спасибо за отзыв!")
+        return redirect("feedback:feedback")
+
+    def forms_invalid(self, forms):
+        return self.render_to_response(forms)

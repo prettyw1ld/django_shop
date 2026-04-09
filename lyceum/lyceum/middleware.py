@@ -1,8 +1,10 @@
 __all__ = ()
 
 import re
+import zoneinfo
 
 import django.conf
+from django.utils import timezone
 
 WORDS_REGEX = re.compile(r"\w+|\W+")
 RUSSIAN_WORD_REGEX = re.compile(r"^[а-яА-ЯёЁ]+$")
@@ -41,3 +43,21 @@ class ReverseRussianMiddleware:
 
         response.content = "".join(transformed).encode("utf-8")
         return response
+
+
+class TimezoneMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        try:
+            tzname = request.COOKIES.get("django_timezone")
+            if tzname:
+                timezone.activate(zoneinfo.ZoneInfo(tzname))
+            else:
+                timezone.deactivate()
+
+        except Exception:
+            timezone.deactivate()
+
+        return self.get_response(request)
