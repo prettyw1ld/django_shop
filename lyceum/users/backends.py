@@ -3,6 +3,7 @@ __all__ = ()
 from django.conf import settings
 import django.contrib.auth
 import django.core.mail
+import django.urls
 from django.utils import timezone
 
 import users.models
@@ -40,7 +41,7 @@ class AuthBackend(django.contrib.auth.backends.ModelBackend):
                     message=f"Ваш аккаунт был заблокирован из-за "
                     "слишком большого количества неудачных попыток входа. "
                     "Для разблокировки перейдите по ссылке:"
-                    f"\n{activate_url}\n\nСсылка действительна 7 часов.",
+                    f"\n{activate_url}\n\nСсылка действительна неделю.",
                     from_email=settings.DJANGO_MAIL,
                     recipient_list=[user.email],
                     fail_silently=False,

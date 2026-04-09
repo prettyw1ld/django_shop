@@ -1,3 +1,4 @@
+{% load static %}
 {% load i18n %}
 <ul class="nav nav-item">
   {% if request.user.is_authenticated and request.user.is_staff %}
@@ -32,9 +33,16 @@
   </li>
   <li class="nav-item">
     {% if view_name == "catalog:item-list" %}
-      <span class="nav-link active">{% translate "Список товаров" %}</span>
+      <span class="nav-link" href='{% url "catalog:item-list" %}'>{% translate "Список товаров" %}</span>
     {% else %}
       <a class="nav-link" href='{% url "catalog:item-list" %}'>{% translate "Список товаров" %}</a>
+    {% endif %}
+  </li>
+  <li class="nav-item">
+    {% if view_name == "statistic:statistic-user" %}
+      <span class="nav-link" href='{% url "statistic:statistic-user" %}'>{% translate "Статистика" %}</span>
+    {% else %}
+      <a class="nav-link" href='{% url "statistic:statistic-user" %}'>{% translate "Статистика" %}</a>
     {% endif %}
   </li>
   {% if request.user.is_authenticated %}
@@ -48,7 +56,7 @@
     <li class="nav-item">
       <form method="post" action="{% url 'users:logout' %}">
         {% csrf_token %}
-        <button type="submit" class="nav-link btn btn-link">Выйти</button>
+        <button type="submit" class="nav-link btn btn-link">{% translate "Выйти" %}</button>
       </form>
     </li>
   {% else %}
@@ -57,6 +65,13 @@
         <span class="nav-link active">{% translate "Войти" %}</span>
       {% else %}
         <a class="nav-link" href='{% url "users:login" %}'>{% translate "Войти" %}</a>
+      {% endif %}
+    </li>
+    <li class="nav-item">
+      {% if view_name == "users:signup" %}
+        <span class="nav-link active">{% translate "Регистрация" %}</span>
+      {% else %}
+        <a class="nav-link" href='{% url "users:signup" %}'>{% translate "Регистрация" %}</a>
       {% endif %}
     </li>
   {% endif %}
@@ -80,3 +95,13 @@
     </form>
   </div>
 </ul>
+{% if birthdays_users %}
+  <div id="birthday-banner" style="text-align: center; padding: 8px">
+    {% for user in birthdays_users %}
+      <div class="birthday-slide" style="display: none">
+        {% translate "С днем рождения " %} {{ user.first_name }} — {{ user.email }} 🎂
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+<script src="{% static 'js/birthdays.js' %}"></script>

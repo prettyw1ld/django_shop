@@ -4,20 +4,66 @@
 {% block content %}
   <h1>{{ title }}</h1>
 
-  {% if items %}
-    <div>
-      {% for item in items %}
-        {% ifchanged item.category %}
-          <div class="row">
-            <div class="col-12 text-center">
-              <h1 class="display-4 fw-bold">{{ item.category.name }}</h1>
-            </div>
-          </div>
-        {% endifchanged %}
-
-        {% include "includes/item_card.html" %}
-      {% endfor %}
+  <div class="mb-4">
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        {% if view_name == "catalog:new-items" %}
+          {% translate "Новое" %}
+        {% elif view_name == "catalog:friday-items" %}
+          {% translate "Пятница" %}
+        {% elif view_name == "catalog:unverified-items" %}
+          {% translate "Непроверенное" %}
+        {% else %}
+          {% translate "Все товары" %}
+        {% endif %}
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <a
+            class="dropdown-item {% if view_name == 'catalog:item-list' %}active{% endif %}"
+            href='{% url "catalog:item-list" %}'
+          >{% translate "Все товары" %}</a>
+        </li>
+        <li>
+          <a
+            class="dropdown-item {% if view_name == 'catalog:new-items' %}active{% endif %}"
+            href='{% url "catalog:new-items" %}'
+          >{% translate "Новое" %}</a>
+        </li>
+        <li>
+          <a
+            class="dropdown-item {% if view_name == 'catalog:friday-items' %}active{% endif %}"
+            href='{% url "catalog:friday-items" %}'
+          >{% translate "Пятница" %}</a>
+        </li>
+        <li>
+          <a
+            class="dropdown-item {% if view_name == 'catalog:unverified-items' %}active{% endif %}"
+            href='{% url "catalog:unverified-items" %}'
+          >{% translate "Непроверенное" %}</a>
+        </li>
+      </ul>
     </div>
+  </div>
+
+  {% if items %}
+    {% for item in items %}
+      {% ifchanged item.category %}
+        {% if not forloop.first %}</div>{% endif %}
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold">{{ item.category.name }}</h1>
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+      {% endifchanged %}
+      <div class="col">
+        {% include "includes/item_card.html" %}
+      </div>
+      {% if forloop.last %}
+      </div>
+      {% endif %}
+    {% endfor %}
   {% else %}
     <p>Список пуст. Йо, Админ, добавь инфы!</p>
   {% endif %}
