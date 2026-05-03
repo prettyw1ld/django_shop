@@ -1,7 +1,5 @@
 # Lyceum (проект на Django)
 
-[![pipeline status](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/badges/main/pipeline.svg?key_text=lint/test)](https://gitlab.crja72.ru/django/2026/spring/course/students/377070-damirkhodzhiev-course-1585/-/commits/main)
-
 Учебный проект с использованием фреймворка Django. 
 
 ## Необходимое ПО
