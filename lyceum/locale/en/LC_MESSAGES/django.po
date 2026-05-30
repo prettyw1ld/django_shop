@@ -39,10 +39,15 @@ msgstr "amir"
 msgid "Зарегистрироваться"
 msgstr "SignUp"
 
+msgid "Зарегистрироваться"
+msgstr "SignUp"
+
 msgid "Русский"
+msgstr "Russian"
 msgstr "Russian"
 
 msgid "English"
+msgstr "English"
 msgstr "English"
 
 msgid "Админ-панель"
